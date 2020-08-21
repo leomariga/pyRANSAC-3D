@@ -20,9 +20,14 @@ class Plane:
 		t, r = self.rawAlignToXY(self.equation)
 		self.rMatrix = r
 		self.tMatrix = t
-		translated_inliers = copy.deepcopy(self.inliers)-t
-		rotated_inliers = np.matmul(r,copy.deepcopy(translated_inliers).transpose()).T
-
+		#translated_inliers = copy.deepcopy(self.inliers)-t
+		#rotated_inliers = np.matmul(r,copy.deepcopy(translated_inliers).transpose()).T
+		o3d.visualization.draw_geometries([self.inliers])
+		translated_inliers = copy.deepcopy(self.inliers).translate(-t)
+		o3d.visualization.draw_geometries([translated_inliers])
+		rotated_inliers = copy.deepcopy(translated_inliers).rotate(r, center=(0,0,0))
+		o3d.visualization.draw_geometries([rotated_inliers])
+		rotated_inliers = np.asarray(rotated_inliers.points)
 		xmin, ymin, zmin = np.amin(rotated_inliers,0)
 		xmax, ymax, zmax = np.amax(rotated_inliers,0)
 
@@ -49,7 +54,6 @@ class Plane:
 		b = eq[1]
 		c = eq[2]
 		d = eq[3]
-		print(np.sqrt(a*a+b*b+c*c))
 		c_theta = c/(np.sqrt(a*a+b*b+c*c))
 		s_theta = np.sqrt((a*a+b*b)/(a*a+b*b+c*c))
 		u1 = b/(np.sqrt(a*a+b*b+c*c))
@@ -88,14 +92,14 @@ class Plane:
 
 			# Now we compute the cross product of vecA and vecB to get vecC which is normal to the plane
 			vecC = np.cross(vecA, vecB)
-			
+			#print(vecC)
 
 			# The plane equation will be vecC[0]*x + vecC[1]*y + vecC[0]*z = -k
 			# We have to use a point to find k
-			vecC = vecC / np.linalg.norm(vecC)
+
 			k = -np.sum(np.multiply(vecC, pt_samples[1,:]))
 			plane_eq = [vecC[0], vecC[1], vecC[2], k]
-			
+			#plane_eq = plane_eq / np.linalg.norm(plane_eq)
 			#print(plane_eq)
 
 			# Distance from a point to a plane 
@@ -107,9 +111,11 @@ class Plane:
 			pt_id_inliers = np.where(np.abs(dist_pt) <= thresh)[0]
 			if(len(pt_id_inliers) > len(best_inliers)):
 				best_eq = plane_eq
-				best_inliers = pt_id_inliers
-			self.inliers = pts[best_inliers]
-			self.equation = best_eq
+				best_inliers = list(pt_id_inliers)
+				pontos = o3d.geometry.PointCloud()
+				pontos.points = o3d.utility.Vector3dVector(pts)
+				self.inliers = pontos.select_by_index(best_inliers)
+				self.equation = best_eq
 		return best_eq, best_inliers
 
 		
@@ -132,14 +138,13 @@ best_eq, best_inliers = plano1.findPlane(points, 0.01)
 plane = pcd_load.select_by_index(best_inliers).paint_uniform_color([1, 0, 0])
 not_plane = pcd_load.select_by_index(best_inliers, invert=True)
 o3d.visualization.draw_geometries([not_plane, plane])
-#pcd = o3d.geometry.PointCloud()
-#pcd.points = o3d.utility.Vector3dVector(plano1.findEnviromentParameters())
-t, r = plano1.rawAlignToXY(best_eq)
-
-pcd_rotacionado = copy.deepcopy(pcd_load).translate(-t).rotate(r, center=(0,0,0))#.paint_uniform_color([0, 0, 1])
+pcd = o3d.geometry.PointCloud()
+pcd.points = o3d.utility.Vector3dVector(plano1.findEnviromentParameters())
+#t, r = plano1.rawAlignToXY(best_eq)
+pcd_rotacionado = pcd.paint_uniform_color([0, 0, 1])
 mesh = o3d.geometry.TriangleMesh.create_coordinate_frame()
 
 
-#box = drawPlane(plano1)
+box = drawPlane(plano1)
 
-o3d.visualization.draw_geometries([plane, pcd_rotacionado, mesh])
+o3d.visualization.draw_geometries([plane, pcd_rotacionado, mesh, box])
