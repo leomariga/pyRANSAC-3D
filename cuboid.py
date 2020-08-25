@@ -151,13 +151,13 @@ class Cuboid:
 
 
 # Load saved point cloud and visualize it
-pcd_load = o3d.io.read_point_cloud("caixa.ply")
+pcd_load = o3d.io.read_point_cloud("caixa8.ply")
 #o3d.visualization.draw_geometries([pcd_load])
 points = np.asarray(pcd_load.points)
 
 plano1 = Cuboid()
 
-best_eq, best_inliers = plano1.fit(points, 0.04)
+best_eq, best_inliers = plano1.fit(points, 0.02)
 plane = pcd_load.select_by_index(best_inliers).paint_uniform_color([1, 0, 0])
 not_plane = pcd_load.select_by_index(best_inliers, invert=True)
-o3d.visualization.draw_geometries([not_plane, plane])
+o3d.visualization.draw_geometries([plane])
