@@ -13,7 +13,7 @@ class Cilinder:
 		self.rMatrix = [] # env to plane
 
 
-	def find(self, pts, thresh=0.05, minPoints=50, maxIteration=1000):
+	def find(self, pts, thresh=0.05, minPoints=50, maxIteration=1):
 		n_points = pts.shape[0]
 		print(n_points)
 		best_eq = []
@@ -71,17 +71,16 @@ class Cilinder:
 			rad1 = np.linalg.norm(p_center - a)
 			rad2 = np.linalg.norm(p_center - b)
 			rad3 = np.linalg.norm(p_center - c)
-			#print(str(rad1)+ " - " +str(rad2)+ " - "+ str(rad3))
-
+			print(str(rad1)+ " - " +str(rad2)+ " - "+ str(rad3))
 
 			# The centered in the 3D space will be:
-			center = pt_samples[0,:] + p_center[0]*vecA_norm + p_center[1]*vecB_norm
+			center = pt_samples[0,:] + np.dot(vecA_norm, p_center[0]) + np.dot(vecB_norm, p_center[1])
 
 			# We can calculate the radius
 			rad1 = np.linalg.norm(center-pt_samples[0,:])
 			rad2 = np.linalg.norm(center-pt_samples[1,:])
 			rad3 = np.linalg.norm(center-pt_samples[2,:])
-			#print(str(rad1)+ " - " +str(rad2)+ " - "+ str(rad3))
+			print(str(rad1)+ " - " +str(rad2)+ " - "+ str(rad3))
 
 
 			# # Distance from a point to a plane 
@@ -104,6 +103,7 @@ class Cilinder:
 			self.center = center
 			self.normal = vecC
 			self.radius = h
+
 		return center, p_center, vecC, h,  best_inliers
 
 		
@@ -125,7 +125,7 @@ mesh_cylinder = o3d.geometry.TriangleMesh.create_cylinder(radius=0.3,
 mesh_cylinder.compute_vertex_normals()
 mesh_cylinder.paint_uniform_color([0.1, 0.9, 0.1])
 o3d.visualization.draw_geometries([mesh_cylinder])
-pcd_load=mesh_cylinder.sample_points_uniformly(number_of_points=1000)
+pcd_load=mesh_cylinder.sample_points_uniformly(number_of_points=2000)
 o3d.visualization.draw_geometries([pcd_load])
 
 points = np.asarray(pcd_load.points)
@@ -138,12 +138,15 @@ print("p_center: "+str(p_center))
 print("vecC: "+str(vecC))
 print("h: "+str(h))
 
+R = get_rotationMatrix_from_vectors([0, 0, 1], vecC)
+
 plane = pcd_load.select_by_index(best_inliers).paint_uniform_color([1, 0, 0])
 # obb = plane.get_oriented_bounding_box()
 # obb2 = plane.get_axis_aligned_bounding_box()
 # obb.color = [0, 0, 1]
 # obb2.color = [0, 1, 0]
 not_plane = pcd_load.select_by_index(best_inliers, invert=True)
-mesh = o3d.geometry.TriangleMesh.create_coordinate_frame(origin=center)
+mesh = o3d.geometry.TriangleMesh.create_coordinate_frame(origin=[0, 0, 0])
+mesh_rot = copy.deepcopy(mesh).rotate(R, center=[0, 0, 0])
 
-o3d.visualization.draw_geometries([not_plane, plane, mesh])
+o3d.visualization.draw_geometries([not_plane, plane, mesh, mesh_rot])
