@@ -13,7 +13,7 @@ class Cilinder:
 		self.rMatrix = [] # env to plane
 
 
-	def find(self, pts, thresh=0.2, minPoints=50, maxIteration=10000):
+	def find(self, pts, thresh=0.2, minPoints=50, maxIteration=5000):
 		n_points = pts.shape[0]
 		print(n_points)
 		best_eq = []
@@ -124,23 +124,23 @@ class Cilinder:
 
 
 # Load saved point cloud and visualize it
-#pcd_load = o3d.io.read_point_cloud("caixa4.ply")
-#o3d.visualization.draw_geometries([pcd_load])
-
-
-mesh_cylinder = o3d.geometry.TriangleMesh.create_cylinder(radius=1,
-                                                            height=10.0)
-mesh_cylinder.compute_vertex_normals()
-mesh_cylinder.paint_uniform_color([0.1, 0.9, 0.1])
-o3d.visualization.draw_geometries([mesh_cylinder])
-pcd_load=mesh_cylinder.sample_points_uniformly(number_of_points=2000)
+pcd_load = o3d.io.read_point_cloud("caixa4.ply")
+pcd_load = pcd_load.voxel_down_sample(voxel_size=0.01)
 o3d.visualization.draw_geometries([pcd_load])
+
+
+# mesh_cylinder = o3d.geometry.TriangleMesh.create_cylinder(radius=1, height=10.0)
+# mesh_cylinder.compute_vertex_normals()
+# mesh_cylinder.paint_uniform_color([0.1, 0.9, 0.1])
+# o3d.visualization.draw_geometries([mesh_cylinder])
+# pcd_load=mesh_cylinder.sample_points_uniformly(number_of_points=2000)
+# o3d.visualization.draw_geometries([pcd_load])
 
 points = np.asarray(pcd_load.points)
 
 cil = Cilinder()
 
-center, normal, radius,  inliers = cil.find(points)
+center, normal, radius,  inliers = cil.find(points, thresh=0.02)
 print("center: "+str(center))
 print("radius: "+str(radius))
 print("vecC: "+str(normal))
@@ -158,4 +158,12 @@ mesh = o3d.geometry.TriangleMesh.create_coordinate_frame(origin=[0,0,0], size = 
 cen = o3d.geometry.TriangleMesh.create_coordinate_frame(origin=center, size = 0.5)
 mesh_rot = copy.deepcopy(mesh).rotate(R, center=[0, 0, 0])
 
-o3d.visualization.draw_geometries([plane, not_plane,  mesh,mesh_rot])
+mesh_cylinder = o3d.geometry.TriangleMesh.create_cylinder(radius=radius,
+                                                            height=0.5)
+mesh_cylinder.compute_vertex_normals()
+mesh_cylinder.paint_uniform_color([0.1, 0.9, 0.1])
+mesh_cylinder = mesh_cylinder.rotate(R, center=[0, 0, 0])
+mesh_cylinder = mesh_cylinder.translate((center[0], center[1], center[2]))
+o3d.visualization.draw_geometries([mesh_cylinder])
+
+o3d.visualization.draw_geometries([plane, not_plane,  mesh,mesh_rot, mesh_cylinder])
