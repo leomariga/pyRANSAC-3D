@@ -1,0 +1,847 @@
+
+
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      <link rel="shortcut icon" href="https://raw.githubusercontent.com/leomariga/pyTruthTable/master/doc/icon_black.png">
+      <meta name="generator" content="mkdocs-1.1.2, mkdocs-material-5.2.2">
+    
+    
+      
+        <title>Code - pyRANSAC_3D</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.a2408e81.min.css">
+      
+        <link rel="stylesheet" href="../assets/stylesheets/palette.a46bcfb3.min.css">
+      
+      
+        
+        
+        <meta name="theme-color" content="#795548">
+      
+    
+    
+    
+      
+        <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700%7CRoboto+Mono&display=fallback">
+        <style>body,input{font-family:"Roboto",-apple-system,BlinkMacSystemFont,Helvetica,Arial,sans-serif}code,kbd,pre{font-family:"Roboto Mono",SFMono-Regular,Consolas,Menlo,monospace}</style>
+      
+    
+    
+    
+    
+      
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="" data-md-color-primary="brown" data-md-color-accent="brown">
+  
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#pyransac_3daux" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+      <header class="md-header" data-md-component="header">
+  <nav class="md-header-nav md-grid" aria-label="Header">
+    <a href=".." title="pyRANSAC_3D" class="md-header-nav__button md-logo" aria-label="pyRANSAC_3D">
+      
+  <img src="https://raw.githubusercontent.com/leomariga/pyTruthTable/master/doc/icon_white.png" alt="logo">
+
+    </a>
+    <label class="md-header-nav__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2z"/></svg>
+    </label>
+    <div class="md-header-nav__title" data-md-component="header-title">
+      
+        <div class="md-header-nav__ellipsis">
+          <span class="md-header-nav__topic md-ellipsis">
+            pyRANSAC_3D
+          </span>
+          <span class="md-header-nav__topic md-ellipsis">
+            
+              Code
+            
+          </span>
+        </div>
+      
+    </div>
+    
+      <label class="md-header-nav__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0116 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 019.5 16 6.5 6.5 0 013 9.5 6.5 6.5 0 019.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+      </label>
+      
+<div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" data-md-state="active">
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0116 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 019.5 16 6.5 6.5 0 013 9.5 6.5 6.5 0 019.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+      </label>
+      <button type="reset" class="md-search__icon md-icon" aria-label="Clear" data-md-component="search-reset" tabindex="-1">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z"/></svg>
+      </button>
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header-nav__source">
+        
+<a href="https://github.com/leomariga/pyRANSAC_3D/" title="Go to repository" class="md-source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M439.55 236.05L244 40.45a28.87 28.87 0 00-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 01-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 000 40.81l195.61 195.6a28.86 28.86 0 0040.8 0l194.69-194.69a28.86 28.86 0 000-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    leomariga/pyRANSAC_3D
+  </div>
+</a>
+      </div>
+    
+  </nav>
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+        
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              <div class="md-sidebar md-sidebar--primary" data-md-component="navigation">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    <nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="pyRANSAC_3D" class="md-nav__button md-logo" aria-label="pyRANSAC_3D">
+      
+  <img src="https://raw.githubusercontent.com/leomariga/pyTruthTable/master/doc/icon_white.png" alt="logo">
+
+    </a>
+    pyRANSAC_3D
+  </label>
+  
+    <div class="md-nav__source">
+      
+<a href="https://github.com/leomariga/pyRANSAC_3D/" title="Go to repository" class="md-source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M439.55 236.05L244 40.45a28.87 28.87 0 00-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 01-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 000 40.81l195.61 195.6a28.86 28.86 0 0040.8 0l194.69-194.69a28.86 28.86 0 000-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    leomariga/pyRANSAC_3D
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href=".." title="Home" class="md-nav__link">
+      Home
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+  
+
+
+  <li class="md-nav__item md-nav__item--active">
+    
+    <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+    
+    
+      <label class="md-nav__link md-nav__link--active" for="__toc">
+        Code
+        <span class="md-nav__icon md-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 9h14V7H3v2m0 4h14v-2H3v2m0 4h14v-2H3v2m16 0h2v-2h-2v2m0-10v2h2V7h-2m0 6h2v-2h-2v2z"/></svg>
+        </span>
+      </label>
+    
+    <a href="./" title="Code" class="md-nav__link md-nav__link--active">
+      Code
+    </a>
+    
+      
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+      </span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#pyransac_3daux" class="md-nav__link">
+    pyRANSAC_3D.aux
+  </a>
+  
+    <nav class="md-nav" aria-label="pyRANSAC_3D.aux">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#get_rotationmatrix_from_vectors" class="md-nav__link">
+    get_rotationMatrix_from_vectors
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#rodrigues_rot" class="md-nav__link">
+    rodrigues_rot
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#pyransac_3dcuboid" class="md-nav__link">
+    pyRANSAC_3D.cuboid
+  </a>
+  
+    <nav class="md-nav" aria-label="pyRANSAC_3D.cuboid">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#cuboid" class="md-nav__link">
+    Cuboid
+  </a>
+  
+    <nav class="md-nav" aria-label="Cuboid">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#fit" class="md-nav__link">
+    fit
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#pyransac_3dcylinder" class="md-nav__link">
+    pyRANSAC_3D.cylinder
+  </a>
+  
+    <nav class="md-nav" aria-label="pyRANSAC_3D.cylinder">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#cylinder" class="md-nav__link">
+    Cylinder
+  </a>
+  
+    <nav class="md-nav" aria-label="Cylinder">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#fit_1" class="md-nav__link">
+    fit
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#pyransac_3dplane" class="md-nav__link">
+    pyRANSAC_3D.plane
+  </a>
+  
+    <nav class="md-nav" aria-label="pyRANSAC_3D.plane">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#plane" class="md-nav__link">
+    Plane
+  </a>
+  
+    <nav class="md-nav" aria-label="Plane">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#fit_2" class="md-nav__link">
+    fit
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+    
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-nav__toggle md-toggle" data-md-toggle="nav-3" type="checkbox" id="nav-3">
+    
+    <label class="md-nav__link" for="nav-3">
+      API Documentation
+      <span class="md-nav__icon md-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M8.59 16.58L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.42z"/></svg>
+      </span>
+    </label>
+    <nav class="md-nav" aria-label="API Documentation" data-md-level="1">
+      <label class="md-nav__title" for="nav-3">
+        <span class="md-nav__icon md-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+        </span>
+        API Documentation
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../api-documentation/plane/" title="Plane" class="md-nav__link">
+      Plane
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../api-documentation/cuboid/" title="Cuboid" class="md-nav__link">
+      Cuboid
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../api-documentation/cylinder/" title="Cylinder" class="md-nav__link">
+      Cylinder
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../api-documentation/auxiliar-functions/" title="Auxiliar functions" class="md-nav__link">
+      Auxiliar functions
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../contributing/" title="Contributing" class="md-nav__link">
+      Contributing
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../license/" title="License" class="md-nav__link">
+      License
+    </a>
+  </li>
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="toc">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+      </span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#pyransac_3daux" class="md-nav__link">
+    pyRANSAC_3D.aux
+  </a>
+  
+    <nav class="md-nav" aria-label="pyRANSAC_3D.aux">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#get_rotationmatrix_from_vectors" class="md-nav__link">
+    get_rotationMatrix_from_vectors
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#rodrigues_rot" class="md-nav__link">
+    rodrigues_rot
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#pyransac_3dcuboid" class="md-nav__link">
+    pyRANSAC_3D.cuboid
+  </a>
+  
+    <nav class="md-nav" aria-label="pyRANSAC_3D.cuboid">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#cuboid" class="md-nav__link">
+    Cuboid
+  </a>
+  
+    <nav class="md-nav" aria-label="Cuboid">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#fit" class="md-nav__link">
+    fit
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#pyransac_3dcylinder" class="md-nav__link">
+    pyRANSAC_3D.cylinder
+  </a>
+  
+    <nav class="md-nav" aria-label="pyRANSAC_3D.cylinder">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#cylinder" class="md-nav__link">
+    Cylinder
+  </a>
+  
+    <nav class="md-nav" aria-label="Cylinder">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#fit_1" class="md-nav__link">
+    fit
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#pyransac_3dplane" class="md-nav__link">
+    pyRANSAC_3D.plane
+  </a>
+  
+    <nav class="md-nav" aria-label="pyRANSAC_3D.plane">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#plane" class="md-nav__link">
+    Plane
+  </a>
+  
+    <nav class="md-nav" aria-label="Plane">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#fit_2" class="md-nav__link">
+    fit
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          <div class="md-content">
+            <article class="md-content__inner md-typeset">
+              
+                
+                  <a href="https://github.com/leomariga/pyRANSAC_3D/edit/master/docs/code.md" title="Edit this page" class="md-content__button md-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25z"/></svg>
+                  </a>
+                
+                
+                  
+                
+                
+                  <h1>Code</h1>
+                
+                <p><a name=".pyRANSAC_3D.aux"></a></p>
+<h2 id="pyransac_3daux">pyRANSAC_3D.aux<a class="headerlink" href="#pyransac_3daux" title="Permanent link">&para;</a></h2>
+<p><a name=".pyRANSAC_3D.aux.get_rotationMatrix_from_vectors"></a></p>
+<h4 id="get_rotationmatrix_from_vectors">get_rotationMatrix_from_vectors<a class="headerlink" href="#get_rotationmatrix_from_vectors" title="Permanent link">&para;</a></h4>
+<div class="codehilite"><pre><span></span><code><span class="n">get_rotationMatrix_from_vectors</span><span class="p">(</span><span class="n">u</span><span class="p">,</span> <span class="n">v</span><span class="p">)</span>
+</code></pre></div>
+
+
+<p>Create a rotation matrix that rotates the space from a 3D vector <code>u</code> to a 3D vector <code>v</code></p>
+<p><strong>Arguments</strong>:</p>
+<ul>
+<li><code>u</code>: Orign vector <code>np.array (1,3)</code>.</li>
+<li><code>v</code>: Destiny vector <code>np.array (1,3)</code>.</li>
+</ul>
+<p><strong>Returns</strong>:</p>
+<p>Rotation matrix <code>np.array (3, 3)</code></p>
+<hr />
+<p><a name=".pyRANSAC_3D.aux.rodrigues_rot"></a></p>
+<h4 id="rodrigues_rot">rodrigues_rot<a class="headerlink" href="#rodrigues_rot" title="Permanent link">&para;</a></h4>
+<div class="codehilite"><pre><span></span><code><span class="n">rodrigues_rot</span><span class="p">(</span><span class="n">P</span><span class="p">,</span> <span class="n">n0</span><span class="p">,</span> <span class="n">n1</span><span class="p">)</span>
+</code></pre></div>
+
+
+<p>Rotate a set of point between two normal vectors using Rodrigues' formula.</p>
+<p><strong>Arguments</strong>:</p>
+<ul>
+<li><code>P</code>: Set of points <code>np.array (N,3)</code>.</li>
+<li><code>n0</code>: Orign vector <code>np.array (1,3)</code>.</li>
+<li><code>n1</code>: Destiny vector <code>np.array (1,3)</code>.</li>
+</ul>
+<p><strong>Returns</strong>:</p>
+<p>Set of points P, but rotated <code>np.array (N, 3)</code></p>
+<hr />
+<p><a name=".pyRANSAC_3D.cuboid"></a></p>
+<h2 id="pyransac_3dcuboid">pyRANSAC_3D.cuboid<a class="headerlink" href="#pyransac_3dcuboid" title="Permanent link">&para;</a></h2>
+<p><a name=".pyRANSAC_3D.cuboid.Cuboid"></a></p>
+<h3 id="cuboid">Cuboid<a class="headerlink" href="#cuboid" title="Permanent link">&para;</a></h3>
+<div class="codehilite"><pre><span></span><code><span class="k">class</span> <span class="nc">Cuboid</span><span class="p">():</span>
+ <span class="o">|</span>  <span class="n">Cuboid</span><span class="p">()</span>
+</code></pre></div>
+
+
+<p>Implementation for box (Cuboid) RANSAC.</p>
+<p>A cuboid is defined as convex polyhedron bounded by six faces formed by three orthogonal normal vectors. Cats love to play with this kind of geometry.
+This method uses 6 points to find 3 best plane equations orthogonal to eachother. </p>
+<p>We could use a recursive planar RANSAC, but it would use 9 points instead. Orthogonality makes this algorithm more efficient. </p>
+<hr />
+<p><a name=".pyRANSAC_3D.cuboid.Cuboid.fit"></a></p>
+<h4 id="fit">fit<a class="headerlink" href="#fit" title="Permanent link">&para;</a></h4>
+<div class="codehilite"><pre><span></span><code> <span class="o">|</span> <span class="n">fit</span><span class="p">(</span><span class="n">pts</span><span class="p">,</span> <span class="n">thresh</span><span class="o">=</span><span class="mf">0.05</span><span class="p">,</span> <span class="n">maxIteration</span><span class="o">=</span><span class="mi">5000</span><span class="p">)</span>
+</code></pre></div>
+
+
+<p>Find the best equation for 3 planes which define a complete cuboid.</p>
+<p><strong>Arguments</strong>:</p>
+<ul>
+<li><code>pts</code>: 3D point cloud as a numpy array (N,3).</li>
+<li><code>thresh</code>: Threshold distance from the cuboid planes which is considered inlier.</li>
+<li><code>maxIteration</code>: Number of maximum iteration which RANSAC will loop over.</li>
+</ul>
+<p><strong>Returns</strong>:</p>
+<ul>
+<li><code>best_eq</code>: A set values as  <code>np.array (4,3)</code>. Columns corresponds to the plane equation's parameters (Ax+By+Cz+D) and rows represents each fitted plane from cuboid.</li>
+<li><code>best_inliers</code>: Inlier's index from the original point cloud.</li>
+</ul>
+<hr />
+<p><a name=".pyRANSAC_3D.cylinder"></a></p>
+<h2 id="pyransac_3dcylinder">pyRANSAC_3D.cylinder<a class="headerlink" href="#pyransac_3dcylinder" title="Permanent link">&para;</a></h2>
+<p><a name=".pyRANSAC_3D.cylinder.Cylinder"></a></p>
+<h3 id="cylinder">Cylinder<a class="headerlink" href="#cylinder" title="Permanent link">&para;</a></h3>
+<div class="codehilite"><pre><span></span><code><span class="k">class</span> <span class="nc">Cylinder</span><span class="p">():</span>
+ <span class="o">|</span>  <span class="n">Cylinder</span><span class="p">()</span>
+</code></pre></div>
+
+
+<p>Implementation for cylinder RANSAC.</p>
+<p>This class finds a infinite height cilinder and returns the cylinder axis, center and radius. 
+This method uses 6 points to find 3 best plane equations orthogonal to each other. We could use a recursive planar RANSAC, but it would use 9 points instead, making this algorithm more efficient. </p>
+<hr />
+<p><a name=".pyRANSAC_3D.cylinder.Cylinder.fit"></a></p>
+<h4 id="fit_1">fit<a class="headerlink" href="#fit_1" title="Permanent link">&para;</a></h4>
+<div class="codehilite"><pre><span></span><code> <span class="o">|</span> <span class="n">fit</span><span class="p">(</span><span class="n">pts</span><span class="p">,</span> <span class="n">thresh</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">maxIteration</span><span class="o">=</span><span class="mi">10000</span><span class="p">)</span>
+</code></pre></div>
+
+
+<p>Find the best equation for 3 planes which define a complete cuboid.</p>
+<p><strong>Arguments</strong>:</p>
+<ul>
+<li><code>pts</code>: 3D point cloud as a <code>np.array (N,3)</code>.</li>
+<li><code>thresh</code>: Threshold distance from the cylinder radius which is considered inlier.</li>
+<li><code>maxIteration</code>: Number of maximum iteration which RANSAC will loop over.</li>
+</ul>
+<p><strong>Returns</strong>:</p>
+<ul>
+<li><code>center</code>:  Point in space in which the cylinder axis will pass through. <code>np.array (1, 3)</code></li>
+<li><code>axis</code>: Unitary vector in the direction of cylinder axis <code>np.array (1, 3)</code></li>
+<li><code>radius</code>: Radius of the cylinder</li>
+<li><code>inliers</code>: Inlier's index from the original point cloud. <code>np.array (1, M)</code></li>
+</ul>
+<hr />
+<p><a name=".pyRANSAC_3D.plane"></a></p>
+<h2 id="pyransac_3dplane">pyRANSAC_3D.plane<a class="headerlink" href="#pyransac_3dplane" title="Permanent link">&para;</a></h2>
+<p><a name=".pyRANSAC_3D.plane.Plane"></a></p>
+<h3 id="plane">Plane<a class="headerlink" href="#plane" title="Permanent link">&para;</a></h3>
+<div class="codehilite"><pre><span></span><code><span class="k">class</span> <span class="nc">Plane</span><span class="p">():</span>
+ <span class="o">|</span>  <span class="n">Plane</span><span class="p">()</span>
+</code></pre></div>
+
+
+<p>Implementation of planar RANSAC.</p>
+<p>Class for Plane object, which finds the equation of a infinite plane using RANSAC algorithim. </p>
+<p>Call <code>fit(.)</code> to randomly take 3 points of pointcloud to verify inliers based on a threshold.</p>
+<hr />
+<p><a name=".pyRANSAC_3D.plane.Plane.fit"></a></p>
+<h4 id="fit_2">fit<a class="headerlink" href="#fit_2" title="Permanent link">&para;</a></h4>
+<div class="codehilite"><pre><span></span><code> <span class="o">|</span> <span class="n">fit</span><span class="p">(</span><span class="n">pts</span><span class="p">,</span> <span class="n">thresh</span><span class="o">=</span><span class="mf">0.05</span><span class="p">,</span> <span class="n">minPoints</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">maxIteration</span><span class="o">=</span><span class="mi">1000</span><span class="p">)</span>
+</code></pre></div>
+
+
+<p>Find the best equation for a plane.</p>
+<p><strong>Arguments</strong>:</p>
+<ul>
+<li><code>pts</code>: 3D point cloud as a <code>np.array (N,3)</code>.</li>
+<li><code>thresh</code>: Threshold distance from the plane which is considered inlier.</li>
+<li><code>maxIteration</code>: Number of maximum iteration which RANSAC will loop over.</li>
+</ul>
+<p><strong>Returns</strong>:</p>
+<ul>
+<li><code>self.equation</code>:  Parameters of the plane using Ax+By+Cy+D <code>np.array (1, 4)</code></li>
+<li><code>self.inliers</code>: points from the dataset considered inliers</li>
+</ul>
+<hr />
+                
+              
+              
+                
+
+
+              
+            </article>
+          </div>
+        </div>
+      </main>
+      
+        
+<footer class="md-footer">
+  
+    <div class="md-footer-nav">
+      <nav class="md-footer-nav__inner md-grid" aria-label="Footer">
+        
+          <a href=".." title="Home" class="md-footer-nav__link md-footer-nav__link--prev" rel="prev">
+            <div class="md-footer-nav__button md-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+            </div>
+            <div class="md-footer-nav__title">
+              <div class="md-ellipsis">
+                <span class="md-footer-nav__direction">
+                  Previous
+                </span>
+                Home
+              </div>
+            </div>
+          </a>
+        
+        
+          <a href="../api-documentation/plane/" title="Plane" class="md-footer-nav__link md-footer-nav__link--next" rel="next">
+            <div class="md-footer-nav__title">
+              <div class="md-ellipsis">
+                <span class="md-footer-nav__direction">
+                  Next
+                </span>
+                Plane
+              </div>
+            </div>
+            <div class="md-footer-nav__button md-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    </div>
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-footer-copyright">
+        
+        Made with
+        <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+          Material for MkDocs
+        </a>
+      </div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    
+      <script src="../assets/javascripts/vendor.d710d30a.min.js"></script>
+      <script src="../assets/javascripts/bundle.5f27aba8.min.js"></script><script id="__lang" type="application/json">{"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents"}</script>
+      
+      <script>
+        app = initialize({
+          base: "..",
+          features: [],
+          search: Object.assign({
+            worker: "../assets/javascripts/worker/search.27c6a5e6.min.js"
+          }, typeof search !== "undefined" && search)
+        })
+      </script>
+      
+    
+  </body>
+</html>
