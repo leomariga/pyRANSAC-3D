@@ -2,7 +2,7 @@ import open3d as o3d
 import numpy as np
 import random
 import copy 
-import pyRANSAC_3D as pyRSC
+import pyransac3d as pyrsc
 
 mesh_cylinder = o3d.geometry.TriangleMesh.create_cylinder(radius=1, height=10.0)
 mesh_cylinder.compute_vertex_normals()
@@ -13,7 +13,7 @@ o3d.visualization.draw_geometries([pcd_load])
 
 points = np.asarray(pcd_load.points)
 
-cil = pyRSC.Cylinder()
+cil = pyrsc.Cylinder()
 
 center, normal, radius,  inliers = cil.fit(points, thresh=0.05)
 print("center: "+str(center))
@@ -21,7 +21,7 @@ print("radius: "+str(radius))
 print("vecC: "+str(normal))
 
 
-R = pyRSC.get_rotationMatrix_from_vectors([0, 0, 1], normal)
+R = pyrsc.get_rotationMatrix_from_vectors([0, 0, 1], normal)
 
 plane = pcd_load.select_by_index(inliers).paint_uniform_color([1, 0, 0])
 # obb = plane.get_oriented_bounding_box()

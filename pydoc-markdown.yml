@@ -14,24 +14,24 @@ renderer:
       children:
       - title: Plane
         contents:
-        - pyRANSAC_3D.plane.*
+        - pyransac3d.plane.*
       - title: Cuboid
         contents:
-        - pyRANSAC_3D.cuboid.*
+        - pyransac3d.cuboid.*
       - title: Cylinder
         contents:
-        - pyRANSAC_3D.cylinder.*
+        - pyransac3d.cylinder.*
       - title: Auxiliar functions
         contents:
-        - pyRANSAC_3D.aux.*
+        - pyransac3d.aux.*
     - title: Contributing
       source: CONTRIBUTING.md
     - title: License
       source: LICENSE
   mkdocs_config:
-    site_name: pyRANSAC_3D
-    repo_name: leomariga/pyRANSAC_3D
-    repo_url: https://github.com/leomariga/pyRANSAC_3D
+    site_name: pyRANSAC-3D
+    repo_name: leomariga/pyRANSAC-3D
+    repo_url: https://github.com/leomariga/pyRANSAC-3D
     theme:
       logo: "https://raw.githubusercontent.com/leomariga/pyTruthTable/master/doc/icon_white.png"
       favicon: "https://raw.githubusercontent.com/leomariga/pyTruthTable/master/doc/icon_black.png"
