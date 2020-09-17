@@ -3,6 +3,17 @@ import random
 import copy 
 
 def get_rotationMatrix_from_vectors(u, v):
+    """ 
+    Create a rotation matrix that rotates the space from a 3D vector `u` to a 3D vector `v`
+
+    :param u: Orign vector `np.array (1,3)`.
+    :param v: Destiny vector `np.array (1,3)`.
+
+    :returns: Rotation matrix `np.array (3, 3)`
+
+    ---
+    """
+
     # Lets find a vector which is ortogonal to both u and v
     w = np.cross(u, v)
     
@@ -27,6 +38,18 @@ def get_rotationMatrix_from_vectors(u, v):
 
 
 def rodrigues_rot(P, n0, n1):
+    """ 
+    Rotate a set of point between two normal vectors using Rodrigues' formula. 
+
+    :param P: Set of points `np.array (N,3)`.
+    :param n0: Orign vector `np.array (1,3)`.
+    :param n1: Destiny vector `np.array (1,3)`.
+
+    :returns: Set of points P, but rotated `np.array (N, 3)`
+
+    ---
+    """
+
     # If P is only 1d array (coords of single point), fix it to be matrix
     P = np.asarray(P)
     if P.ndim == 1:

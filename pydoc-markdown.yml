@@ -1,0 +1,47 @@
+loaders:
+  - type: python
+processors:
+  - type: filter
+  - type: smart
+  - type: crossref
+renderer:
+  type: mkdocs
+  pages:
+    - title: Home
+      name: index
+      source: README.md
+    - title: API Documentation
+      children:
+      - title: Plane
+        contents:
+        - pyRANSAC_3D.plane.*
+      - title: Cuboid
+        contents:
+        - pyRANSAC_3D.cuboid.*
+      - title: Cylinder
+        contents:
+        - pyRANSAC_3D.cylinder.*
+      - title: Auxiliar functions
+        contents:
+        - pyRANSAC_3D.aux.*
+    - title: Contributing
+      source: CONTRIBUTING.md
+    - title: License
+      source: LICENSE
+  mkdocs_config:
+    site_name: pyRANSAC_3D
+    repo_name: leomariga/pyRANSAC_3D
+    repo_url: https://github.com/leomariga/pyRANSAC_3D
+    theme:
+      logo: "https://raw.githubusercontent.com/leomariga/pyTruthTable/master/doc/icon_white.png"
+      favicon: "https://raw.githubusercontent.com/leomariga/pyTruthTable/master/doc/icon_black.png"
+      name: material
+      palette:
+        primary: brown
+        accent: brown
+    markdown_extensions:
+      - admonition
+      - codehilite:
+          guess_lang: false
+      - toc:
+          permalink: true

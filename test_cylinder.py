@@ -15,7 +15,7 @@ points = np.asarray(pcd_load.points)
 
 cil = pyRSC.Cylinder()
 
-center, normal, radius,  inliers = cil.fit(points, thresh=0.02)
+center, normal, radius,  inliers = cil.fit(points, thresh=0.05)
 print("center: "+str(center))
 print("radius: "+str(radius))
 print("vecC: "+str(normal))

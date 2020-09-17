@@ -2,16 +2,17 @@ import numpy as np
 import random
 
 class Cuboid:
+	""" 
+	Implementation for box (Cuboid) RANSAC.
 
+	A cuboid is defined as convex polyhedron bounded by six faces formed by three orthogonal normal vectors. Cats love to play with this kind of geometry.
+	This method uses 6 points to find 3 best plane equations orthogonal to eachother. 
+
+	We could use a recursive planar RANSAC, but it would use 9 points instead. Orthogonality makes this algorithm more efficient. 
+
+	---
+	"""
 	def __init__(self):
-		""" 
-	    Constructor for box (Cuboid) RANSAC.
-
-	    A cuboid is defined as convex polyhedron bounded by six faces formed by three orthogonal normal vectors. Cats love to play with this kind of geometry.
-	    This method uses 6 points to find 3 best plane equations orthogonal to eachother. We could use a recursive planar RANSAC, but it would use 9 points instead, making this algorithm more efficient. 
-
-	    ---
-	    """
 		self.inliers = []
 		self.equation = []
 
@@ -22,11 +23,13 @@ class Cuboid:
 		""" 
         Find the best equation for 3 planes which define a complete cuboid.
 
-        :param pts: Point cloud as a numpy array (N,3).
+        :param pts: 3D point cloud as a numpy array (N,3).
         :param thresh: Threshold distance from the cuboid planes which is considered inlier.
         :param maxIteration: Number of maximum iteration which RANSAC will loop over.
-        :returns best_eq:  A (4,3) numpy array. Columns corresponds to the plane equation's parameters (Ax+By+Cz+D) and rows represents each fitted plane from cuboid.
-		:returns best_inliers: Inlier's index from the original point cloud.
+
+        :returns: 
+        - `best_eq`: A set values as  `np.array (4,3)`. Columns corresponds to the plane equation's parameters (Ax+By+Cz+D) and rows represents each fitted plane from cuboid.
+		- `best_inliers`: Inlier's index from the original point cloud.
         ---
         """
 		n_points = pts.shape[0]

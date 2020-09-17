@@ -4,12 +4,35 @@ import random
 import copy 
 
 class Plane:
+	""" 
+	Implementation of planar RANSAC.
+
+	Class for Plane object, which finds the equation of a infinite plane using RANSAC algorithim. 
+
+	Call `fit(.)` to randomly take 3 points of pointcloud to verify inliers based on a threshold.
+
+	---
+	"""
 
 	def __init__(self):
 		self.inliers = []
 		self.equation = []
 
+
+
 	def fit(self, pts, thresh=0.05, minPoints=100, maxIteration=1000):
+		""" 
+		Find the best equation for a plane.
+
+		:param pts: 3D point cloud as a `np.array (N,3)`.
+		:param thresh: Threshold distance from the plane which is considered inlier.
+		:param maxIteration: Number of maximum iteration which RANSAC will loop over.
+		:returns:
+		- `self.equation`:  Parameters of the plane using Ax+By+Cy+D `np.array (1, 4)`
+		- `self.inliers`: points from the dataset considered inliers
+
+		---
+		"""
 		n_points = pts.shape[0]
 		print(n_points)
 		best_eq = []
@@ -52,4 +75,4 @@ class Plane:
 			self.inliers = best_inliers
 			self.equation = best_eq
 
-		return best_eq, best_inliers
+		return self.equation, self.inliers

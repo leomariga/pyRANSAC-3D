@@ -4,34 +4,35 @@ import copy
 from .aux import *
 
 class Cylinder:
+	""" 
+	Implementation for cylinder RANSAC.
+
+	This class finds a infinite height cilinder and returns the cylinder axis, center and radius. 
+	This method uses 6 points to find 3 best plane equations orthogonal to each other. We could use a recursive planar RANSAC, but it would use 9 points instead, making this algorithm more efficient. 
+
+	---
+	"""
 
 	def __init__(self):
-		""" 
-	    Constructor for cylinder RANSAC.
-
-	    This class finds a infinite height cilinder and returns the cylinder axis, center and radius. 
-	    This method uses 6 points to find 3 best plane equations orthogonal to eachother. We could use a recursive planar RANSAC, but it would use 9 points instead, making this algorithm more efficient. 
-
-	    ---
-	    """
 		self.inliers = []
 		self.center = []
 		self.axis = []
 		self.radius = 0
 
-	def fit(self, pts, thresh=0.2, maxIteration=5000):
+	def fit(self, pts, thresh=0.2, maxIteration=10000):
 		""" 
-        Find the best equation for 3 planes which define a complete cuboid.
+		Find the best equation for 3 planes which define a complete cuboid.
 
-        :param pts: 3D point cloud as a numpy array (N,3).
-        :param thresh: Threshold distance from the cylinder radius which is considered inlier.
-        :param maxIteration: Number of maximum iteration which RANSAC will loop over.
-        :returns center:  Point in space in which the cylinder axis will pass through. (np.array (1, 3)
-		:returns axis: Unitary vector in the direction of cylinder axis (np.array (1, 3))
-		:returns radius: Radius of the cylinder
-		:returns inliers: Inlier's index from the original point cloud.
-        ---
-        """
+		:param pts: 3D point cloud as a `np.array (N,3)`.
+		:param thresh: Threshold distance from the cylinder radius which is considered inlier.
+		:param maxIteration: Number of maximum iteration which RANSAC will loop over.
+		:returns:
+		- `center`:  Point in space in which the cylinder axis will pass through. `np.array (1, 3)`
+		- `axis`: Unitary vector in the direction of cylinder axis `np.array (1, 3)`
+		- `radius`: Radius of the cylinder
+		- `inliers`: Inlier's index from the original point cloud. `np.array (1, M)`
+		---
+		"""
 		n_points = pts.shape[0]
 		best_eq = []
 		best_inliers = []
@@ -67,11 +68,8 @@ class Cylinder:
 			mb = 0
 			while(ma == 0):
 				ma = (P_rot[1, 1]-P_rot[0, 1])/(P_rot[1, 0]-P_rot[0, 0])
-				#print("ma: "+str(ma))
 				mb = (P_rot[2, 1]-P_rot[1, 1])/(P_rot[2, 0]-P_rot[1, 0])
-				#print("mb: "+str(mb))
 				if(ma == 0):
-					#print("ma zero, rolling order")
 					P_rot = np.roll(P_rot,-1,axis=0)
 				else:
 					break
@@ -99,7 +97,7 @@ class Cylinder:
 				best_inliers = pt_id_inliers
 				self.inliers = best_inliers
 				self.center = center
-				self.normal = vecC
+				self.axis = vecC
 				self.radius = radius
 
 		return self.center, self.axis, self.radius,  self.inliers
