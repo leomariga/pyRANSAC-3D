@@ -246,12 +246,18 @@
     Take a look:
   </a>
   
-</li>
+    <nav class="md-nav" aria-label="Take a look:">
+      <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#see-more-examples-here" class="md-nav__link">
-    See more examples here
+  <a href="#example-1-planar-ransac" class="md-nav__link">
+    Example 1 - Planar RANSAC
   </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
         
@@ -453,12 +459,18 @@
     Take a look:
   </a>
   
-</li>
+    <nav class="md-nav" aria-label="Take a look:">
+      <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#see-more-examples-here" class="md-nav__link">
-    See more examples here
+  <a href="#example-1-planar-ransac" class="md-nav__link">
+    Example 1 - Planar RANSAC
   </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
         
@@ -521,93 +533,50 @@
   <img src="https://raw.githubusercontent.com/leomariga/pyTruthTable/master/doc/logo.png"><br>
 </div> -->
 
-<!-- -----------------
-[![PyPI Latest Release](https://img.shields.io/pypi/v/pyTruthTable.svg?style=for-the-badge)](https://pypi.org/project/pyTruthTable/)
-[![License](https://img.shields.io/pypi/l/pyTruthTable.svg?style=for-the-badge)](https://github.com/leomariga/pyTruthTable/blob/master/LICENSE)
- -->
-
+<hr />
+<p><a href="https://pypi.org/project/pyransac3d/"><img alt="PyPI Latest Release" src="https://img.shields.io/pypi/v/pyransac3d.svg?style=for-the-badge" /></a>
+<a href="https://github.com/leomariga/pyransac3d/blob/master/LICENSE"><img alt="License" src="https://img.shields.io/pypi/l/pyransac3d.svg?style=for-the-badge" /></a></p>
 <h2 id="what-is-pyransac-3d">What is pyRANSAC-3D?<a class="headerlink" href="#what-is-pyransac-3d" title="Permanent link">&para;</a></h2>
-<p><strong><em>pyRANSAC-3D</em></strong> is an open source implementation of  .</p>
+<p><strong><em>pyRANSAC-3D</em></strong> is an open source implementation of Random sample consensus (RANSAC) method. It fits primitive shapes such as planes, cuboids and cylinder in a point cloud to many aplications: 3D slam, 3D reconstruction, object tracking and many others. </p>
 <h4 id="features">Features:<a class="headerlink" href="#features" title="Permanent link">&para;</a></h4>
 <ul>
-<li>Uses Pandas Dataframe.</li>
-<li>Big set of logic operations.</li>
-<li>Simplified function calls.</li>
-<li>Automatic column naming.</li>
-<li>Customizible appearence.</li>
+<li>Cylinder</li>
+<li>Plane</li>
+<li>Cuboid</li>
 </ul>
 <h2 id="installation">Installation<a class="headerlink" href="#installation" title="Permanent link">&para;</a></h2>
-<p>Requirements: Python 3 and <a href="https://github.com/pandas-dev/pandas">Pandas</a>.</p>
-<p>Install with <a href="https://pypi.org/project/pyTruthTable/">Pypi</a>:</p>
-<div class="codehilite"><pre><span></span><code>pip3 install pyTruthTable
+<p>Requirements: Numpy</p>
+<p>Install with <a href="https://pypi.org/project/pyransac3d/">Pypi</a>:</p>
+<div class="codehilite"><pre><span></span><code>pip3 install pyransac3d
 </code></pre></div>
 
 
 <h3 id="take-a-look">Take a look:<a class="headerlink" href="#take-a-look" title="Permanent link">&para;</a></h3>
-<!-- ##### Example 1 - Binary operations
+<h5 id="example-1-planar-ransac">Example 1 - Planar RANSAC<a class="headerlink" href="#example-1-planar-ransac" title="Permanent link">&para;</a></h5>
+<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">pyransac3d</span> <span class="k">as</span> <span class="nn">pyrsc</span>
 
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">pyTruthTable</span> <span class="k">as</span> <span class="nn">ptt</span>
+<span class="n">points</span> <span class="o">=</span> <span class="n">load_points</span><span class="p">(</span><span class="o">.</span><span class="p">)</span> <span class="c1"># Load your point cloud as a numpy array (N, 3)</span>
 
-<span class="c1"># Initialize</span>
-<span class="n">t_table</span> <span class="o">=</span> <span class="n">ptt</span><span class="o">.</span><span class="n">PyTruthTable</span><span class="p">([</span><span class="s2">&quot;A&quot;</span><span class="p">,</span> <span class="s2">&quot;B&quot;</span><span class="p">])</span>
-
-<span class="c1"># Create relations</span>
-<span class="n">t_table</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;not&quot;</span><span class="p">,</span> <span class="s2">&quot;A&quot;</span><span class="p">)</span>
-<span class="n">t_table</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;and&quot;</span><span class="p">,</span> <span class="s2">&quot;A&quot;</span><span class="p">,</span> <span class="s2">&quot;B&quot;</span><span class="p">)</span>
-<span class="n">t_table</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;or&quot;</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="s2">&quot;B&quot;</span><span class="p">)</span>    <span class="c1"># Use the column index or name</span>
-<span class="n">t_table</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;xor&quot;</span><span class="p">,</span> <span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
-<span class="n">t_table</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;nand&quot;</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">name</span> <span class="o">=</span> <span class="s2">&quot;C&quot;</span><span class="p">)</span> <span class="c1"># Rename column</span>
-<span class="n">t_table</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;equals&quot;</span><span class="p">,</span> <span class="s2">&quot;C&quot;</span><span class="p">,</span> <span class="s2">&quot;A&quot;</span><span class="p">)</span>
+<span class="n">plane1</span> <span class="o">=</span> <span class="n">pyrsc</span><span class="o">.</span><span class="n">Plane</span><span class="p">()</span>
+<span class="n">best_eq</span><span class="p">,</span> <span class="n">best_inliers</span> <span class="o">=</span> <span class="n">plane1</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">points</span><span class="p">,</span> <span class="mf">0.01</span><span class="p">)</span>
 </code></pre></div>
 
 
-
-|   A   |   B   |  ¬ A  | A ^ B | ¬ A v B | (A ^ B) ⊕ (¬ A v B) |   C  | C ↔ A |
-|:-----:|:-----:|:-----:|:-----:|:-------:|:-------------------:|:----:|:-----:|
-|  True |  True | False |  True |   True  |        False        | True |  True |
-|  True | False | False | False |  False  |        False        | True |  True |
-| False |  True |  True | False |   True  |         True        | True | False |
-| False | False |  True | False |   True  |         True        | True | False |
-
-##### Example 2 - Prepositional logic clauses
-
-
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">pyTruthTable</span> <span class="k">as</span> <span class="nn">ptt</span>
-
-<span class="c1"># Initialize</span>
-<span class="n">tt</span> <span class="o">=</span> <span class="n">ptt</span><span class="o">.</span><span class="n">PyTruthTable</span><span class="p">([</span><span class="s2">&quot;Hot&quot;</span><span class="p">,</span> <span class="s2">&quot;Wet&quot;</span><span class="p">,</span> <span class="s2">&quot;Rains&quot;</span><span class="p">])</span>
-
-<span class="c1"># Append new column with specified operation</span>
-<span class="n">tt</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;and&quot;</span><span class="p">,</span> <span class="s2">&quot;Hot&quot;</span><span class="p">,</span> <span class="s2">&quot;Wet&quot;</span><span class="p">)</span>
-<span class="n">tt</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;implies&quot;</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="s2">&quot;Rains&quot;</span><span class="p">)</span>
-</code></pre></div>
-
-
-
-|  Hot  |  Wet  | Rains | Hot ^ Wet | (Hot ^ Wet) → (Rains) |
-|:-----:|:-----:|:-----:|:---------:|:---------------------:|
-|  True |  True |  True |    True   |          True         |
-|  True |  True | False |    True   |         False         |
-|  True | False |  True |   False   |          True         |
-|  True | False | False |   False   |          True         |
-| False |  True |  True |   False   |          True         |
-| False |  True | False |   False   |          True         |
-| False | False |  True |   False   |          True         |
-| False | False | False |   False   |          True         | -->
-
-<h3 id="see-more-examples-here">See more examples here<a class="headerlink" href="#see-more-examples-here" title="Permanent link">&para;</a></h3>
+<p>Results in the plane equation Ax+By+Cz+D:
+<code>[1, 0.5, 2, 0]</code></p>
 <h2 id="documentation-other-links">Documentation &amp; other links<a class="headerlink" href="#documentation-other-links" title="Permanent link">&para;</a></h2>
 <ul>
-<li>The <a href="https://leomariga.github.io/pyTruthTable/">amazing documentation is this Ṕage</a>.</li>
-<li>Source code in the <a href="https://github.com/leomariga/pyTruthTable">Github repository</a>.</li>
-<li><a href="https://pypi.org/project/pyTruthTable/">Pypi pakage installer</a></li>
+<li>The <a href="https://leomariga.github.io/pyRANSAC-3D/">amazing documentation is this Ṕage</a>.</li>
+<li>Source code in the <a href="https://github.com/leomariga/pyRANSAC-3D">Github repository</a>.</li>
+<li><a href="https://pypi.org/project/pyransac3d/">Pypi pakage installer</a></li>
 </ul>
 <h2 id="license">License<a class="headerlink" href="#license" title="Permanent link">&para;</a></h2>
-<p><a href="https://github.com/leomariga/pyTruthTable/blob/master/LICENSE">MIT</a></p>
+<p><a href="https://github.com/leomariga/pyRANSAC-3D/blob/master/LICENSE">Apache 2.0</a></p>
 <h2 id="contributing-is-awesome">Contributing is awesome!<a class="headerlink" href="#contributing-is-awesome" title="Permanent link">&para;</a></h2>
-<p>See <a href="https://github.com/leomariga/pyTruthTable/blob/master/CONTRIBUTING.md">CONTRIBUTING</a></p>
+<p>See <a href="https://github.com/leomariga/pyRANSAC-3D/blob/master/CONTRIBUTING.md">CONTRIBUTING</a></p>
 <h2 id="contact">Contact<a class="headerlink" href="#contact" title="Permanent link">&para;</a></h2>
-<p>Developed with :heart: by <a href="https://github.com/leomariga">Leonardo Mariga</a> </p>
+<p>Developed with :heart: by the internet</p>
+<p>Mainteiner: <a href="https://github.com/leomariga">Leonardo Mariga</a> </p>
 <p>leomariga@gmail.com</p>
 <p>Did you like it? Remember to click on :star2: button.</p>
                 
