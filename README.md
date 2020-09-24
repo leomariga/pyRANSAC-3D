@@ -43,7 +43,7 @@ Results in the plane equation Ax+By+Cz+D:
 
 
 ## Documentation & other links
- - The [amazing documentation is this Ṕage](https://leomariga.github.io/pyRANSAC-3D/).
+ - The [documentation is this Ṕage](https://leomariga.github.io/pyRANSAC-3D/).
  - Source code in the [Github repository](https://github.com/leomariga/pyRANSAC-3D).
  - [Pypi pakage installer](https://pypi.org/project/pyransac3d/)
 
