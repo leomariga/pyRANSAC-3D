@@ -1,6 +1,4 @@
-<div align="center">
-  <img src="https://raw.githubusercontent.com/leomariga/pyRANSAC-3D/master/doc/plano.gif"><br>
-</div>
+
 
 -----------------
 [![PyPI Latest Release](https://img.shields.io/pypi/v/pyransac3d.svg?style=for-the-badge)](https://pypi.org/project/pyransac3d/)
@@ -8,6 +6,10 @@
 
 ## What is pyRANSAC-3D?
 **_pyRANSAC-3D_** is an open source implementation of Random sample consensus (RANSAC) method. It fits primitive shapes such as planes, cuboids and cylinder in a point cloud to many aplications: 3D slam, 3D reconstruction, object tracking and many others. 
+
+<div align="center">
+  <img src="https://raw.githubusercontent.com/leomariga/pyRANSAC-3D/master/doc/plano.gif"><br>
+</div>
 
 #### Features:
  - Cylinder
