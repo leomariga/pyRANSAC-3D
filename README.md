@@ -1,6 +1,6 @@
-<!-- <div align="center">
-  <img src="https://raw.githubusercontent.com/leomariga/pyTruthTable/master/doc/logo.png"><br>
-</div> -->
+<div align="center">
+  <img src="https://raw.githubusercontent.com/leomariga/pyRANSAC-3D/master/doc/plano.gif"><br>
+</div>
 
 -----------------
 [![PyPI Latest Release](https://img.shields.io/pypi/v/pyransac3d.svg?style=for-the-badge)](https://pypi.org/project/pyransac3d/)
