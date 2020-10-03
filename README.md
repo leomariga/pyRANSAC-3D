@@ -15,6 +15,7 @@
  - Cylinder
  - Plane
  - Cuboid
+ - Line
 
 
 ## Installation

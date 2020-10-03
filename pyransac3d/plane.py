@@ -11,6 +11,8 @@ class Plane:
 
 	Call `fit(.)` to randomly take 3 points of pointcloud to verify inliers based on a threshold.
 
+	![Plane](https://raw.githubusercontent.com/leomariga/pyRANSAC-3D/master/doc/plano.gif "Plane")
+
 	---
 	"""
 

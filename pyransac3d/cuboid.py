@@ -10,6 +10,8 @@ class Cuboid:
 
 	We could use a recursive planar RANSAC, but it would use 9 points instead. Orthogonality makes this algorithm more efficient. 
 
+	![Cuboid](https://raw.githubusercontent.com/leomariga/pyRANSAC-3D/master/doc/cuboid.gif "Cuboid")
+
 	---
 	"""
 	def __init__(self):
@@ -21,17 +23,18 @@ class Cuboid:
 
 	def fit(self, pts, thresh=0.05, maxIteration=5000):
 		""" 
-        Find the best equation for 3 planes which define a complete cuboid.
+		Find the best equation for 3 planes which define a complete cuboid.
 
-        :param pts: 3D point cloud as a numpy array (N,3).
-        :param thresh: Threshold distance from the cuboid planes which is considered inlier.
-        :param maxIteration: Number of maximum iteration which RANSAC will loop over.
-
-        :returns: 
-        - `best_eq`: A set values as  `np.array (4,3)`. Columns corresponds to the plane equation's parameters (Ax+By+Cz+D) and rows represents each fitted plane from cuboid.
-		- `best_inliers`: Inlier's index from the original point cloud.
-        ---
-        """
+		:param pts: 3D point cloud as a `np.array (N,3)`.
+		:param thresh: Threshold distance from the cylinder radius which is considered inlier.
+		:param maxIteration: Number of maximum iteration which RANSAC will loop over.
+		:returns:
+		- `center`:  Point in space in which the cylinder axis will pass through. `np.array (1, 3)`
+		- `axis`: Unitary vector in the direction of cylinder axis `np.array (1, 3)`
+		- `radius`: Radius of the cylinder
+		- `inliers`: Inlier's index from the original point cloud. `np.array (1, M)`
+		---
+		"""
 		n_points = pts.shape[0]
 		print(n_points)
 		best_eq = []

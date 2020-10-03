@@ -21,6 +21,9 @@ renderer:
       - title: Cylinder
         contents:
         - pyransac3d.cylinder.*
+      - title: Line
+        contents:
+        - pyransac3d.line.*
       - title: Auxiliar functions
         contents:
         - pyransac3d.aux.*

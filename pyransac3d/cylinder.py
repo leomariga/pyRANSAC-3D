@@ -21,18 +21,20 @@ class Cylinder:
 
 	def fit(self, pts, thresh=0.2, maxIteration=10000):
 		""" 
-		Find the best equation for 3 planes which define a complete cuboid.
+        Find the parameters (axis and radius) to define a cylinder. 
 
-		:param pts: 3D point cloud as a `np.array (N,3)`.
-		:param thresh: Threshold distance from the cylinder radius which is considered inlier.
-		:param maxIteration: Number of maximum iteration which RANSAC will loop over.
-		:returns:
-		- `center`:  Point in space in which the cylinder axis will pass through. `np.array (1, 3)`
-		- `axis`: Unitary vector in the direction of cylinder axis `np.array (1, 3)`
-		- `radius`: Radius of the cylinder
-		- `inliers`: Inlier's index from the original point cloud. `np.array (1, M)`
-		---
-		"""
+        :param pts: 3D point cloud as a numpy array (N,3).
+        :param thresh: Threshold distance from the cylinder hull which is considered inlier.
+        :param maxIteration: Number of maximum iteration which RANSAC will loop over.
+
+        :returns: 
+        - `center`: Center of the cylinder np.array(1,3) which the cylinder axis is passing through.
+		- `axis`: Vector describing cylinder's axis np.array(1,3).
+        - `radius`: Radius of cylinder.
+		- `inliers`: Inlier's index from the original point cloud.
+        ---
+        """
+
 		n_points = pts.shape[0]
 		best_eq = []
 		best_inliers = []
@@ -83,7 +85,7 @@ class Cylinder:
 			# Remake rodrigues rotation
 			center = rodrigues_rot(p_center, [0,0,1], vecC)[0]
 
-			# Distance from a point to a plane 
+			# Distance from a point to a line
 			pt_id_inliers = [] # list of inliers ids
 			vecC_stakado =  np.stack([vecC]*n_points,0)
 			dist_pt = np.cross(vecC_stakado, (center- pts))
