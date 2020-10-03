@@ -309,6 +309,18 @@
 
 
   <li class="md-nav__item">
+    <a href="../line/" title="Line" class="md-nav__link">
+      Line
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
     <a href="../auxiliar-functions/" title="Auxiliar functions" class="md-nav__link">
       Auxiliar functions
     </a>
@@ -420,6 +432,7 @@
 <p>A cuboid is defined as convex polyhedron bounded by six faces formed by three orthogonal normal vectors. Cats love to play with this kind of geometry.
 This method uses 6 points to find 3 best plane equations orthogonal to eachother. </p>
 <p>We could use a recursive planar RANSAC, but it would use 9 points instead. Orthogonality makes this algorithm more efficient. </p>
+<p><img alt="Cuboid" src="https://raw.githubusercontent.com/leomariga/pyRANSAC-3D/master/doc/cuboid.gif" title="Cuboid" /></p>
 <hr />
 <p><a name=".pyransac3d.cuboid.Cuboid.fit"></a></p>
 <h4 id="fit">fit<a class="headerlink" href="#fit" title="Permanent link">&para;</a></h4>
@@ -430,14 +443,16 @@ This method uses 6 points to find 3 best plane equations orthogonal to eachother
 <p>Find the best equation for 3 planes which define a complete cuboid.</p>
 <p><strong>Arguments</strong>:</p>
 <ul>
-<li><code>pts</code>: 3D point cloud as a numpy array (N,3).</li>
-<li><code>thresh</code>: Threshold distance from the cuboid planes which is considered inlier.</li>
+<li><code>pts</code>: 3D point cloud as a <code>np.array (N,3)</code>.</li>
+<li><code>thresh</code>: Threshold distance from the cylinder radius which is considered inlier.</li>
 <li><code>maxIteration</code>: Number of maximum iteration which RANSAC will loop over.</li>
 </ul>
 <p><strong>Returns</strong>:</p>
 <ul>
-<li><code>best_eq</code>: A set values as  <code>np.array (4,3)</code>. Columns corresponds to the plane equation's parameters (Ax+By+Cz+D) and rows represents each fitted plane from cuboid.</li>
-<li><code>best_inliers</code>: Inlier's index from the original point cloud.</li>
+<li><code>center</code>:  Point in space in which the cylinder axis will pass through. <code>np.array (1, 3)</code></li>
+<li><code>axis</code>: Unitary vector in the direction of cylinder axis <code>np.array (1, 3)</code></li>
+<li><code>radius</code>: Radius of the cylinder</li>
+<li><code>inliers</code>: Inlier's index from the original point cloud. <code>np.array (1, M)</code></li>
 </ul>
 <hr />
                 
