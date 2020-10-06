@@ -24,6 +24,9 @@ renderer:
       - title: Line
         contents:
         - pyransac3d.line.*
+      - title: Circle
+        contents:
+        - pyransac3d.circle.*
       - title: Auxiliar functions
         contents:
         - pyransac3d.aux.*
