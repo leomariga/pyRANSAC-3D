@@ -19,6 +19,7 @@
  - Plane
  - Cuboid
  - Line
+ - Circle
 
 
 ## Installation
