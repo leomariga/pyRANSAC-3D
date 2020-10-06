@@ -36,8 +36,8 @@ renderer:
     repo_name: leomariga/pyRANSAC-3D
     repo_url: https://github.com/leomariga/pyRANSAC-3D
     theme:
-      logo: "https://raw.githubusercontent.com/leomariga/pyTruthTable/master/doc/icon_white.png"
-      favicon: "https://raw.githubusercontent.com/leomariga/pyTruthTable/master/doc/icon_black.png"
+      logo: "https://raw.githubusercontent.com/leomariga/pyRANSAC-3D/master/doc/icon_white.png"
+      favicon: "https://raw.githubusercontent.com/leomariga/pyRANSAC-3D/master/doc/icon_black.png"
       name: material
       palette:
         primary: brown
