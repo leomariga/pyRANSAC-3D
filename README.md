@@ -18,8 +18,10 @@
  - Cylinder
  - Plane
  - Cuboid
+ - Sphere
  - Line
  - Circle
+ - Point
 
 
 ## Installation
@@ -48,11 +50,34 @@ best_eq, best_inliers = plane1.fit(points, 0.01)
 Results in the plane equation Ax+By+Cz+D:
 `[1, 0.5, 2, 0]`
 
+##### Example 2 - Spherical RANSAC
+
+Loading a noisy sphere's point cloud with r = 5 centered in 0 we can use the following code:
+
+``` python
+import pyransac3d as pyrsc
+
+points = load_points(.) # Load your point cloud as a numpy array (N, 3)
+
+sph = pyrsc.Sphere()
+center, radius, inliers = sph.fit(points, thresh=0.4)
+
+```
+
+Results:
+``` python
+center: [0.010462385575072288, -0.2855090643954039, 0.02867848979091283]
+radius: 5.085218633039647
+```
+
+![3D Sphere](https://raw.githubusercontent.com/leomariga/pyRANSAC-3D/master/doc/sphere.gif "3D Sphere")
+
 
 ## Documentation & other links
  - The [documentation is this Ṕage](https://leomariga.github.io/pyRANSAC-3D/).
  - Source code in the [Github repository](https://github.com/leomariga/pyRANSAC-3D).
  - [Pypi pakage installer](https://pypi.org/project/pyransac3d/)
+ - The animations you see in the documentation are not part of the library, but you can find it on branch [Animations](https://github.com/leomariga/pyRANSAC-3D/tree/Animations). It needs [Open3D](https://github.com/intel-isl/Open3D) library to run. The Animation branch is not regularly maintained, it only exists to create some cool visualizations ;D 
 
 
 ## License
