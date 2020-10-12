@@ -15,13 +15,13 @@
 </div>
 
 #### Features:
- - Cylinder
- - Plane
- - Cuboid
- - Sphere
- - Line
- - Circle
- - Point
+ - [Plane](https://leomariga.github.io/pyRANSAC-3D/api-documentation/plane/)
+ - [Cylinder](https://leomariga.github.io/pyRANSAC-3D/api-documentation/cylinder/)
+ - [Cuboid](https://leomariga.github.io/pyRANSAC-3D/api-documentation/cuboid/)
+ - [Sphere](https://leomariga.github.io/pyRANSAC-3D/api-documentation/sphere/)
+ - [Line](https://leomariga.github.io/pyRANSAC-3D/api-documentation/line/)
+ - [Circle](https://leomariga.github.io/pyRANSAC-3D/api-documentation/circle/)
+ - [Point](https://leomariga.github.io/pyRANSAC-3D/api-documentation/point/)
 
 
 ## Installation
@@ -33,9 +33,9 @@ Install with [Pypi](https://pypi.org/project/pyransac3d/):
 pip3 install pyransac3d
 ```
 
-### Take a look: 
+## Take a look: 
 
-##### Example 1 - Planar RANSAC
+#### Example 1 - Planar RANSAC
 
 ``` python
 import pyransac3d as pyrsc
@@ -50,7 +50,7 @@ best_eq, best_inliers = plane1.fit(points, 0.01)
 Results in the plane equation Ax+By+Cz+D:
 `[1, 0.5, 2, 0]`
 
-##### Example 2 - Spherical RANSAC
+### Example 2 - Spherical RANSAC
 
 Loading a noisy sphere's point cloud with r = 5 centered in 0 we can use the following code:
 
@@ -96,7 +96,5 @@ Developed with :heart: by the internet
 
 
 Mainteiner: [Leonardo Mariga](https://github.com/leomariga) 
-
-leomariga@gmail.com
 
 Did you like it? Remember to click on :star2: button.

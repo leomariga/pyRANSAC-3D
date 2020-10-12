@@ -5,7 +5,7 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name="pyransac3d", # Replace with your own username
-    version="0.0.3",
+    version="0.4.0",
     author="Leonardo Mariga",
     author_email="leomariga@gmail.com",
     description="A python tool for fitting primitives 3D shapes in point clouds using RANSAC algorithm ",
