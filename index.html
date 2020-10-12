@@ -238,10 +238,9 @@
     Installation
   </a>
   
-    <nav class="md-nav" aria-label="Installation">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
+</li>
+      
+        <li class="md-nav__item">
   <a href="#take-a-look" class="md-nav__link">
     Take a look:
   </a>
@@ -256,8 +255,10 @@
   
 </li>
         
-      </ul>
-    </nav>
+          <li class="md-nav__item">
+  <a href="#example-2-spherical-ransac" class="md-nav__link">
+    Example 2 - Spherical RANSAC
+  </a>
   
 </li>
         
@@ -368,6 +369,18 @@
 
 
   <li class="md-nav__item">
+    <a href="api-documentation/sphere/" title="Sphere" class="md-nav__link">
+      Sphere
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
     <a href="api-documentation/line/" title="Line" class="md-nav__link">
       Line
     </a>
@@ -382,6 +395,18 @@
   <li class="md-nav__item">
     <a href="api-documentation/circle/" title="Circle" class="md-nav__link">
       Circle
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="api-documentation/point/" title="Point" class="md-nav__link">
+      Point
     </a>
   </li>
 
@@ -475,10 +500,9 @@
     Installation
   </a>
   
-    <nav class="md-nav" aria-label="Installation">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
+</li>
+      
+        <li class="md-nav__item">
   <a href="#take-a-look" class="md-nav__link">
     Take a look:
   </a>
@@ -493,8 +517,10 @@
   
 </li>
         
-      </ul>
-    </nav>
+          <li class="md-nav__item">
+  <a href="#example-2-spherical-ransac" class="md-nav__link">
+    Example 2 - Spherical RANSAC
+  </a>
   
 </li>
         
@@ -568,10 +594,13 @@
 
 <h4 id="features">Features:<a class="headerlink" href="#features" title="Permanent link">&para;</a></h4>
 <ul>
-<li>Cylinder</li>
-<li>Plane</li>
-<li>Cuboid</li>
-<li>Line</li>
+<li><a href="https://leomariga.github.io/pyRANSAC-3D/api-documentation/plane/">Plane</a></li>
+<li><a href="https://leomariga.github.io/pyRANSAC-3D/api-documentation/cylinder/">Cylinder</a></li>
+<li><a href="https://leomariga.github.io/pyRANSAC-3D/api-documentation/cuboid/">Cuboid</a></li>
+<li><a href="https://leomariga.github.io/pyRANSAC-3D/api-documentation/sphere/">Sphere</a></li>
+<li><a href="https://leomariga.github.io/pyRANSAC-3D/api-documentation/line/">Line</a></li>
+<li><a href="https://leomariga.github.io/pyRANSAC-3D/api-documentation/circle/">Circle</a></li>
+<li><a href="https://leomariga.github.io/pyRANSAC-3D/api-documentation/point/">Point</a></li>
 </ul>
 <h2 id="installation">Installation<a class="headerlink" href="#installation" title="Permanent link">&para;</a></h2>
 <p>Requirements: Numpy</p>
@@ -580,8 +609,8 @@
 </code></pre></div>
 
 
-<h3 id="take-a-look">Take a look:<a class="headerlink" href="#take-a-look" title="Permanent link">&para;</a></h3>
-<h5 id="example-1-planar-ransac">Example 1 - Planar RANSAC<a class="headerlink" href="#example-1-planar-ransac" title="Permanent link">&para;</a></h5>
+<h2 id="take-a-look">Take a look:<a class="headerlink" href="#take-a-look" title="Permanent link">&para;</a></h2>
+<h4 id="example-1-planar-ransac">Example 1 - Planar RANSAC<a class="headerlink" href="#example-1-planar-ransac" title="Permanent link">&para;</a></h4>
 <div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">pyransac3d</span> <span class="k">as</span> <span class="nn">pyrsc</span>
 
 <span class="n">points</span> <span class="o">=</span> <span class="n">load_points</span><span class="p">(</span><span class="o">.</span><span class="p">)</span> <span class="c1"># Load your point cloud as a numpy array (N, 3)</span>
@@ -593,11 +622,30 @@
 
 <p>Results in the plane equation Ax+By+Cz+D:
 <code>[1, 0.5, 2, 0]</code></p>
+<h3 id="example-2-spherical-ransac">Example 2 - Spherical RANSAC<a class="headerlink" href="#example-2-spherical-ransac" title="Permanent link">&para;</a></h3>
+<p>Loading a noisy sphere's point cloud with r = 5 centered in 0 we can use the following code:</p>
+<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">pyransac3d</span> <span class="k">as</span> <span class="nn">pyrsc</span>
+
+<span class="n">points</span> <span class="o">=</span> <span class="n">load_points</span><span class="p">(</span><span class="o">.</span><span class="p">)</span> <span class="c1"># Load your point cloud as a numpy array (N, 3)</span>
+
+<span class="n">sph</span> <span class="o">=</span> <span class="n">pyrsc</span><span class="o">.</span><span class="n">Sphere</span><span class="p">()</span>
+<span class="n">center</span><span class="p">,</span> <span class="n">radius</span><span class="p">,</span> <span class="n">inliers</span> <span class="o">=</span> <span class="n">sph</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">points</span><span class="p">,</span> <span class="n">thresh</span><span class="o">=</span><span class="mf">0.4</span><span class="p">)</span>
+</code></pre></div>
+
+
+<p>Results:</p>
+<div class="codehilite"><pre><span></span><code><span class="n">center</span><span class="p">:</span> <span class="p">[</span><span class="mf">0.010462385575072288</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.2855090643954039</span><span class="p">,</span> <span class="mf">0.02867848979091283</span><span class="p">]</span>
+<span class="n">radius</span><span class="p">:</span> <span class="mf">5.085218633039647</span>
+</code></pre></div>
+
+
+<p><img alt="3D Sphere" src="https://raw.githubusercontent.com/leomariga/pyRANSAC-3D/master/doc/sphere.gif" title="3D Sphere" /></p>
 <h2 id="documentation-other-links">Documentation &amp; other links<a class="headerlink" href="#documentation-other-links" title="Permanent link">&para;</a></h2>
 <ul>
 <li>The <a href="https://leomariga.github.io/pyRANSAC-3D/">documentation is this Ṕage</a>.</li>
 <li>Source code in the <a href="https://github.com/leomariga/pyRANSAC-3D">Github repository</a>.</li>
 <li><a href="https://pypi.org/project/pyransac3d/">Pypi pakage installer</a></li>
+<li>The animations you see in the documentation are not part of the library, but you can find it on branch <a href="https://github.com/leomariga/pyRANSAC-3D/tree/Animations">Animations</a>. It needs <a href="https://github.com/intel-isl/Open3D">Open3D</a> library to run. The Animation branch is not regularly maintained, it only exists to create some cool visualizations ;D </li>
 </ul>
 <h2 id="license">License<a class="headerlink" href="#license" title="Permanent link">&para;</a></h2>
 <p><a href="https://github.com/leomariga/pyRANSAC-3D/blob/master/LICENSE">Apache 2.0</a></p>
@@ -606,7 +654,6 @@
 <h2 id="contact">Contact<a class="headerlink" href="#contact" title="Permanent link">&para;</a></h2>
 <p>Developed with :heart: by the internet</p>
 <p>Mainteiner: <a href="https://github.com/leomariga">Leonardo Mariga</a> </p>
-<p>leomariga@gmail.com</p>
 <p>Did you like it? Remember to click on :star2: button.</p>
                 
               
