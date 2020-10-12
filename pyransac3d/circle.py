@@ -2,16 +2,13 @@ import numpy as np
 import random
 import copy 
 from .aux import *
-
+import time
 class Circle:
     """ 
     Implementation for Circle RANSAC.
 
     This class finds the circle's parameters based on 3 sampled points. 
     This method uses 3 points to find the circle's plane, center and radius.
-
-    ![Circle](https://raw.githubusercontent.com/leomariga/pyRANSAC-3D/master/doc/circle.gif "Circle")
-
 
     ---
     """
@@ -22,7 +19,7 @@ class Circle:
         self.axis = []
         self.radius = 0
 
-    def fit(self, pts, thresh=0.2, maxIteration=1000):
+    def fit(self, pts, pcd_load, thresh=0.2, maxIteration=1000):
         """ 
         Find the parameters (axis and radius and center) to define a circle. 
 
@@ -37,6 +34,16 @@ class Circle:
         - `inliers`: Inlier's index from the original point cloud.
         ---
         """
+
+
+        def rotate_view(vis):
+            ctr.rotate(0.1, 0.0)
+            return False
+
+
+        vis = o3d.visualization.Visualizer()
+        vis.create_window()
+
 
         n_points = pts.shape[0]
         best_eq = []
@@ -115,6 +122,43 @@ class Circle:
                 self.center = center
                 self.axis = vecC
                 self.radius = radius
+
+
+            R2 = get_rotationMatrix_from_vectors([0, 0, 1], self.axis )
+            mesh_cylinder2 = o3d.geometry.TriangleMesh.create_torus(torus_radius=self.radius, tube_radius=0.1)
+            mesh_cylinder2.compute_vertex_normals()
+            mesh_cylinder2.paint_uniform_color([0, 1, 0])
+            mesh_cylinder2 = mesh_cylinder2.rotate(R2, center=[0, 0, 0])
+            mesh_cylinder2 = mesh_cylinder2.translate((self.center[0], self.center[1], self.center[2]))
+
+            R1 = get_rotationMatrix_from_vectors([0, 0, 1], vecC )
+            mesh_cylinder1 = o3d.geometry.TriangleMesh.create_torus(torus_radius=radius, tube_radius=0.1)
+            mesh_cylinder1.compute_vertex_normals()
+            mesh_cylinder1.paint_uniform_color([1, 0, 0])
+            mesh_cylinder1 = mesh_cylinder1.rotate(R1, center=[0, 0, 0])
+            mesh_cylinder1 = mesh_cylinder1.translate((center[0], center[1], center[2]))
+
+
+            lin = pcd_load.select_by_index(pt_id_inliers).paint_uniform_color([1, 0, 0])
+            lin2 = pcd_load.select_by_index(self.inliers).paint_uniform_color([0, 1, 0])
+            vis.clear_geometries()
+            #time.sleep(0.01)
+            vis.add_geometry(copy.deepcopy(pcd_load))
+            # vis.add_geometry(mesh_cylinder)
+            vis.add_geometry(mesh_cylinder2)
+            if(radius <= 1.2*self.radius):
+                vis.add_geometry(mesh_cylinder1)
+            vis.add_geometry(lin)
+            vis.add_geometry(lin2)
+
+            ctr = vis.get_view_control()
+            ctr.rotate(-it*4, -it*4,)
+            ctr.set_zoom(0.7)
+            ctr.set_lookat([0, 0, 0])
+
+            vis.poll_events()
+            vis.update_renderer()
+            time.sleep(0.04)
 
         return self.center, self.axis, self.radius,  self.inliers
 

@@ -2,6 +2,7 @@ import numpy as np
 import random
 import copy 
 from .aux import *
+import time
 
 class Point:
     """ 
@@ -10,7 +11,7 @@ class Point:
     This object finds the coordinate of a point in 3D space using RANSAC method. 
     The point with more neighbors in a determined radius (`thresh`) will be selected as the best candidate.
 
-    ![3D point](https://raw.githubusercontent.com/leomariga/pyRANSAC-3D/master/doc/point.gif "3D Point")
+    ![3D line](https://raw.githubusercontent.com/leomariga/pyRANSAC-3D/master/doc/line.gif "3D line")
 
     ---
     """
@@ -19,7 +20,7 @@ class Point:
         self.inliers = []
         self.center = []
 
-    def fit(self, pts, thresh=0.2, maxIteration=10000):
+    def fit(self, pts, pcd_load, thresh=0.2, maxIteration=10000):
         """ 
         Find the best point for the 3D Point representaiton. The Point in a 3d enviroment is defined as a X, Y Z coordinate with more neighbors around.
 
@@ -32,6 +33,16 @@ class Point:
 
         ---
         """
+
+        def rotate_view(vis):
+            ctr.rotate(0.1, 0.0)
+            return False
+
+
+
+        vis = o3d.visualization.Visualizer()
+        vis.create_window()
+
         n_points = pts.shape[0]
         best_inliers = []
 
@@ -55,6 +66,37 @@ class Point:
                 best_inliers = pt_id_inliers
                 self.inliers = best_inliers
                 self.center = pt_samples[0,:]
+
+
+            mesh_cylinder2 = o3d.geometry.TriangleMesh.create_sphere(radius=0.2)
+            mesh_cylinder2.compute_vertex_normals()
+            mesh_cylinder2.paint_uniform_color([0, 1, 0])
+            mesh_cylinder2 = mesh_cylinder2.translate((self.center[0], self.center[1], self.center[2]))
+
+            mesh_cylinder = o3d.geometry.TriangleMesh.create_sphere(radius=0.2)
+            mesh_cylinder.compute_vertex_normals()
+            mesh_cylinder.paint_uniform_color([1, 0, 0])
+            mesh_cylinder = mesh_cylinder.translate((pt_samples[0,:][0], pt_samples[0,:][1], pt_samples[0,:][2]))
+
+
+            lin = pcd_load.select_by_index(pt_id_inliers).paint_uniform_color([1, 0, 0])
+            lin2 = pcd_load.select_by_index(self.inliers).paint_uniform_color([0, 1, 0])
+            vis.clear_geometries()
+            #time.sleep(0.01)
+            vis.add_geometry(copy.deepcopy(pcd_load))
+            vis.add_geometry(mesh_cylinder)
+            vis.add_geometry(mesh_cylinder2)
+            vis.add_geometry(lin)
+            vis.add_geometry(lin2)
+
+            ctr = vis.get_view_control()
+            ctr.rotate(-it*6, 0)
+            ctr.set_zoom(0.7)
+            ctr.set_lookat([0, 0, 0])
+
+            vis.poll_events()
+            vis.update_renderer()
+            time.sleep(0.04)
 
         return self.center, self.inliers
 
