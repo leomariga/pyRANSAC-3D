@@ -21,12 +21,18 @@ renderer:
       - title: Cylinder
         contents:
         - pyransac3d.cylinder.*
+      - title: Sphere
+        contents:
+        - pyransac3d.sphere.*
       - title: Line
         contents:
         - pyransac3d.line.*
       - title: Circle
         contents:
         - pyransac3d.circle.*
+      - title: Point
+        contents:
+        - pyransac3d.point.*
       - title: Auxiliar functions
         contents:
         - pyransac3d.aux.*
