@@ -1,10 +1,15 @@
 import numpy as np
 import random
 import copy 
-from .aux import *
+from .aux_functions import *
 
 class Cylinder:
     """ 
+    !!! warning
+        The cylinder RANSAC in this library works! but does not present good results on real data on the current version.
+        We are working to make a better algorithim using normals. If you want to contribute, please create a MR on github.
+        You'll be our hero! 
+
     Implementation for cylinder RANSAC.
 
     This class finds a infinite height cilinder and returns the cylinder axis, center and radius. 
@@ -20,7 +25,7 @@ class Cylinder:
 
     def fit(self, pts, thresh=0.2, maxIteration=10000):
         """ 
-        Find the parameters (axis and radius) to define a cylinder. 
+        Find the parameters (axis and radius) defining a cylinder. 
 
         :param pts: 3D point cloud as a numpy array (N,3).
         :param thresh: Threshold distance from the cylinder hull which is considered inlier.

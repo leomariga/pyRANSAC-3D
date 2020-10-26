@@ -1,7 +1,7 @@
 import numpy as np
 import random
 import copy 
-from .aux import *
+from .aux_functions import *
 
 class Circle:
     """ 

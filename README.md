@@ -35,7 +35,7 @@ pip3 install pyransac3d
 
 ## Take a look: 
 
-#### Example 1 - Planar RANSAC
+### Example 1 - Planar RANSAC
 
 ``` python
 import pyransac3d as pyrsc
@@ -77,7 +77,7 @@ radius: 5.085218633039647
  - The [documentation is this Ṕage](https://leomariga.github.io/pyRANSAC-3D/).
  - Source code in the [Github repository](https://github.com/leomariga/pyRANSAC-3D).
  - [Pypi pakage installer](https://pypi.org/project/pyransac3d/)
- - The animations you see in the documentation are not part of the library, but you can find it on branch [Animations](https://github.com/leomariga/pyRANSAC-3D/tree/Animations). It needs [Open3D](https://github.com/intel-isl/Open3D) library to run. The Animation branch is not regularly maintained, it only exists to create some cool visualizations ;D 
+ - You can find the animations you see in the documentation on branch [Animations](https://github.com/leomariga/pyRANSAC-3D/tree/Animations). It needs [Open3D](https://github.com/intel-isl/Open3D) library to run. The Animation branch is not regularly maintained, it only exists to create some cool visualizations ;D 
 
 
 ## License
