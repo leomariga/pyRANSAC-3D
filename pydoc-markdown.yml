@@ -33,9 +33,9 @@ renderer:
       - title: Point
         contents:
         - pyransac3d.point.*
-      - title: Auxiliar functions
+      - title: Auxiliary
         contents:
-        - pyransac3d.aux.*
+        - pyransac3d.aux_functions.*
     - title: Contributing
       source: CONTRIBUTING.md
     - title: License
@@ -53,6 +53,7 @@ renderer:
         accent: brown
     markdown_extensions:
       - admonition
+      - pymdownx.superfences
       - codehilite:
           guess_lang: false
       - toc:

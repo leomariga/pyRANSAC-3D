@@ -29,10 +29,8 @@ class Cuboid:
         :param thresh: Threshold distance from the cylinder radius which is considered inlier.
         :param maxIteration: Number of maximum iteration which RANSAC will loop over.
         :returns:
-        - `center`:  Point in space in which the cylinder axis will pass through. `np.array (1, 3)`
-        - `axis`: Unitary vector in the direction of cylinder axis `np.array (1, 3)`
-        - `radius`: Radius of the cylinder
-        - `inliers`: Inlier's index from the original point cloud. `np.array (1, M)`
+        - `best_eq`:  Array of 3 best planes's equation `np.array (3, 4)`
+        - `best_inliers`: Inlier's index from the original point cloud. `np.array (1, M)`
         ---
         """
         n_points = pts.shape[0]

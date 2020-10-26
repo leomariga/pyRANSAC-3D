@@ -1,5 +1,5 @@
 
-from .aux import *
+from .aux_functions import *
 from .cylinder import Cylinder
 from .plane import Plane
 from .cuboid import Cuboid
