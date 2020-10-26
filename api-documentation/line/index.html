@@ -357,8 +357,8 @@
 
 
   <li class="md-nav__item">
-    <a href="../auxiliar-functions/" title="Auxiliar functions" class="md-nav__link">
-      Auxiliar functions
+    <a href="../auxiliary/" title="Auxiliary" class="md-nav__link">
+      Auxiliary
     </a>
   </li>
 
@@ -459,10 +459,9 @@
                 
                 <p><a name=".pyransac3d.line.Line"></a></p>
 <h3 id="line">Line<a class="headerlink" href="#line" title="Permanent link">&para;</a></h3>
-<div class="codehilite"><pre><span></span><code><span class="k">class</span> <span class="nc">Line</span><span class="p">():</span>
+<div class="highlight"><pre><span></span><code><span class="k">class</span> <span class="nc">Line</span><span class="p">():</span>
  <span class="o">|</span>  <span class="n">Line</span><span class="p">()</span>
 </code></pre></div>
-
 
 <p>Implementation for 3D Line RANSAC.</p>
 <p>This object finds the equation of a line in 3D space using RANSAC method. 
@@ -471,9 +470,8 @@ This method uses 2 points from 3D space and computes a line. The selected candid
 <hr />
 <p><a name=".pyransac3d.line.Line.fit"></a></p>
 <h4 id="fit">fit<a class="headerlink" href="#fit" title="Permanent link">&para;</a></h4>
-<div class="codehilite"><pre><span></span><code> <span class="o">|</span> <span class="n">fit</span><span class="p">(</span><span class="n">pts</span><span class="p">,</span> <span class="n">thresh</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">maxIteration</span><span class="o">=</span><span class="mi">1000</span><span class="p">)</span>
+<div class="highlight"><pre><span></span><code> <span class="o">|</span> <span class="n">fit</span><span class="p">(</span><span class="n">pts</span><span class="p">,</span> <span class="n">thresh</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">maxIteration</span><span class="o">=</span><span class="mi">1000</span><span class="p">)</span>
 </code></pre></div>
-
 
 <p>Find the best equation for the 3D line. The line in a 3d enviroment is defined as y = Ax+B, but A and B are vectors intead of scalars.</p>
 <p><strong>Arguments</strong>:</p>
