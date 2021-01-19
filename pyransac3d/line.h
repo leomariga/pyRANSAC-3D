@@ -1,5 +1,5 @@
-#ifndef __TESTE__H
-#define __TESTE__H
+#ifndef __LINE__H
+#define __LINE__H
 #include <stdlib.h> 
 #include <iostream>
 #include <math.h>
