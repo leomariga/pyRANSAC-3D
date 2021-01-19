@@ -24,7 +24,7 @@ class Line():
         self.versor    = versor.copy().ctypes.data_as(ctypes.POINTER(ctypes.c_double))
         self.inliers   = inliers.copy().ctypes.data_as(ctypes.POINTER(ctypes.c_int))
         self.size      = ctypes.c_int(len(data))
-        arq            = ctypes.CDLL("./teste.so")
+        arq            = ctypes.CDLL("./line.so")
         self.model     = arq.Ransac
         self.model.argtypes = [ctypes.POINTER(ctypes.c_double), ctypes.c_int,
                                ctypes.c_double, ctypes.POINTER(ctypes.c_double),
