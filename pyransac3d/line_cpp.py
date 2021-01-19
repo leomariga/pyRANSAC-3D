@@ -10,13 +10,6 @@ import numpy as np
 import matplotlib.pyplot as plt
 import ctypes
 
-
-
-plt.rcParams.update({'figure.max_open_warning': 0})
-plt.rcParams.update({'figure.dpi': 140})
-plt.rcParams.update({'figure.figsize': (10, 9)})
-plt.rcParams.update({'axes.grid': True})
-
 class Line():
     '''
     Receives:
