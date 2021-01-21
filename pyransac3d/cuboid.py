@@ -70,7 +70,7 @@ class Cuboid:
             
             # vecC is already normal (module 1) so we only have to discount from the point, the distance*unity = distance*normal
             # A simple way of understanding this is we move our point along the normal until it reaches the plane
-            p4_proj_plane = pt_samples[3,0]-dist_p4_plane*vecC
+            p4_proj_plane = pt_samples[3,:]-dist_p4_plane*vecC
 
             # Now, with help of our point p5 we can find another plane P2 which contains p4, p4_proj, p5 and 
             vecD = p4_proj_plane - pt_samples[3,:]
