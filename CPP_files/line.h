@@ -6,6 +6,15 @@
 #include <time.h>
 #include <vector>
 #include <random>
+
+/*
+
+Author: Guilherme Ferrari Fortino
+
+Adaptation from https://github.com/jczamorac/Tracking_RANSAC
+
+*/
+
 extern "C" {
 
 void swap(int &a, int &b);

@@ -4,6 +4,9 @@
 Created on Sun Jan 10 17:58:45 2021
 
 @author: Guilherme Ferrari Fortino
+
+Adaptation from https://github.com/jczamorac/Tracking_RANSAC
+
 """
 
 import numpy as np
