@@ -19,6 +19,7 @@ class Line_c():
     mode = 0 -> Chooses two random points from cluster.
     mode = 1 -> Chooses two random points based on gaussian sampling.
     mode = 2 -> Chooses two random points based on weight/charge sampling.
+    mode = 3 -> Chooses two random points based on weight and gaussian sampling.
     
     Parameters
     ----------
