@@ -197,7 +197,7 @@ int Ransac_2(double (*data)[3], double *versor, double* pb, int *inliers, double
 	double TCharge = 0;
 	double PDF[size];
 	double AvgCharge, TwiceAvCharge;
-	double distancias_quadrado = 0, best_weight = 100000000000;
+	double distancias_quadrado = 0, best_weight = 100000000000, parcial_weight;
 
 	if (mode == 2 || mode == 3){
 		for (loop = 0; loop < size; loop++) TCharge += charge[loop];
@@ -232,9 +232,12 @@ int Ransac_2(double (*data)[3], double *versor, double* pb, int *inliers, double
 			distancias_quadrado += (double) pow(norma2, 2.0);	
 			} 
 		}
-		if(best_weight > (double) distancias_quadrado/parcial.size()){ // parcial.size() > best.size()
+		
+		parcial_weight = (double) distancias_quadrado/parcial.size();
+		
+		if(best_weight < parcial_weight && parcial.size() > best.size()){ // parcial.size() > best.size()
 			best.clear(); // Limpa o vector que continha o melhor num de inliers
-			best_weight = (double) distancias_quadrado/parcial.size();
+			best_weight = parcial_weight;
 			for(loop = 0; loop < parcial.size(); loop++) best.push_back(parcial[loop]); 
 			for(loop = 0; loop < best.size(); loop++) inliers[loop] = best[loop];
 			for(loop = 0; loop < 3; loop++) versor[loop] = (double) parcial_versor[loop];
@@ -242,7 +245,8 @@ int Ransac_2(double (*data)[3], double *versor, double* pb, int *inliers, double
 			parcial.clear();
 		}
 		else parcial.clear();
-		distancias_quadrado = 0.0;	
+		distancias_quadrado = 0.0;
+		parcial_weight = 0;
 		
 	}
 	int num_inliers = best.size();
