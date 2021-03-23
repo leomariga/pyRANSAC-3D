@@ -34,7 +34,6 @@ class Cuboid:
         ---
         """
         n_points = pts.shape[0]
-        print(n_points)
         best_eq = []
         best_inliers = []
 
