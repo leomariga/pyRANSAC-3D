@@ -36,7 +36,7 @@ class Sphere:
         """
 
         n_points = pts.shape[0]
-        best_inliers = []
+        best_inliers = self.inliers
 
         for it in range(maxIteration):
 
