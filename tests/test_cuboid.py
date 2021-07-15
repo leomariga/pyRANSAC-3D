@@ -1,14 +1,11 @@
-import open3d as o3d
 import numpy as np
-import random
-import matplotlib
-import matplotlib.pyplot as plt
-import pyransac3d as pyrsc
+import open3d as o3d
 
+import pyransac3d as pyrsc
 
 # Load saved point cloud and visualize it
 pcd_load = o3d.io.read_point_cloud("dataset/caixa.ply")
-#o3d.visualization.draw_geometries([pcd_load])
+# o3d.visualization.draw_geometries([pcd_load])
 points = np.asarray(pcd_load.points)
 
 plano1 = pyrsc.Cuboid()

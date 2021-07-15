@@ -1,13 +1,13 @@
-import numpy as np
 import random
-import copy 
-from .aux_functions import *
+
+import numpy as np
+
 
 class Point:
-    """ 
+    """
     Implementation for Point RANSAC.
 
-    This object finds the coordinate of a point in 3D space using RANSAC method. 
+    This object finds the coordinate of a point in 3D space using RANSAC method.
     The point with more neighbors in a determined radius (`thresh`) will be selected as the best candidate.
 
     ![3D point](https://raw.githubusercontent.com/leomariga/pyRANSAC-3D/master/doc/point.gif "3D Point")
@@ -20,7 +20,7 @@ class Point:
         self.center = []
 
     def fit(self, pts, thresh=0.2, maxIteration=10000):
-        """ 
+        """
         Find the best point for the 3D Point representaiton. The Point in a 3d enviroment is defined as a X, Y Z coordinate with more neighbors around.
 
         :param pts: 3D point cloud as a `np.array (N,3)`.
@@ -37,25 +37,22 @@ class Point:
 
         for it in range(maxIteration):
 
-            # Samples 1 random points 
-            id_samples = random.sample(range(1, n_points-1), 1)
+            # Samples 1 random points
+            id_samples = random.sample(range(1, n_points - 1), 1)
             pt_samples = pts[id_samples]
 
             # Verify the distance from this point to the other
 
-            pt_id_inliers = [] # list of inliers ids
-            dist_pt = pt_samples[0,:] - pts
+            pt_id_inliers = []  # list of inliers ids
+            dist_pt = pt_samples[0, :] - pts
             dist_pt = np.linalg.norm(dist_pt, axis=1)
-
 
             # Select indexes where distance is biggers than the threshold
             pt_id_inliers = np.where(np.abs(dist_pt) <= thresh)[0]
 
-            if(len(pt_id_inliers) > len(best_inliers)):
+            if len(pt_id_inliers) > len(best_inliers):
                 best_inliers = pt_id_inliers
                 self.inliers = best_inliers
-                self.center = pt_samples[0,:]
+                self.center = pt_samples[0, :]
 
         return self.center, self.inliers
-
-
