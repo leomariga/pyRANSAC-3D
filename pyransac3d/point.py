@@ -38,7 +38,7 @@ class Point:
         for it in range(maxIteration):
 
             # Samples 1 random points
-            id_samples = random.sample(range(1, n_points - 1), 1)
+            id_samples = random.sample(range(0, n_points), 1)
             pt_samples = pts[id_samples]
 
             # Verify the distance from this point to the other

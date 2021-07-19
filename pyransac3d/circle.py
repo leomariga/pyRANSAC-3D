@@ -46,7 +46,7 @@ class Circle:
         for it in range(maxIteration):
 
             # Samples 3 random points
-            id_samples = random.sample(range(1, n_points - 1), 3)
+            id_samples = random.sample(range(0, n_points), 3)
             pt_samples = pts[id_samples]
 
             # We have to find the plane equation described by those 3 points

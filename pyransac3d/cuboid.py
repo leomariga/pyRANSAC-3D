@@ -40,8 +40,8 @@ class Cuboid:
         for it in range(maxIteration):
             plane_eq = []
 
-            # Samples 3 random points
-            id_samples = random.sample(range(1, n_points - 1), 6)
+            # Samples 6 random points
+            id_samples = random.sample(range(0, n_points), 6)
             pt_samples = pts[id_samples]
 
             # We have to find the plane equation described by those 3 points

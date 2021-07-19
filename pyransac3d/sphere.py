@@ -41,7 +41,7 @@ class Sphere:
         for it in range(maxIteration):
 
             # Samples 4 random points
-            id_samples = random.sample(range(1, n_points - 1), 4)
+            id_samples = random.sample(range(0, n_points), 4)
             pt_samples = pts[id_samples]
 
             # We calculate the 4x4 determinant by dividing the problem in determinants of 3x3 matrix

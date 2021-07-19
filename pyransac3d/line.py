@@ -38,8 +38,8 @@ class Line:
 
         for it in range(maxIteration):
 
-            # Samples 3 random points
-            id_samples = random.sample(range(1, n_points - 1), 2)
+            # Samples 2 random points
+            id_samples = random.sample(range(0, n_points), 2)
             pt_samples = pts[id_samples]
 
             # The line defined by two points is defined as P2 - P1
