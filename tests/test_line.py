@@ -1,6 +1,9 @@
+import sys
+
 import numpy as np
 import open3d as o3d
 
+sys.path.append(".")
 import pyransac3d as pyrsc
 
 print("create noisy mesh")

@@ -1,6 +1,9 @@
+import sys
+
 import numpy as np
 import open3d as o3d
 
+sys.path.append(".")
 import pyransac3d as pyrsc
 
 mesh_in = o3d.geometry.TriangleMesh.create_sphere(radius=5.0)

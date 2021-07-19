@@ -1,10 +1,13 @@
+import sys
+
 import numpy as np
 import open3d as o3d
 
+sys.path.append(".")
 import pyransac3d as pyrsc
 
 # Load saved point cloud and visualize it
-pcd_load = o3d.io.read_point_cloud("dataset/caixa.ply")
+pcd_load = o3d.io.read_point_cloud("tests/dataset/caixa.ply")
 # o3d.visualization.draw_geometries([pcd_load])
 points = np.asarray(pcd_load.points)
 

@@ -1,8 +1,10 @@
 import copy
+import sys
 
 import numpy as np
 import open3d as o3d
 
+sys.path.append(".")
 import pyransac3d as pyrsc
 
 mesh_cylinder = o3d.geometry.TriangleMesh.create_cylinder(radius=1, height=10.0)
