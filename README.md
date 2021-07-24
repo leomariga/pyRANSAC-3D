@@ -48,7 +48,7 @@ best_eq, best_inliers = plane1.fit(points, 0.01)
 ```
 
 Results in the plane equation Ax+By+Cz+D:
-`[1, 0.5, 2, 0]`
+`[0.720, -0.253, 0.646, 1.100]`
 
 ### Example 2 - Spherical RANSAC
 
