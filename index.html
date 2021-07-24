@@ -607,7 +607,6 @@
 <p>Install with <a href="https://pypi.org/project/pyransac3d/">Pypi</a>:</p>
 <div class="highlight"><pre><span></span><code>pip3 install pyransac3d
 </code></pre></div>
-
 <h2 id="take-a-look">Take a look:<a class="headerlink" href="#take-a-look" title="Permanent link">&para;</a></h2>
 <h3 id="example-1-planar-ransac">Example 1 - Planar RANSAC<a class="headerlink" href="#example-1-planar-ransac" title="Permanent link">&para;</a></h3>
 <div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">pyransac3d</span> <span class="k">as</span> <span class="nn">pyrsc</span>
@@ -617,9 +616,8 @@
 <span class="n">plane1</span> <span class="o">=</span> <span class="n">pyrsc</span><span class="o">.</span><span class="n">Plane</span><span class="p">()</span>
 <span class="n">best_eq</span><span class="p">,</span> <span class="n">best_inliers</span> <span class="o">=</span> <span class="n">plane1</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">points</span><span class="p">,</span> <span class="mf">0.01</span><span class="p">)</span>
 </code></pre></div>
-
 <p>Results in the plane equation Ax+By+Cz+D:
-<code>[1, 0.5, 2, 0]</code></p>
+<code>[0.720, -0.253, 0.646, 1.100]</code></p>
 <h3 id="example-2-spherical-ransac">Example 2 - Spherical RANSAC<a class="headerlink" href="#example-2-spherical-ransac" title="Permanent link">&para;</a></h3>
 <p>Loading a noisy sphere's point cloud with r = 5 centered in 0 we can use the following code:</p>
 <div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">pyransac3d</span> <span class="k">as</span> <span class="nn">pyrsc</span>
@@ -629,7 +627,6 @@
 <span class="n">sph</span> <span class="o">=</span> <span class="n">pyrsc</span><span class="o">.</span><span class="n">Sphere</span><span class="p">()</span>
 <span class="n">center</span><span class="p">,</span> <span class="n">radius</span><span class="p">,</span> <span class="n">inliers</span> <span class="o">=</span> <span class="n">sph</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">points</span><span class="p">,</span> <span class="n">thresh</span><span class="o">=</span><span class="mf">0.4</span><span class="p">)</span>
 </code></pre></div>
-
 <p>Results:
 <div class="highlight"><pre><span></span><code><span class="n">center</span><span class="p">:</span> <span class="p">[</span><span class="mf">0.010462385575072288</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.2855090643954039</span><span class="p">,</span> <span class="mf">0.02867848979091283</span><span class="p">]</span>
 <span class="n">radius</span><span class="p">:</span> <span class="mf">5.085218633039647</span>

@@ -462,9 +462,8 @@
 <div class="highlight"><pre><span></span><code><span class="k">class</span> <span class="nc">Point</span><span class="p">():</span>
  <span class="o">|</span>  <span class="n">Point</span><span class="p">()</span>
 </code></pre></div>
-
 <p>Implementation for Point RANSAC.</p>
-<p>This object finds the coordinate of a point in 3D space using RANSAC method. 
+<p>This object finds the coordinate of a point in 3D space using RANSAC method.
 The point with more neighbors in a determined radius (<code>thresh</code>) will be selected as the best candidate.</p>
 <p><img alt="3D point" src="https://raw.githubusercontent.com/leomariga/pyRANSAC-3D/master/doc/point.gif" title="3D Point" /></p>
 <hr />
@@ -472,7 +471,6 @@ The point with more neighbors in a determined radius (<code>thresh</code>) will 
 <h4 id="fit">fit<a class="headerlink" href="#fit" title="Permanent link">&para;</a></h4>
 <div class="highlight"><pre><span></span><code> <span class="o">|</span> <span class="n">fit</span><span class="p">(</span><span class="n">pts</span><span class="p">,</span> <span class="n">thresh</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">maxIteration</span><span class="o">=</span><span class="mi">10000</span><span class="p">)</span>
 </code></pre></div>
-
 <p>Find the best point for the 3D Point representaiton. The Point in a 3d enviroment is defined as a X, Y Z coordinate with more neighbors around.</p>
 <p><strong>Arguments</strong>:</p>
 <ul>

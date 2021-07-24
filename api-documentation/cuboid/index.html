@@ -462,18 +462,16 @@
 <div class="highlight"><pre><span></span><code><span class="k">class</span> <span class="nc">Cuboid</span><span class="p">():</span>
  <span class="o">|</span>  <span class="n">Cuboid</span><span class="p">()</span>
 </code></pre></div>
-
 <p>Implementation for box (Cuboid) RANSAC.</p>
 <p>A cuboid is defined as convex polyhedron bounded by six faces formed by three orthogonal normal vectors. Cats love to play with this kind of geometry.
-This method uses 6 points to find 3 best plane equations orthogonal to eachother. </p>
-<p>We could use a recursive planar RANSAC, but it would use 9 points instead. Orthogonality makes this algorithm more efficient. </p>
+This method uses 6 points to find 3 best plane equations orthogonal to eachother.</p>
+<p>We could use a recursive planar RANSAC, but it would use 9 points instead. Orthogonality makes this algorithm more efficient.</p>
 <p><img alt="Cuboid" src="https://raw.githubusercontent.com/leomariga/pyRANSAC-3D/master/doc/cuboid.gif" title="Cuboid" /></p>
 <hr />
 <p><a name=".pyransac3d.cuboid.Cuboid.fit"></a></p>
 <h4 id="fit">fit<a class="headerlink" href="#fit" title="Permanent link">&para;</a></h4>
 <div class="highlight"><pre><span></span><code> <span class="o">|</span> <span class="n">fit</span><span class="p">(</span><span class="n">pts</span><span class="p">,</span> <span class="n">thresh</span><span class="o">=</span><span class="mf">0.05</span><span class="p">,</span> <span class="n">maxIteration</span><span class="o">=</span><span class="mi">5000</span><span class="p">)</span>
 </code></pre></div>
-
 <p>Find the best equation for 3 planes which define a complete cuboid.</p>
 <p><strong>Arguments</strong>:</p>
 <ul>
