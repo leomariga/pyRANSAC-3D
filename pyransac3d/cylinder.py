@@ -8,9 +8,9 @@ from .aux_functions import rodrigues_rot
 class Cylinder:
     """
     !!! warning
-        The cylinder RANSAC in this library works! but does not present good results on real data on the current version.
+        The cylinder RANSAC does NOT present good results on real data on the current version.
         We are working to make a better algorithim using normals. If you want to contribute, please create a MR on github.
-        You'll be our hero!
+        Or give us ideas on [this issue](https://github.com/leomariga/pyRANSAC-3D/issues/13)
 
     Implementation for cylinder RANSAC.
 
