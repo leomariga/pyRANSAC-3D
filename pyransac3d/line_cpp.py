@@ -10,83 +10,40 @@ Adaptation from https://github.com/jczamorac/Tracking_RANSAC
 """
 
 import numpy as np
-import ctypes
+import pyransac3d_wrapper as pyrsc_w
 
-class Line_c():
-    """
-    Ransac algorithm to fit a line with options to random sampling and
-    criteria for the best model.
-    mode = 0 -> Chooses two random points from cluster.
-    mode = 1 -> Chooses two random points based on gaussian sampling.
-    mode = 2 -> Chooses two random points based on weight/charge sampling.
-    mode = 3 -> Chooses two random points based on weight and gaussian sampling.
-    
-    Parameters
-    ----------
-    
-    data : numpy array
-        Array with the cluster.
-    number_it : int
-        Number of iterations.
-    min_dist : flaot
-        Minimum distance from point to line.
-    charge : numpy array
-        Charge / weights from the dataset.
-    mode : int, optional
-        Random sampling mode. The default is 0.
-    selection_mode : int, optional
-        Parameter of ransac best model. If 0 the best model is the one with
-        the most inliers. If 1 the best model is the one with the minor sum of
-        the squared distances / number of inliers. The default is 0.
-    
-    Returns
-    -------
-    inliers: numpy array
-        Inliers coefficients.
-    versor: numpy array
-        Versor of the best model.
-    point: numpy array
-        Reference point where it intercepts the line.
-    """
-    def __init__(self, data, number_it, min_dist, charge, mode: int = 0, selection_mode: int = 0):
-        #print("\n\n", len(data), "\n")
-        self.data      = data.copy().ctypes.data_as(ctypes.POINTER(ctypes.c_double))
-        self.number_it = ctypes.c_int(number_it)
-        self.min_dist  = ctypes.c_double(min_dist)
-        self.charge    = charge.copy().ctypes.data_as(ctypes.POINTER(ctypes.c_double))
-        self.versor    = np.zeros(3).ctypes.data_as(ctypes.POINTER(ctypes.c_double))
-        self.inliers   = np.zeros(len(data)).ctypes.data_as(ctypes.POINTER(ctypes.c_int))
-        self.pb        = np.zeros(3).ctypes.data_as(ctypes.POINTER(ctypes.c_double))
-        self.size      = ctypes.c_int(len(data))
-        self.mode      = ctypes.c_int(mode)
-        self.sm        = ctypes.c_int(selection_mode)
-        arq            = ctypes.CDLL("./line.so") #ctypes.CDLL("./teste.so")
-        self.model     = None
-        if selection_mode == 0:
-            self.model = arq.Ransac
-        else:
-            self.model = arq.Ransac_2
-        self.model.argtypes = [ctypes.POINTER(ctypes.c_double), # double (*data)[3]
-                               ctypes.POINTER(ctypes.c_double), # double *versor
-                               ctypes.POINTER(ctypes.c_double), # double* pb
-                               ctypes.POINTER(ctypes.c_int),    # int *inliers
-                               ctypes.POINTER(ctypes.c_double), # charge (weights)
-                               ctypes.c_int,                    # int number_it
-                               ctypes.c_double,                 # double min_dist
-                               ctypes.c_int,                    # int size
-                               ctypes.c_int]                    # int mode
+class Line_cpp:
+    """ 
+    Implementation for 3D Line RANSAC.
 
-        self.restype = ctypes.c_int
-        
-    def fit(self):
-        num_inliers = int(self.model(self.data, self.versor, self.pb, self.inliers,
-                                     self.charge, self.number_it, self.min_dist,
-                                     self.size, self.mode, self.sm))
-        inliers = np.array([self.inliers[i] for i in range(num_inliers)])
-        versor  = np.array([float(self.versor[0]), float(self.versor[1]), float(self.versor[2])])
-        pb      = np.array([float(self.pb[0]), float(self.pb[1]), float(self.pb[2])])
-        return inliers, versor, pb
-        
+    This object finds the equation of a line in 3D space using RANSAC method. 
+    This method uses 2 points from 3D space and computes a line. The selected candidate will be the line with more inliers inside the radius theshold. 
+
+    ![3D line](https://raw.githubusercontent.com/leomariga/pyRANSAC-3D/master/doc/line.gif "3D line")
+
+    ---
+    """
+
+    def __init__(self):
+        self.inliers = []
+        self.A = []
+        self.B = []
+
+    def fit(self, pts, thresh=0.2, maxIteration=1000):
+        """ 
+        Find the best equation for the 3D line. The line in a 3d enviroment is defined as y = Ax+B, but A and B are vectors intead of scalars.
+
+        :param pts: 3D point cloud as a `np.array (N,3)`.
+        :param thresh: Threshold distance from the line which is considered inlier.
+        :param maxIteration: Number of maximum iteration which RANSAC will loop over.
+        :returns:
+        - `A`: 3D slope of the line (angle) `np.array (1, 3)`
+        - `B`: Axis interception as `np.array (1, 3)`
+        - `inliers`: Inlier's index from the original point cloud. `np.array (1, M)`
+        ---
+        """
+        self.inliers, self.A, self.B = pyrsc_w.ransac_line(pts, maxIteration, thresh, 2)
+        return self.A, self.B, self.inliers
         
         
         
