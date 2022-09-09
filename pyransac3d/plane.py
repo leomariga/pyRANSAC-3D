@@ -53,6 +53,10 @@ class Plane:
 
             # Now we compute the cross product of vecA and vecB to get vecC which is normal to the plane
             vecC = np.cross(vecA, vecB)
+            
+            # if vectors A and B are pallel vector C will be a zero vector resulting in a divide by zero error in the next step
+            if np.any(vecC) == False:
+                continue
 
             # The plane equation will be vecC[0]*x + vecC[1]*y + vecC[0]*z = -k
             # We have to use a point to find k
