@@ -90,13 +90,13 @@ Did this repository was useful for your work? =)
 
 ```
 @software{Mariga_pyRANSAC-3D_2022,
-author = {Mariga, Leonardo},
-doi = {10.5281/zenodo.7212567},
-month = {10},
-title = {{pyRANSAC-3D}},
-url = {https://github.com/leomariga/pyRANSAC-3D},
-version = {v0.6.0},
-year = {2022}
+  author = {Mariga, Leonardo},
+  doi = {10.5281/zenodo.7212567},
+  month = {10},
+  title = {{pyRANSAC-3D}},
+  url = {https://github.com/leomariga/pyRANSAC-3D},
+  version = {v0.6.0},
+  year = {2022}
 }
 ```
 
