@@ -4,8 +4,10 @@
 </div>
 
 -----------------
-[![PyPI Latest Release](https://img.shields.io/pypi/v/pyransac3d.svg?style=for-the-badge)](https://pypi.org/project/pyransac3d/)
-[![License](https://img.shields.io/pypi/l/pyransac3d.svg?style=for-the-badge)](https://github.com/leomariga/pyransac3d/blob/master/LICENSE)
+[![DOI](https://zenodo.org/badge/287829485.svg)](https://zenodo.org/badge/latestdoi/287829485)
+[![PyPI Latest Release](https://img.shields.io/pypi/v/pyransac3d.svg)](https://pypi.org/project/pyransac3d/)
+[![License](https://img.shields.io/pypi/l/pyransac3d.svg)](https://github.com/leomariga/pyransac3d/blob/master/LICENSE)
+
 
 ## What is pyRANSAC-3D?
 **_pyRANSAC-3D_** is an open source implementation of Random sample consensus (RANSAC) method. It fits primitive shapes such as planes, cuboids and cylinder in a point cloud to many aplications: 3D slam, 3D reconstruction, object tracking and many others. 
@@ -82,6 +84,21 @@ radius: 5.085218633039647
 
 ## License
 [Apache 2.0](https://github.com/leomariga/pyRANSAC-3D/blob/master/LICENSE)
+
+## Citation
+Did this repository was useful for your work? =)
+
+```
+@software{pyransac3d,
+  author = {Mariga, Leonardo},
+  doi = {10.5281/zenodo.7212568},
+  month = {10},
+  title = {{pyRANSAC-3D}},
+  url = {https://github.com/leomariga/pyRANSAC-3D},
+  version = {v0.6.0},
+  year = {2022}
+}
+```
 
 ## Contributing is awesome!
 
