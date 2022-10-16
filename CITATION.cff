@@ -1,0 +1,10 @@
+cff-version: 1.2.0
+message: "If you use this software, please cite it as below."
+authors:
+- family-names: "Mariga"
+  given-names: "Leonardo"
+title: "pyRANSAC-3D"
+version: v0.6.0
+doi: 10.5281/zenodo.7212567
+date-released: 2022-10-16
+url: "https://github.com/leomariga/pyRANSAC-3D"
