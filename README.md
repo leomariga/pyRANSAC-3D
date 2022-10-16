@@ -89,14 +89,14 @@ radius: 5.085218633039647
 Did this repository was useful for your work? =)
 
 ```
-@software{pyransac3d,
-  author = {Mariga, Leonardo},
-  doi = {10.5281/zenodo.7212568},
-  month = {10},
-  title = {{pyRANSAC-3D}},
-  url = {https://github.com/leomariga/pyRANSAC-3D},
-  version = {v0.6.0},
-  year = {2022}
+@software{Mariga_pyRANSAC-3D_2022,
+author = {Mariga, Leonardo},
+doi = {10.5281/zenodo.7212567},
+month = {10},
+title = {{pyRANSAC-3D}},
+url = {https://github.com/leomariga/pyRANSAC-3D},
+version = {v0.6.0},
+year = {2022}
 }
 ```
 
