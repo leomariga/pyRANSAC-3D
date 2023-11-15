@@ -24,13 +24,13 @@ points = np.asarray(pcd_load.points)
 
 line = pyrsc.Line()
 
-A, B, inliers = line.fit(points,pcd_load, thresh=15)
+A, B, inliers = line.fit(points, thresh=15)
 
 
 
 R = pyrsc.get_rotationMatrix_from_vectors([0, 0, 1], A)
 
-plane = pcd_load.select_by_index(inliers).paint_uniform_color([1, 0, 0])
+# plane = pcd_load.select_by_index(inliers).paint_uniform_color([1, 0, 0])
 # # obb = plane.get_oriented_bounding_box()
 # # obb2 = plane.get_axis_aligned_bounding_box()
 # # obb.color = [0, 0, 1]
