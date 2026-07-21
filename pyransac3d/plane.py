@@ -7,7 +7,7 @@ class Plane:
     """
     Implementation of planar RANSAC.
 
-    Class for Plane object, which finds the equation of a infinite plane using RANSAC algorithim.
+    Class for Plane object, which finds the equation of a infinite plane using RANSAC algorithm.
 
     Call `fit(.)` to randomly take 3 points of pointcloud to verify inliers based on a threshold.
 
