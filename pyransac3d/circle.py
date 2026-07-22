@@ -105,7 +105,10 @@ class Circle:
             ) / np.sqrt(plane_eq[0] ** 2 + plane_eq[1] ** 2 + plane_eq[2] ** 2)
             vecC_stakado = np.stack([vecC] * n_points, 0)
             # Distance from a point to the circle hull if it is infinite along its axis (perpendicular distance to the plane)
+            # The norm of the cross product in this case is the distance from the point to circle's axis (using the normal vector of the plane)
+            #https://math.stackexchange.com/questions/3525110/how-to-prove-the-norm-of-a-cross-product-equals-the-norm-of-a-projection
             dist_pt_inf_circle = np.cross(vecC_stakado, (center - pts))
+            # We need to subtract the radius to get the distance from the point to the circle's hull, not to the center axis.
             dist_pt_inf_circle = np.linalg.norm(dist_pt_inf_circle, axis=1) - radius
 
             # https://math.stackexchange.com/questions/31049/distance-from-a-point-to-circles-closest-point
