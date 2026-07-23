@@ -54,6 +54,9 @@ dev = [
     "isort",
     "pylint",
     "black",
+    "pydoc-markdown>=4.8.2",
+    "mkdocs>=1.6.1",
+    "mkdocs-material>=9.7.7",
 ]
 
 [tool.setuptools.packages.find]
