@@ -55,6 +55,10 @@ class Cuboid:
             # Now we compute the cross product of vecA and vecB to get vecC which is normal to the plane
             vecC = np.cross(vecA, vecB)
 
+            # Avoid parallel vectors (division by zero error)
+            if np.any(vecC) == False:
+                continue
+
             # The plane equation will be vecC[0]*x + vecC[1]*y + vecC[0]*z = -k
             # We have to use a point to find k
             vecC = vecC / np.linalg.norm(vecC)  # Normal
@@ -79,6 +83,9 @@ class Cuboid:
             vecD = p4_proj_plane - pt_samples[3, :]
             vecE = pt_samples[4, :] - pt_samples[3, :]
             vecF = np.cross(vecD, vecE)
+            # Avoid parallel vectors (division by zero error)
+            if np.any(vecF) == False:
+                continue
             vecF = vecF / np.linalg.norm(vecF)  # Normal
             k = -np.sum(np.multiply(vecF, pt_samples[4, :]))
             plane_eq.append([vecF[0], vecF[1], vecF[2], k])
