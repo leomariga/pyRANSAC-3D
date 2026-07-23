@@ -63,3 +63,41 @@ People *love* thorough bug reports. I'm not even kidding.
 ## License
 By contributing, you agree that your contributions will be licensed under its Apache License 2.0.
 
+## Maintainer Notes
+These steps are infrequent, so they're documented here as a reminder.
+
+### Publishing to PyPI
+1. Bump the version in `pyproject.toml` (`[project] version`) and `CITATION.cff` (`version`) — keep them in sync.
+2. Build the package:
+   ```sh
+   uv build
+   ```
+
+3. Optional: test the release on [TestPyPI](https://test.pypi.org) first with `uv publish --publish-url https://test.pypi.org/legacy/ --token <test-token>` before publishing for real.
+
+4. Publish (requires a PyPI API token):
+   ```sh
+   uv publish --token pypi-xxxx
+   ```
+5. Verify: check [pypi.org/project/pyransac3d](https://pypi.org/project/pyransac3d/) and test-install ephemerally with `uvx` (run from outside the repo, so it doesn't pick up the local `pyransac3d/` source folder):
+   ```sh
+   uvx --from pyransac3d==<version> python -c "import pyransac3d as pyrsc; print(pyrsc.Plane)"
+   ```
+
+
+
+### Generating and publishing docs
+Docs are generated from source docstrings via `pydoc-markdown` (config: `pydoc-markdown.yml`) using the `mkdocs` renderer, then deployed to the `gh-pages` branch (served by GitHub Pages).
+
+1. Build the docs site:
+   ```sh
+   uv run pydoc-markdown --build
+   ```
+2. Deploy to `gh-pages`:
+   ```sh
+   cd build/docs
+   uv run mkdocs gh-deploy --force
+   ```
+   `--force` overwrites `gh-pages` with the new build; that branch only ever holds generated site output, so this is expected/safe.
+3. Verify at [leomariga.github.io/pyRANSAC-3D](https://leomariga.github.io/pyRANSAC-3D/) (allow a minute or two for GitHub Pages to update).
+
