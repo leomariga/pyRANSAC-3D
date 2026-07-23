@@ -62,6 +62,9 @@ class Cylinder:
 
             # Now we compute the cross product of vecA and vecB to get vecC which is normal to the plane
             vecC = np.cross(vecA_norm, vecB_norm)
+            # Avoid parallel vectors (division by zero error)
+            if np.any(vecC) == False:
+                continue
             vecC = vecC / np.linalg.norm(vecC)
 
             # Now we calculate the rotation of the points with rodrigues equation
