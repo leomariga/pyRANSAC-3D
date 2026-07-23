@@ -1,0 +1,60 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "pyransac3d"
+version = "0.6.1"
+description = "A python tool for fitting primitives 3D shapes in point clouds using RANSAC algorithm "
+readme = "README.md"
+license = "Apache-2.0"
+requires-python = ">=3.9"
+authors = [
+    { name = "Leonardo Mariga", email = "leomariga@gmail.com" },
+]
+keywords = [
+    "ransac",
+    "ransac-algorithm",
+    "point-cloud",
+    "point-cloud-processing",
+    "3d-reconstruction",
+    "segmentation",
+    "shape-detection",
+    "shape-fitting",
+    "plane-detection",
+    "plane-fitting",
+    "sphere-fitting",
+    "cylinder-fitting",
+    "cuboid-fitting",
+    "circle-fitting",
+    "line-fitting",
+    "geometry",
+    "computer-vision",
+    "open3d",
+    "lidar",
+    "slam",
+]
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "Operating System :: OS Independent",
+]
+dependencies = [
+    "numpy",
+]
+
+[project.urls]
+Documentation = "https://leomariga.github.io/pyRANSAC-3D/"
+Source = "https://github.com/leomariga/pyRANSAC-3D"
+
+[dependency-groups]
+dev = [
+    "open3d",
+    "invoke",
+    "flake8",
+    "isort",
+    "pylint",
+    "black",
+]
+
+[tool.setuptools.packages.find]
+include = ["pyransac3d*"]

@@ -1,7 +1,7 @@
 # Roadmap
 
 ## v0.7.0
-- [ ] Add UV for package manager
+- [x] Add UV for package manager
 - [ ] #7 Add generators of numpy point cloud to make tests and examples. 
 - [ ] #17 Add additional output information
 - [ ] #28 Getting Runtime error when fitting. Division by zero, soved in #33. Verify if need to add to other primitive shapes. 

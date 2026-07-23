@@ -10,6 +10,21 @@ We love your input! We want to make contributing to this project as easy and tra
 ## We Develop with Github
 We use github to host code, to track issues and feature requests, as well as accept pull requests.
 
+## Development setup
+This project uses [uv](https://docs.astral.sh/uv/) to manage dependencies and the dev environment.
+
+1. [Install uv](https://docs.astral.sh/uv/getting-started/installation/) if you don't have it yet.
+2. Clone the repo and sync the environment (this installs the runtime dependencies plus the `dev` dependency group defined in `pyproject.toml`):
+   ```sh
+   git clone https://github.com/leomariga/pyRANSAC-3D
+   cd pyRANSAC-3D
+   uv sync
+   ```
+3. Run project commands with `uv run`, e.g.:
+   ```sh
+   uv run invoke --list
+   ```
+
 ## We Use [Github Flow](https://guides.github.com/introduction/flow/index.html), So All Code Changes Happen Through Pull Requests
 Pull requests are the best way to propose changes to the codebase (we use [Github Flow](https://guides.github.com/introduction/flow/index.html)). We actively welcome your pull requests:
 
@@ -19,7 +34,7 @@ Pull requests are the best way to propose changes to the codebase (we use [Githu
 4. Ensure the test suite passes.
 5. Make sure your code lints.
 6. Issue that pull request!
-6. Clean unused files before commiting using `invoke clean`
+6. Clean unused files before commiting using `uv run invoke clean`
 
 ## Any contributions you make will be under the Apache 2.0 Software License
 In short, when you submit code changes, your submissions are understood to be under the same [Apache License 2.0](https://www.apache.org/licenses/LICENSE-2.0) that covers the project. Feel free to contact the maintainers if that's a concern.
@@ -42,8 +57,8 @@ People *love* thorough bug reports. I'm not even kidding.
 
 ## Use a Consistent Coding Style
 * 4 spaces for indentation rather than tabs
-* We have many interesting commands to help create a better code, try `invoke --list`
-* Use `invoke lint` and `invoke format` before commit
+* We have many interesting commands to help create a better code, try `uv run invoke --list`
+* Use `uv run invoke lint` and `uv run invoke format` before commit
 
 ## License
 By contributing, you agree that your contributions will be licensed under its Apache License 2.0.

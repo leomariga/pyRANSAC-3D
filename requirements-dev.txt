@@ -1,6 +1,0 @@
-open3d
-invoke
-flake8
-isort
-pylint
-black

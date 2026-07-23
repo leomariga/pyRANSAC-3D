@@ -14,7 +14,6 @@ from invoke import task
 MAX_LINE_LENGTH = 121
 
 ROOT_DIR = Path(__file__).parent
-SETUP_FILE = ROOT_DIR.joinpath("setup.py")
 TEST_DIR = ROOT_DIR.joinpath("tests")
 SOURCE_DIR = ROOT_DIR.joinpath("pyransac3d")
 PYTHON_DIRS = [str(d) for d in [SOURCE_DIR, TEST_DIR]]
