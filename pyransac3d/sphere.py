@@ -38,6 +38,9 @@ class Sphere:
         n_points = pts.shape[0]
         best_inliers = self.inliers
 
+        if n_points < 4:
+            raise ValueError("Point cloud must contain at least 4 points!")
+
         for it in range(maxIteration):
 
             # Samples 4 random points
