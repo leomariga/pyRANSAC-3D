@@ -4,8 +4,8 @@
 - [x] Add UV for package manager
 - [ ] #7 Add generators of numpy point cloud to make tests and examples. 
 - [ ] #17 Add additional output information
-- [ ] #28 Getting Runtime error when fitting. Division by zero, soved in #33. Verify if need to add to other primitive shapes. 
-- [ ] #29 Wrong center for detecting circles, also mentioned in #13
+- [x] #28 Getting Runtime error when fitting. Division by zero, soved in #33. Verify if need to add to other primitive shapes. 
+- [ ] #29 Wrong center for detecting circles, also mentioned in #13 and probably #39
 - [ ] #35 Sphere fitting gives cryptic error message if less than 4 points are provided. This could be added also to other primitives. Implement on #36.
 - [ ] #40 Cuboid is not cuboid. Rework this primitive in library.
  
