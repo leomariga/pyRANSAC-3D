@@ -37,6 +37,9 @@ class Cuboid:
         best_eq = []
         best_inliers = []
 
+        if n_points < 6:
+            raise ValueError("Point cloud must contain at least 6 points!")
+
         for it in range(maxIteration):
             plane_eq = []
 

@@ -44,6 +44,9 @@ class Cylinder:
         n_points = pts.shape[0]
         best_inliers = []
 
+        if n_points < 3:
+            raise ValueError("Point cloud must contain at least 3 points!")
+
         for it in range(maxIteration):
 
             # Samples 3 random points
