@@ -36,6 +36,9 @@ class Line:
         n_points = pts.shape[0]
         best_inliers = []
 
+        if n_points < 2:
+            raise ValueError("Point cloud must contain at least 2 points!")
+
         for it in range(maxIteration):
 
             # Samples 2 random points
