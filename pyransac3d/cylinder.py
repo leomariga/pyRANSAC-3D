@@ -94,7 +94,7 @@ class Cylinder:
                 - ma * (P_rot[1, 0] + P_rot[2, 0])
             ) / (2 * (mb - ma))
             p_center_y = -1 / (ma) * (p_center_x - (P_rot[0, 0] + P_rot[1, 0]) / 2) + (P_rot[0, 1] + P_rot[1, 1]) / 2
-            p_center = [p_center_x, p_center_y, 0]
+            p_center = [p_center_x, p_center_y, P_rot[0, 2]]
             radius = np.linalg.norm(p_center - P_rot[0, :])
 
             # Remake rodrigues rotation
