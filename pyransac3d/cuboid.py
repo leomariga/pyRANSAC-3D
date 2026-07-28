@@ -21,13 +21,26 @@ class Cuboid:
         self.inliers = []
         self.equation = []
 
-    def fit(self, pts, thresh=0.05, maxIteration=5000):
+    def fit(self, pts, thresh=0.05, maxIteration=5000, callback=None):
         """
         Find the best equation for 3 planes which define a complete cuboid.
 
         :param pts: 3D point cloud as a `np.array (N,3)`.
         :param thresh: Threshold distance from the cylinder radius which is considered inlier.
         :param maxIteration: Number of maximum iteration which RANSAC will loop over.
+        :param callback: Optional callable invoked after every non-degenerate iteration
+            with a state `dict`. Useful to plot the fitting progress, inspect
+            intermediate results, or implement a custom early-stopping criterion. If it
+            returns a truthy value, fitting stops early and the current best result is
+            returned. Treat the arrays in the state `dict` as read-only. State keys:
+            - `iteration`: current iteration index (0-based)
+            - `sample_indices`: indices of the points sampled this iteration
+            - `sample_points`: the sampled points, `np.array (6, 3)`
+            - `model`: `dict` with this iteration's candidate `equation` (3 planes)
+            - `inliers`: inlier indices found for this iteration's candidate
+            - `best_model`: `dict` with the best `equation` (3 planes) found so far
+            - `best_inliers`: best inlier indices found so far
+            - `is_best`: `True` if this iteration became the new best candidate
         :returns:
         - `best_eq`:  Array of 3 best planes's equation `np.array (3, 4)`
         - `best_inliers`: Inlier's index from the original point cloud. `np.array (1, M)`
@@ -123,9 +136,26 @@ class Cuboid:
             min_dist_pt = np.amin(dist_pt, axis=0)
             pt_id_inliers = np.where(np.abs(min_dist_pt) <= thresh)[0]
 
-            if len(pt_id_inliers) > len(best_inliers):
+            is_best = len(pt_id_inliers) > len(best_inliers)
+            if is_best:
                 best_eq = plane_eq
                 best_inliers = pt_id_inliers
             self.inliers = best_inliers
             self.equation = best_eq
+
+            if callback is not None:
+                stop = callback(
+                    {
+                        "iteration": it,
+                        "sample_indices": id_samples,
+                        "sample_points": pt_samples,
+                        "model": {"equation": plane_eq},
+                        "inliers": pt_id_inliers,
+                        "best_model": {"equation": best_eq},
+                        "best_inliers": best_inliers,
+                        "is_best": is_best,
+                    }
+                )
+                if stop:
+                    break
         return best_eq, best_inliers
