@@ -19,6 +19,7 @@ class Line:
         self.inliers = []
         self.A = []
         self.B = []
+        self.distances = []
 
     def fit(self, pts, thresh=0.2, maxIteration=1000, callback=None):
         """
@@ -44,6 +45,9 @@ class Line:
         - `A`: 3D slope of the line (angle) `np.array (1, 3)`
         - `B`: Axis interception as `np.array (1, 3)`
         - `inliers`: Inlier's index from the original point cloud. `np.array (1, M)`
+
+        The distances used to select the inliers are not returned, but they are kept in the object
+        and can be read from `self.distances` as a `np.array (N,)`, in the same order of `pts`.
         ---
         """
         n_points = pts.shape[0]
@@ -81,6 +85,7 @@ class Line:
                 self.inliers = best_inliers
                 self.A = best_A
                 self.B = best_B
+                self.distances = dist_pt
 
             if callback is not None:
                 stop = callback(

@@ -19,6 +19,8 @@ class Sphere:
         self.inliers = []
         self.center = []
         self.radius = 0
+        self.distances = []
+        self.radial_distances = []
 
     def fit(self, pts, thresh=0.2, maxIteration=1000, callback=None):
         """
@@ -45,6 +47,11 @@ class Sphere:
         - `center`: Center of the cylinder np.array(1,3) which the cylinder axis is passing through.
         - `radius`: Radius of cylinder.
         - `inliers`: Inlier's index from the original point cloud.
+
+        The distances measured to select the inliers are not returned, but they are kept in the
+        object, both as a `np.array (N,)` in the same order of `pts`:
+        - `self.radial_distances`: distance from each point to the center of the sphere
+        - `self.distances`: distance from each point to the hull of the sphere
         ---
         """
 
@@ -110,8 +117,11 @@ class Sphere:
             dist_pt = center - pts
             dist_pt = np.linalg.norm(dist_pt, axis=1)
 
+            # The distance to the hull is how much the point is away from the radius
+            dist_hull = np.abs(dist_pt - radius)
+
             # Select indexes where distance is biggers than the threshold
-            pt_id_inliers = np.where(np.abs(dist_pt - radius) <= thresh)[0]
+            pt_id_inliers = np.where(dist_hull <= thresh)[0]
 
             is_best = len(pt_id_inliers) > len(best_inliers)
             if is_best:
@@ -121,6 +131,8 @@ class Sphere:
                 self.inliers = best_inliers
                 self.center = best_center
                 self.radius = best_radius
+                self.radial_distances = dist_pt
+                self.distances = dist_hull
 
             if callback is not None:
                 stop = callback(

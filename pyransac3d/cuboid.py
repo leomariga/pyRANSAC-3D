@@ -31,6 +31,13 @@ class Cuboid:
         self.center = []
         self.extents = []
         self.axes = []
+        self.distances = []
+        self.plane_distances = []
+        self.face_normals = []
+        self.face_inlier_count = []
+        self.ref_face_index = 0
+        self.z_bounds = []
+        self.hull_angle = 0
 
     def fit(self, pts, thresh=0.05, maxIteration=5000, callback=None):
         """
@@ -49,7 +56,9 @@ class Cuboid:
             - `sample_points`: the sampled points, `np.array (6, 3)`
             - `model`: `dict` with this iteration's candidate `equation` (3 planes)
             - `inliers`: inlier indices found for this iteration's candidate
-            - `best_model`: `dict` with the best `equation` (3 planes) found so far
+            - `best_model`: `dict` with the best `equation` (3 planes) found so far and the
+            `center`, `extents` and `axes` of its box. Measuring the box is much more expensive
+            than testing a candidate, so it only happens when the best candidate changes
             - `best_inliers`: best inlier indices found so far
             - `is_best`: `True` if this iteration became the new best candidate
         :returns:
@@ -62,6 +71,23 @@ class Cuboid:
         The equations of the 3 orthogonal planes used to build the box are not returned, but they
         are kept in the object and can be read from `self.equation` as a `np.array (3, 4)`.
 
+        The distances measured to select the inliers are not returned either, but they are kept in
+        the object, in the same order of `pts`:
+        - `self.plane_distances`: distance from each point to each one of the 3 planes,
+        `np.array (3, N)`
+        - `self.distances`: distance from each point to the closest one of the 3 planes,
+        `np.array (N,)`
+
+        The measurements used to build the box from the 3 planes are kept in the object too:
+        - `self.face_normals`: normal of each one of the 3 planes `np.array (3, 3)`
+        - `self.face_inlier_count`: how many inliers are closest to each plane `np.array (3,)`
+        - `self.ref_face_index`: index of the plane with most inliers, whose normal is the
+        reference axis `self.axes[2]`
+        - `self.z_bounds`: smallest and biggest coordinate of the inliers along the reference
+        axis `np.array (2,)`
+        - `self.hull_angle`: rotation around the reference axis, in radians, which gives the
+        smallest footprint of the inliers `float`
+
         Call `get_corners(.)` to get the 8 vertices of the box and `get_transform(.)` to get its
         rotation and translation as a single matrix.
 
@@ -70,6 +96,8 @@ class Cuboid:
         n_points = pts.shape[0]
         best_eq = []
         best_inliers = []
+        best_plane_distances = []
+        best_distances = []
 
         if n_points < 6:
             raise ValueError("Point cloud must contain at least 6 points!")
@@ -161,10 +189,16 @@ class Cuboid:
             if is_best:
                 best_eq = plane_eq
                 best_inliers = pt_id_inliers
+                best_plane_distances = dist_pt
+                best_distances = min_dist_pt
             self.inliers = best_inliers
             self.equation = best_eq
+            self.plane_distances = best_plane_distances
+            self.distances = best_distances
 
             if callback is not None:
+                if is_best:
+                    self._measure_box(pts[best_inliers], best_eq)
                 stop = callback(
                     {
                         "iteration": it,
@@ -172,7 +206,12 @@ class Cuboid:
                         "sample_points": pt_samples,
                         "model": {"equation": plane_eq},
                         "inliers": pt_id_inliers,
-                        "best_model": {"equation": best_eq},
+                        "best_model": {
+                            "equation": best_eq,
+                            "center": self.center,
+                            "extents": self.extents,
+                            "axes": self.axes,
+                        },
                         "best_inliers": best_inliers,
                         "is_best": is_best,
                     }
@@ -182,20 +221,16 @@ class Cuboid:
 
         # Every iteration was degenerate, so there is no box to measure
         if len(best_inliers) > 0:
-            self.measure_box(pts[best_inliers], best_eq)
+            self._measure_box(pts[best_inliers], best_eq)
 
         return self.center, self.extents, self.axes, self.inliers
 
-    def measure_box(self, pts_inliers, plane_eq):
+    def _measure_box(self, pts_inliers, plane_eq):
         """
         Measure the box which contains the inliers of 3 orthogonal planes.
 
-        This is the step `fit(.)` runs on its best candidate, and it is public so you can measure
-        the box of any set of 3 orthogonal planes, for example to follow the box of the best
-        candidate of every iteration from a `fit(.)` callback.
-
-        It sets `self.center`, `self.extents` and `self.axes`, which are also what `get_corners(.)`
-        and `get_transform(.)` read.
+        It sets `self.center`, `self.extents` and `self.axes`, plus the measurements used to build
+        them, which are all documented in `fit(.)`.
 
         :param pts_inliers: Inlier points of the 3 planes as a `np.array (M,3)`.
         :param plane_eq: Equation of the 3 orthogonal planes `np.array (3, 4)`.
@@ -211,7 +246,8 @@ class Cuboid:
         # Each inlier belongs to the plane it is closest to. The face with more points is the one
         # we trust the most, because the 6 sampled points give a coarse orientation
         n_pts_face = np.bincount(np.argmin(dist_pt, axis=1), minlength=3)
-        ref_normal = normals[np.argmax(n_pts_face)]
+        ref_face = np.argmax(n_pts_face)
+        ref_normal = normals[ref_face]
 
         # Align the reference normal with Z. The extent along Z is then a dimension of the box and
         # deleting Z projects every inlier on the face which is orthogonal to the reference normal
@@ -236,6 +272,11 @@ class Cuboid:
         self.axes = rodrigues_rot(axes, [0, 0, 1], ref_normal)
         self.center = rodrigues_rot([center_2d[0], center_2d[1], (z_min + z_max) / 2], [0, 0, 1], ref_normal)[0]
         self.extents = np.asarray([width, depth, z_max - z_min])
+        self.face_normals = normals
+        self.face_inlier_count = n_pts_face
+        self.ref_face_index = ref_face
+        self.z_bounds = np.asarray([z_min, z_max])
+        self.hull_angle = angle
 
     def get_corners(self):
         """

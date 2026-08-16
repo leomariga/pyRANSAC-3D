@@ -48,9 +48,8 @@ def plot_callback(state):
     colors[state["sample_indices"]] = [0.1, 0.3, 0.9]
     pcd.colors = o3d.utility.Vector3dVector(colors)
 
-    # The box only changes when RANSAC finds a better set of 3 planes, so we measure it just there
+    # The box only changes when RANSAC finds a better set of 3 planes, so we redraw it just there
     if state["is_best"]:
-        cuboid1.measure_box(points[state["best_inliers"]], state["best_model"]["equation"])
         box.points = o3d.utility.Vector3dVector(cuboid1.get_corners())
         vis.update_geometry(box)
 

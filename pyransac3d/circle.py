@@ -23,6 +23,10 @@ class Circle:
         self.center = []
         self.axis = []
         self.radius = 0
+        self.plane_equation = []
+        self.distances = []
+        self.plane_distances = []
+        self.radial_distances = []
 
     def fit(self, pts, thresh=0.2, maxIteration=1000, callback=None):
         """
@@ -50,6 +54,17 @@ class Circle:
         - `axis`: Vector describing circle's plane normal as np.array(1,3).
         - `radius`: Radius of the circle.
         - `inliers`: Inlier's index from the original point cloud.
+
+        The equation of the plane which contains the circle is not returned, but it is kept in the
+        object and can be read from `self.plane_equation` as Ax+By+Cz+D `np.array (1, 4)`, where
+        A, B and C are the same as `self.axis`.
+
+        The distances measured to select the inliers are not returned either, but they are kept in
+        the object, all of them as a `np.array (N,)` in the same order of `pts`:
+        - `self.plane_distances`: signed distance from each point to the plane of the circle
+        - `self.radial_distances`: distance from each point to the hull of the circle if it was
+        extruded along its axis, which is negative for points inside of it
+        - `self.distances`: distance from each point to the hull of the circle
         ---
         """
 
@@ -150,6 +165,10 @@ class Circle:
                 self.center = best_center
                 self.axis = best_axis
                 self.radius = best_radius
+                self.plane_equation = plane_eq
+                self.plane_distances = dist_pt_plane
+                self.radial_distances = dist_pt_inf_circle
+                self.distances = dist_pt
 
             if callback is not None:
                 stop = callback(

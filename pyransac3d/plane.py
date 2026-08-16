@@ -19,6 +19,7 @@ class Plane:
     def __init__(self):
         self.inliers = []
         self.equation = []
+        self.distances = []
 
     def fit(self, pts, thresh=0.05, maxIteration=1000, callback=None):
         """
@@ -44,11 +45,16 @@ class Plane:
         - `self.equation`:  Parameters of the plane using Ax+By+Cy+D `np.array (1, 4)`
         - `self.inliers`: points from the dataset considered inliers
 
+        The distances used to select the inliers are not returned, but they are kept in the object
+        and can be read from `self.distances` as a `np.array (N,)`, in the same order of `pts`.
+        They are signed, so the sign tells on which side of the plane the point is.
+
         ---
         """
         n_points = pts.shape[0]
         best_eq = []
         best_inliers = []
+        best_distances = []
 
         if n_points < 3:
             raise ValueError("Point cloud must contain at least 3 points!")
@@ -93,8 +99,10 @@ class Plane:
             if is_best:
                 best_eq = plane_eq
                 best_inliers = pt_id_inliers
+                best_distances = dist_pt
             self.inliers = best_inliers
             self.equation = best_eq
+            self.distances = best_distances
 
             if callback is not None:
                 stop = callback(
