@@ -1,40 +1,28 @@
-import sys
+import random
 
 import numpy as np
-import open3d as o3d
 
-sys.path.append(".")
 import pyransac3d as pyrsc
 
-mesh_in = o3d.geometry.TriangleMesh.create_torus(torus_radius=5.0, tube_radius=0.5)
-vertices = np.asarray(mesh_in.vertices)
-noise = 0.5
-vertices += np.random.logistic(0, noise, size=vertices.shape)
-mesh_in.vertices = o3d.utility.Vector3dVector(vertices)
-mesh_in.compute_vertex_normals()
-mesh_in.paint_uniform_color([0.1, 0.9, 0.1])
-o3d.visualization.draw_geometries([mesh_in])
-pcd_load = mesh_in.sample_points_uniformly(number_of_points=2000)
-o3d.visualization.draw_geometries([pcd_load])
 
-points = np.asarray(pcd_load.points)
+def test_circle_finds_the_generated_circle():
+    # Seeding both generators makes the cloud and the samples taken by RANSAC the same on every run
+    random.seed(0)
+    generator = pyrsc.ShapeGenerator(seed=0)
 
-cir = pyrsc.Circle()
+    center = np.asarray([1.0, -1.0, 2.0])
+    axis = np.asarray([0.0, 1.0, 1.0]) / np.linalg.norm([0.0, 1.0, 1.0])
+    radius = 3.0
+    n_points = 300
+    points = generator.circle(center, axis, radius, n_points=n_points, noise=0.02, n_outliers=150)
 
-center, normal, radius, inliers = cir.fit(points, thresh=0.5)
-print("center: " + str(center))
-print("radius: " + str(radius))
-print("vecC: " + str(normal))
+    circle = pyrsc.Circle()
+    fit_center, fit_axis, fit_radius, inliers = circle.fit(points, thresh=0.15, maxIteration=500)
 
+    assert np.linalg.norm(np.asarray(fit_center) - center) < 0.25
+    assert abs(fit_radius - radius) < 0.15
 
-R = pyrsc.get_rotationMatrix_from_vectors([0, 0, 1], normal)
+    # The circle lies on the same plane when its normal points the other way around
+    assert abs(np.dot(fit_axis, axis)) > 0.99
 
-inline = pcd_load.select_by_index(inliers).paint_uniform_color([1, 0, 0])
-
-
-mesh_circle = o3d.geometry.TriangleMesh.create_torus(torus_radius=radius, tube_radius=0.1)
-mesh_circle.compute_vertex_normals()
-mesh_circle.paint_uniform_color([0.9, 0.1, 0.1])
-mesh_circle = mesh_circle.rotate(R, center=[0, 0, 0])
-mesh_circle = mesh_circle.translate((center[0], center[1], center[2]))
-o3d.visualization.draw_geometries([mesh_circle, pcd_load, inline])
+    assert len(inliers) >= 0.95 * n_points

@@ -1,14 +1,15 @@
-import sys
+from pathlib import Path
 
 import numpy as np
 import open3d as o3d
 
-sys.path.append(".")
 import pyransac3d as pyrsc
+
+DATASET_DIR = Path(__file__).resolve().parent / "dataset"
 
 # Fit a plane but stop as soon as a candidate explains a large enough
 # fraction of the point cloud, instead of always running maxIteration times.
-pcd_load = o3d.io.read_point_cloud("tests/dataset/caixa.ply")
+pcd_load = o3d.io.read_point_cloud(str(DATASET_DIR / "caixa.ply"))
 points = np.asarray(pcd_load.points)
 n_points = points.shape[0]
 

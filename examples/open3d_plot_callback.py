@@ -1,18 +1,19 @@
-import sys
 import time
+from pathlib import Path
 
 import numpy as np
 import open3d as o3d
 
-sys.path.append(".")
 import pyransac3d as pyrsc
+
+DATASET_DIR = Path(__file__).resolve().parent / "dataset"
 
 # Live-plot each RANSAC candidate while it is being evaluated: the box keeps
 # its real point colors, the current iteration's inliers are highlighted in
 # red, the best inliers found so far in green, and the sampled points that
 # generated the current candidate in blue. The camera turns a little on every
 # iteration to show the cloud in 3d.
-pcd_load = o3d.io.read_point_cloud("tests/dataset/caixa.ply")
+pcd_load = o3d.io.read_point_cloud(str(DATASET_DIR / "caixa.ply"))
 points = np.asarray(pcd_load.points)
 n_points = points.shape[0]
 original_colors = np.asarray(pcd_load.colors)

@@ -57,7 +57,13 @@ dev = [
     "pydoc-markdown>=4.8.2",
     "mkdocs>=1.6.1",
     "mkdocs-material>=9.7.7",
+    "pytest>=8.4.2",
 ]
 
 [tool.setuptools.packages.find]
 include = ["pyransac3d*"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+python_files = ["test_*.py"]
+python_functions = ["test_*"]

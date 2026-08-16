@@ -1,46 +1,30 @@
-import copy
-import sys
+import random
 
 import numpy as np
-import open3d as o3d
 
-sys.path.append(".")
 import pyransac3d as pyrsc
 
-mesh_cylinder = o3d.geometry.TriangleMesh.create_cylinder(radius=1, height=10.0)
-mesh_cylinder.compute_vertex_normals()
-mesh_cylinder.paint_uniform_color([0.1, 0.9, 0.1])
-o3d.visualization.draw_geometries([mesh_cylinder])
-pcd_load = mesh_cylinder.sample_points_uniformly(number_of_points=2000)
-o3d.visualization.draw_geometries([pcd_load])
 
-points = np.asarray(pcd_load.points)
+def test_cylinder_finds_the_generated_cylinder():
+    # Seeding both generators makes the cloud and the samples taken by RANSAC the same on every run
+    random.seed(0)
+    generator = pyrsc.ShapeGenerator(seed=0)
 
-cil = pyrsc.Cylinder()
+    center = np.asarray([1.0, 1.0, 0.0])
+    axis = np.asarray([0.2, 0.0, 1.0]) / np.linalg.norm([0.2, 0.0, 1.0])
+    radius = 3.0
+    n_points = 500
+    points = generator.cylinder(center, axis, radius, height=4.0, n_points=n_points, noise=0.02, n_outliers=200)
 
-center, normal, radius, inliers = cil.fit(points, thresh=0.05)
-print("center: " + str(center))
-print("radius: " + str(radius))
-print("vecC: " + str(normal))
+    cylinder = pyrsc.Cylinder()
+    fit_center, fit_axis, fit_radius, inliers = cylinder.fit(points, thresh=0.15, maxIteration=1500)
 
+    # The cylinder points the same way when its axis points the other way around
+    assert abs(np.dot(fit_axis, axis)) > 0.99
+    assert abs(fit_radius - radius) < 0.15
 
-R = pyrsc.get_rotationMatrix_from_vectors([0, 0, 1], normal)
+    # The center can be anywhere along the axis, so it is only wrong when it is off the axis
+    to_center = np.asarray(fit_center) - center
+    assert np.linalg.norm(to_center - np.dot(to_center, axis) * axis) < 0.3
 
-plane = pcd_load.select_by_index(inliers).paint_uniform_color([1, 0, 0])
-# obb = plane.get_oriented_bounding_box()
-# obb2 = plane.get_axis_aligned_bounding_box()
-# obb.color = [0, 0, 1]
-# obb2.color = [0, 1, 0]
-not_plane = pcd_load.select_by_index(inliers, invert=True)
-mesh = o3d.geometry.TriangleMesh.create_coordinate_frame(origin=[0, 0, 0], size=0.2)
-cen = o3d.geometry.TriangleMesh.create_coordinate_frame(origin=center, size=0.5)
-mesh_rot = copy.deepcopy(mesh).rotate(R, center=[0, 0, 0])
-
-mesh_cylinder = o3d.geometry.TriangleMesh.create_cylinder(radius=radius, height=0.5)
-mesh_cylinder.compute_vertex_normals()
-mesh_cylinder.paint_uniform_color([0.1, 0.9, 0.1])
-mesh_cylinder = mesh_cylinder.rotate(R, center=[0, 0, 0])
-mesh_cylinder = mesh_cylinder.translate((center[0], center[1], center[2]))
-o3d.visualization.draw_geometries([mesh_cylinder])
-
-o3d.visualization.draw_geometries([plane, not_plane, mesh, mesh_rot, mesh_cylinder])
+    assert len(inliers) >= 0.8 * n_points

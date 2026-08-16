@@ -15,8 +15,9 @@ MAX_LINE_LENGTH = 121
 
 ROOT_DIR = Path(__file__).parent
 TEST_DIR = ROOT_DIR.joinpath("tests")
+EXAMPLES_DIR = ROOT_DIR.joinpath("examples")
 SOURCE_DIR = ROOT_DIR.joinpath("pyransac3d")
-PYTHON_DIRS = [str(d) for d in [SOURCE_DIR, TEST_DIR]]
+PYTHON_DIRS = [str(d) for d in [SOURCE_DIR, TEST_DIR, EXAMPLES_DIR]]
 
 
 def _delete_file(file):
@@ -64,6 +65,13 @@ def lint_pylint(c):
 @task(lint_flake8, lint_pylint)
 def lint(c):
     """Run all linting"""
+
+
+@task(help={"verbose": "Prints the name and the result of every test"})
+def test(c, verbose=False):
+    """Run the tests with pytest"""
+    pytest_options = "--verbose" if verbose else ""
+    _run(c, f"pytest {pytest_options} {TEST_DIR}")
 
 
 @task

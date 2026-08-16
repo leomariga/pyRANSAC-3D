@@ -1,36 +1,29 @@
-import sys
+import random
 
 import numpy as np
-import open3d as o3d
 
-sys.path.append(".")
 import pyransac3d as pyrsc
 
-print("create noisy mesh")
-mesh_in = o3d.geometry.TriangleMesh.create_cylinder(radius=1, height=500.0)
-vertices = np.asarray(mesh_in.vertices)
-noise = 15
-vertices += np.random.logistic(0, noise, size=vertices.shape)
-mesh_in.vertices = o3d.utility.Vector3dVector(vertices)
-mesh_in.compute_vertex_normals()
-mesh_in.paint_uniform_color([0.2, 0.2, 0.8])
-o3d.visualization.draw_geometries([mesh_in])
-pcd_load = mesh_in.sample_points_uniformly(number_of_points=2000)
-o3d.visualization.draw_geometries([pcd_load])
 
+def test_line_finds_the_generated_line():
+    # Seeding both generators makes the cloud and the samples taken by RANSAC the same on every run
+    random.seed(0)
+    generator = pyrsc.ShapeGenerator(seed=0)
 
-points = np.asarray(pcd_load.points)
+    anchor = np.asarray([1.0, 2.0, -1.0])
+    direction = np.asarray([1.0, 1.0, 0.5]) / np.linalg.norm([1.0, 1.0, 0.5])
+    n_points = 300
+    points = generator.line(anchor, direction, length=10.0, n_points=n_points, noise=0.05, n_outliers=150)
 
-line = pyrsc.Line()
+    line = pyrsc.Line()
+    fit_direction, fit_point, inliers = line.fit(points, thresh=0.25, maxIteration=300)
 
-A, B, inliers = line.fit(points, thresh=15)
+    # A line is the same line when its direction points the other way around
+    assert abs(np.dot(fit_direction, direction)) > 0.999
 
-R = pyrsc.get_rotationMatrix_from_vectors([0, 0, 1], A)
-plane = pcd_load.select_by_index(inliers).paint_uniform_color([1, 0, 0])
+    # Any point of the line is a valid answer, so the only thing to check is that it really is on
+    # the line, which is the part of the vector to the anchor which is not along the direction
+    to_anchor = np.asarray(fit_point) - anchor
+    assert np.linalg.norm(to_anchor - np.dot(to_anchor, direction) * direction) < 0.25
 
-mesh_cylinder = o3d.geometry.TriangleMesh.create_cylinder(radius=1, height=1000)
-mesh_cylinder.compute_vertex_normals()
-mesh_cylinder.paint_uniform_color([1, 0, 0])
-mesh_cylinder = mesh_cylinder.rotate(R, center=[0, 0, 0])
-mesh_cylinder = mesh_cylinder.translate((B[0], B[1], B[2]))
-o3d.visualization.draw_geometries([pcd_load, plane, mesh_cylinder])
+    assert len(inliers) >= 0.95 * n_points

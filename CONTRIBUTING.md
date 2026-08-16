@@ -25,13 +25,25 @@ This project uses [uv](https://docs.astral.sh/uv/) to manage dependencies and th
    uv run invoke --list
    ```
 
+## Tests and examples
+The `tests` folder has the automated tests, which are run with pytest:
+```sh
+uv run invoke test
+```
+They only depend on NumPy: the point clouds are built by `pyransac3d.ShapeGenerator` from the parameters of each shape, so every test checks the fitted shape against the shape it generated, and the whole suite runs in a few seconds without opening any window.
+
+The `examples` folder has the scripts which show how to use the library. They use Open3D to plot the results, so they open a window and are meant to be run one at a time:
+```sh
+uv run python examples/plane_demo.py
+```
+
 ## We Use [Github Flow](https://guides.github.com/introduction/flow/index.html), So All Code Changes Happen Through Pull Requests
 Pull requests are the best way to propose changes to the codebase (we use [Github Flow](https://guides.github.com/introduction/flow/index.html)). We actively welcome your pull requests:
 
 1. Fork the repo and create a new branch from `master`.
 2. If you've added code that should be tested, add tests.
 3. Update the documentation.
-4. Ensure the test suite passes.
+4. Ensure the test suite passes with `uv run invoke test`.
 5. Make sure your code lints.
 6. Issue that pull request!
 6. Clean unused files before commiting using `uv run invoke clean`

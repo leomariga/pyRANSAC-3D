@@ -33,6 +33,9 @@ renderer:
       - title: Point
         contents:
         - pyransac3d.point.*
+      - title: Shape Generator
+        contents:
+        - pyransac3d.shape_generator.*
       - title: Auxiliary
         contents:
         - pyransac3d.aux_functions.*

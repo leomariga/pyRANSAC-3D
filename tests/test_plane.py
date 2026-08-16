@@ -1,24 +1,30 @@
-import sys
+import random
 
 import numpy as np
-import open3d as o3d
 
-sys.path.append(".")
 import pyransac3d as pyrsc
 
-# Load saved point cloud and visualize it
-pcd_load = o3d.io.read_point_cloud("tests/dataset/caixa.ply")
-# o3d.visualization.draw_geometries([pcd_load])
-points = np.asarray(pcd_load.points)
 
-plano1 = pyrsc.Plane()
+def test_plane_finds_the_generated_plane():
+    # Seeding both generators makes the cloud and the samples taken by RANSAC the same on every run
+    random.seed(0)
+    generator = pyrsc.ShapeGenerator(seed=0)
 
-best_eq, best_inliers = plano1.fit(points, 0.01)
-plane = pcd_load.select_by_index(best_inliers).paint_uniform_color([1, 0, 0])
-obb = plane.get_oriented_bounding_box()
-obb2 = plane.get_axis_aligned_bounding_box()
-obb.color = [0, 0, 1]
-obb2.color = [0, 1, 0]
-not_plane = pcd_load.select_by_index(best_inliers, invert=True)
+    center = np.asarray([0.5, 1.0, -2.0])
+    normal = np.asarray([1.0, 2.0, 3.0]) / np.linalg.norm([1.0, 2.0, 3.0])
+    n_points = 400
+    points = generator.plane(center, normal, size=8.0, n_points=n_points, noise=0.02, n_outliers=200)
 
-o3d.visualization.draw_geometries([not_plane, plane, obb, obb2])
+    plane = pyrsc.Plane()
+    equation, inliers = plane.fit(points, thresh=0.1, maxIteration=300)
+
+    equation = np.asarray(equation)
+
+    # A plane is the same plane when its equation is multiplied by -1
+    assert abs(np.dot(equation[0:3], normal)) > 0.999
+
+    # The center of the patch is on the plane, so putting it on the equation gives its distance to
+    # the fitted plane, which is zero when both planes are the same
+    assert abs(np.dot(equation[0:3], center) + equation[3]) < 0.1
+
+    assert len(inliers) >= 0.95 * n_points

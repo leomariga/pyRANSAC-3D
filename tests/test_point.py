@@ -1,35 +1,23 @@
-import sys
+import random
 
 import numpy as np
-import open3d as o3d
 
-sys.path.append(".")
 import pyransac3d as pyrsc
 
-mesh_in = o3d.geometry.TriangleMesh.create_sphere(radius=1.0)
-vertices = np.asarray(mesh_in.vertices)
-noise = 0.5
-vertices += np.random.logistic(0, noise, size=vertices.shape)
-mesh_in.vertices = o3d.utility.Vector3dVector(vertices)
-mesh_in.compute_vertex_normals()
-mesh_in.paint_uniform_color([0.1, 0.9, 0.1])
-o3d.visualization.draw_geometries([mesh_in])
-pcd_load = mesh_in.sample_points_uniformly(number_of_points=2000)
-o3d.visualization.draw_geometries([pcd_load])
 
-points = np.asarray(pcd_load.points)
+def test_point_finds_the_generated_center():
+    # Seeding both generators makes the cloud and the samples taken by RANSAC the same on every run
+    random.seed(0)
+    generator = pyrsc.ShapeGenerator(seed=0)
 
-pt = pyrsc.Point()
+    center = np.asarray([1.0, -2.0, 3.0])
+    n_points = 300
+    points = generator.point(center, n_points=n_points, noise=0.05, n_outliers=200, outlier_bounds=4.0)
 
-center, inliers = pt.fit(points, thresh=1.2)
-print("center: " + str(center))
+    point = pyrsc.Point()
+    fit_center, inliers = point.fit(points, thresh=0.25, maxIteration=200)
 
-
-inline = pcd_load.select_by_index(inliers).paint_uniform_color([1, 0, 0])
-outline = pcd_load.select_by_index(inliers, invert=True).paint_uniform_color([0, 1, 0])
-
-mesh_circle = o3d.geometry.TriangleMesh.create_sphere(radius=0.2)
-mesh_circle.compute_vertex_normals()
-mesh_circle.paint_uniform_color([0.9, 0.1, 0.1])
-mesh_circle = mesh_circle.translate((center[0], center[1], center[2]))
-o3d.visualization.draw_geometries([outline, mesh_circle, inline])
+    # The center is one of the points of the cluster, so it is as far from the real center as the
+    # noise took it
+    assert np.linalg.norm(np.asarray(fit_center) - center) < 0.25
+    assert len(inliers) >= n_points

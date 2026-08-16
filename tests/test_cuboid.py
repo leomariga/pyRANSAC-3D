@@ -1,52 +1,52 @@
-import sys
+import random
 
 import numpy as np
-import open3d as o3d
 
-sys.path.append(".")
 import pyransac3d as pyrsc
 
-# Load saved point cloud and visualize it
-pcd_load = o3d.io.read_point_cloud("tests/dataset/caixa.ply")
-# o3d.visualization.draw_geometries([pcd_load])
-points = np.asarray(pcd_load.points)
 
-plano1 = pyrsc.Cuboid()
+def test_cuboid_finds_the_generated_cuboid():
+    # Seeding both generators makes the cloud and the samples taken by RANSAC the same on every run
+    random.seed(0)
+    generator = pyrsc.ShapeGenerator(seed=0)
 
-center, extents, axes, best_inliers = plano1.fit(points, 0.02)
-plane = pcd_load.select_by_index(best_inliers).paint_uniform_color([1, 0, 0])
-not_plane = pcd_load.select_by_index(best_inliers, invert=True)
+    center = np.asarray([1.0, -1.0, 2.0])
+    extents = np.asarray([4.0, 3.0, 2.0])
+    angle = np.radians(25.0)
+    axes = np.asarray(
+        [
+            [np.cos(angle), np.sin(angle), 0.0],
+            [-np.sin(angle), np.cos(angle), 0.0],
+            [0.0, 0.0, 1.0],
+        ]
+    )
 
-print("Center: ", center)
-print("Extents: ", extents)
-print("Axes: ", axes)
+    # The box is measured from the bounding box of the inliers, and the 3 planes of a candidate are
+    # infinite, so outliers far from the box but close to one of the planes would stretch it
+    n_points = 900
+    points = generator.cuboid(center, extents, axes=axes, n_points=n_points, noise=0.01)
 
-# The equations of the 3 faces are not returned by fit, but they are kept in the object
-print("Plane equations: ", plano1.equation)
+    cuboid = pyrsc.Cuboid()
+    fit_center, fit_extents, fit_axes, inliers = cuboid.fit(points, thresh=0.05, maxIteration=2000)
 
-# Rotation and translation of the box, which is what we need to place a mesh on it
-transform = plano1.get_transform()
-print("Rotation: ", transform[0:3, 0:3])
-print("Translation: ", transform[0:3, 3])
+    assert np.linalg.norm(fit_center - center) < 0.25
 
-# create_box builds the box on the origin corner, so we move it half of its size on every
-# direction to center it, and then a single transform puts it on the pose we just fitted
-mesh_box = o3d.geometry.TriangleMesh.create_box(width=extents[0], height=extents[1], depth=extents[2])
-mesh_box = mesh_box.translate(-extents / 2)
-mesh_box = mesh_box.transform(transform)
-mesh_box.compute_vertex_normals()
-mesh_box.paint_uniform_color([0, 0, 1])
+    # A box looks the same after being rotated by 90 degrees around its own axes, so its axes come
+    # in any order and pointing either way, and so do the extents measured along them
+    np.testing.assert_allclose(np.sort(fit_extents), np.sort(extents), atol=0.3)
+    alignment = np.abs(fit_axes.dot(axes.T))
+    assert np.all(np.amax(alignment, axis=1) > 0.99)
 
-# draw_geometries has no transparency at all, it always draws a mesh opaque, and a solid box would
-# hide the points it rests on. Drawing the 12 edges of the same box is what lets us see them.
-# The 4 first corners are on one face and the 4 last ones are on the opposite face, in the same order
-edges = [[0, 1], [1, 2], [2, 3], [3, 0], [4, 5], [5, 6], [6, 7], [7, 4], [0, 4], [1, 5], [2, 6], [3, 7]]
-box = o3d.geometry.LineSet(
-    points=o3d.utility.Vector3dVector(plano1.get_corners()),
-    lines=o3d.utility.Vector2iVector(edges),
-)
-box.paint_uniform_color([0, 0, 1])
+    # The 3 planes of the best candidate are 3 faces which touch each other, so they hold about
+    # half of the points of the cloud
+    assert len(inliers) >= 0.3 * n_points
 
-# mesh = o3d.geometry.TriangleMesh.create_coordinate_frame(origin=[0, 0, 0])
-# Replace box with mesh_box below to draw it solid instead of see-through
-o3d.visualization.draw_geometries([plane, not_plane, box])
+    corners = cuboid.get_corners()
+    assert corners.shape == (8, 3)
+
+    # Every corner of the box is half of each extent away from the center, along its own axes
+    np.testing.assert_allclose(
+        np.linalg.norm(corners - fit_center, axis=1),
+        np.full(8, np.linalg.norm(extents) / 2),
+        atol=0.3,
+    )
