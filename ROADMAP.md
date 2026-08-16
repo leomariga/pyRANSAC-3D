@@ -7,7 +7,7 @@
 - [x] #28 Getting Runtime error when fitting. Division by zero, soved in #33. Verify if need to add to other primitive shapes. 
 - [x] #29 Wrong center for detecting circles, also mentioned in #13 and probably #39
 - [x] #35 Sphere fitting gives cryptic error message if less than 4 points are provided. This could be added also to other primitives. Implement on #36.
-- [ ] #40 Cuboid is not cuboid. Rework this primitive in library.
+- [x] #40 Cuboid is not cuboid. Rework this primitive in library.
 - [x] #34 Add callbacks
 - [ ] Create a folder with examples and add to the documentation.
 - [ ] Create a folder with formal pytest tests and run it with the tasks.py

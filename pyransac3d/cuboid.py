@@ -2,6 +2,8 @@ import random
 
 import numpy as np
 
+from .aux_functions import convex_hull_2d, min_bounding_rect, rodrigues_rot
+
 
 class Cuboid:
     """
@@ -12,6 +14,12 @@ class Cuboid:
 
     We could use a recursive planar RANSAC, but it would use 9 points instead. Orthogonality makes this algorithm more efficient.
 
+    Once the three faces are found, the bounded box which contains them is measured. The face with
+    most inliers gives the reference axis, and the remaining rotation around it is the one which
+    makes the smallest footprint when the inliers are projected on the plane orthogonal to that
+    axis. This way `fit(.)` also gives the `center`, the `extents` and the `axes` of a real box,
+    and not only the equations of three infinite planes.
+
     ![Cuboid](https://raw.githubusercontent.com/leomariga/pyRANSAC-3D/master/doc/cuboid.gif "Cuboid")
 
     ---
@@ -20,10 +28,13 @@ class Cuboid:
     def __init__(self):
         self.inliers = []
         self.equation = []
+        self.center = []
+        self.extents = []
+        self.axes = []
 
     def fit(self, pts, thresh=0.05, maxIteration=5000, callback=None):
         """
-        Find the best equation for 3 planes which define a complete cuboid.
+        Find the cuboid which best fits the point cloud, from the 3 orthogonal planes of its faces.
 
         :param pts: 3D point cloud as a `np.array (N,3)`.
         :param thresh: Threshold distance from the cylinder radius which is considered inlier.
@@ -42,8 +53,18 @@ class Cuboid:
             - `best_inliers`: best inlier indices found so far
             - `is_best`: `True` if this iteration became the new best candidate
         :returns:
-        - `best_eq`:  Array of 3 best planes's equation `np.array (3, 4)`
-        - `best_inliers`: Inlier's index from the original point cloud. `np.array (1, M)`
+        - `center`: Center of the cuboid `np.array (3,)`
+        - `extents`: Size of the cuboid along each one of its axes `np.array (3,)`
+        - `axes`: Orthonormal axes of the cuboid, one per row, where the last one is the normal of
+        the face with most inliers `np.array (3, 3)`
+        - `inliers`: Inlier's index from the original point cloud. `np.array (1, M)`
+
+        The equations of the 3 orthogonal planes used to build the box are not returned, but they
+        are kept in the object and can be read from `self.equation` as a `np.array (3, 4)`.
+
+        Call `get_corners(.)` to get the 8 vertices of the box and `get_transform(.)` to get its
+        rotation and translation as a single matrix.
+
         ---
         """
         n_points = pts.shape[0]
@@ -158,4 +179,118 @@ class Cuboid:
                 )
                 if stop:
                     break
-        return best_eq, best_inliers
+
+        # Every iteration was degenerate, so there is no box to measure
+        if len(best_inliers) > 0:
+            self.measure_box(pts[best_inliers], best_eq)
+
+        return self.center, self.extents, self.axes, self.inliers
+
+    def measure_box(self, pts_inliers, plane_eq):
+        """
+        Measure the box which contains the inliers of 3 orthogonal planes.
+
+        This is the step `fit(.)` runs on its best candidate, and it is public so you can measure
+        the box of any set of 3 orthogonal planes, for example to follow the box of the best
+        candidate of every iteration from a `fit(.)` callback.
+
+        It sets `self.center`, `self.extents` and `self.axes`, which are also what `get_corners(.)`
+        and `get_transform(.)` read.
+
+        :param pts_inliers: Inlier points of the 3 planes as a `np.array (M,3)`.
+        :param plane_eq: Equation of the 3 orthogonal planes `np.array (3, 4)`.
+
+        ---
+        """
+
+        # The 3 normals are already unitary and orthogonal to each other, so the distance from a
+        # point to a plane is just the dot product with the normal plus the plane's D
+        normals = plane_eq[:, 0:3]
+        dist_pt = np.abs(pts_inliers.dot(normals.T) + plane_eq[:, 3])
+
+        # Each inlier belongs to the plane it is closest to. The face with more points is the one
+        # we trust the most, because the 6 sampled points give a coarse orientation
+        n_pts_face = np.bincount(np.argmin(dist_pt, axis=1), minlength=3)
+        ref_normal = normals[np.argmax(n_pts_face)]
+
+        # Align the reference normal with Z. The extent along Z is then a dimension of the box and
+        # deleting Z projects every inlier on the face which is orthogonal to the reference normal
+        pts_ref = rodrigues_rot(pts_inliers, ref_normal, [0, 0, 1])
+        z_min = np.amin(pts_ref[:, 2])
+        z_max = np.amax(pts_ref[:, 2])
+
+        # The projection of a box on that plane is a rectangle, so the remaining rotation and the
+        # other 2 dimensions are the ones which enclose the projected points with the smallest area
+        hull = convex_hull_2d(pts_ref[:, 0:2])
+        angle, _, width, depth, center_2d, _ = min_bounding_rect(hull)
+
+        # The rectangle axes are the rows of its rotation matrix, so we only have to rotate them
+        # back together with the center to describe the box in the original space
+        axes = np.asarray(
+            [
+                [np.cos(angle), np.sin(angle), 0],
+                [-np.sin(angle), np.cos(angle), 0],
+                [0, 0, 1],
+            ]
+        )
+        self.axes = rodrigues_rot(axes, [0, 0, 1], ref_normal)
+        self.center = rodrigues_rot([center_2d[0], center_2d[1], (z_min + z_max) / 2], [0, 0, 1], ref_normal)[0]
+        self.extents = np.asarray([width, depth, z_max - z_min])
+
+    def get_corners(self):
+        """
+        Get the vertices of the fitted cuboid.
+
+        :returns: The 8 vertices of the cuboid `np.array (8, 3)`, the first 4 on one face and the
+        last 4 on the opposite one, both in the same order.
+
+        ---
+        """
+
+        if len(self.center) == 0:
+            raise ValueError("The cuboid has no corners because it was not fitted yet. Call fit() first!")
+
+        signs = np.asarray(
+            [
+                [-1, -1, -1],
+                [1, -1, -1],
+                [1, 1, -1],
+                [-1, 1, -1],
+                [-1, -1, 1],
+                [1, -1, 1],
+                [1, 1, 1],
+                [-1, 1, 1],
+            ]
+        )
+
+        # Walk from the center along each axis by half of its extent
+        return self.center + (signs * (self.extents / 2)).dot(self.axes)
+
+    def get_transform(self):
+        """
+        Get the rotation and the translation of the fitted cuboid as a single matrix.
+
+        The matrix takes a point from the cuboid's own frame, where the box is centered on the
+        origin and aligned with the coordinate axes with the size given by `self.extents`, to the
+        frame of the point cloud. The rotation is `transform[0:3, 0:3]` and the translation is
+        `transform[0:3, 3]`, which is the same as `self.center`.
+
+        Keep in mind a box looks the same after being rotated by 90 degrees around its own axes, so
+        this is one of the 24 rotations which describe the same cuboid, and not a unique answer.
+
+        :returns: Homogeneous transformation matrix from the cuboid frame to the point cloud frame
+        `np.array (4, 4)`
+
+        ---
+        """
+
+        if len(self.center) == 0:
+            raise ValueError("The cuboid has no transform because it was not fitted yet. Call fit() first!")
+
+        # The rows of self.axes are the axes of the box written in the point cloud frame, so they
+        # are the columns of the rotation matrix which takes the box frame to the point cloud frame
+        transform = np.eye(4)
+        transform[0:3, 0:3] = np.asarray(self.axes).T
+        transform[0:3, 3] = self.center
+
+        return transform
