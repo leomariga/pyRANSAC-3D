@@ -28,3 +28,26 @@ def test_plane_finds_the_generated_plane():
     assert abs(np.dot(equation[0:3], center) + equation[3]) < 0.1
 
     assert len(inliers) >= 0.95 * n_points
+
+
+def test_plane_keeps_the_distances_of_the_best_candidate():
+    random.seed(0)
+    generator = pyrsc.ShapeGenerator(seed=0)
+
+    points = generator.plane([0.5, 1.0, -2.0], [1.0, 2.0, 3.0], size=8.0, n_points=200, noise=0.02, n_outliers=100)
+
+    plane = pyrsc.Plane()
+    equation, inliers = plane.fit(points, thresh=0.1, maxIteration=100)
+
+    # The object keeps what fit(.) returned
+    np.testing.assert_array_equal(plane.equation, equation)
+    np.testing.assert_array_equal(plane.inliers, inliers)
+
+    # The normal of the equation is unitary, so the signed distance to the plane is what putting
+    # each point on the equation gives
+    equation = np.asarray(equation)
+    assert plane.distances.shape == (points.shape[0],)
+    np.testing.assert_allclose(plane.distances, points.dot(equation[0:3]) + equation[3])
+
+    # The inliers are exactly the points which are closer to the plane than the threshold
+    np.testing.assert_array_equal(inliers, np.where(np.abs(plane.distances) <= 0.1)[0])

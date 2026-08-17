@@ -27,3 +27,26 @@ def test_line_finds_the_generated_line():
     assert np.linalg.norm(to_anchor - np.dot(to_anchor, direction) * direction) < 0.25
 
     assert len(inliers) >= 0.95 * n_points
+
+
+def test_line_keeps_the_distances_of_the_best_candidate():
+    random.seed(0)
+    generator = pyrsc.ShapeGenerator(seed=0)
+
+    points = generator.line([1.0, 2.0, -1.0], [1.0, 1.0, 0.5], length=10.0, n_points=200, noise=0.05, n_outliers=100)
+
+    line = pyrsc.Line()
+    fit_direction, fit_point, inliers = line.fit(points, thresh=0.25, maxIteration=100)
+
+    # The object keeps what fit(.) returned
+    np.testing.assert_array_equal(line.A, fit_direction)
+    np.testing.assert_array_equal(line.B, fit_point)
+    np.testing.assert_array_equal(line.inliers, inliers)
+
+    # The direction is unitary, so the norm of the cross product is the perpendicular distance
+    # from each point to the line
+    expected = np.linalg.norm(np.cross(fit_direction, fit_point - points), axis=1)
+    assert line.distances.shape == (points.shape[0],)
+    np.testing.assert_allclose(line.distances, expected)
+
+    np.testing.assert_array_equal(inliers, np.where(line.distances <= 0.25)[0])
