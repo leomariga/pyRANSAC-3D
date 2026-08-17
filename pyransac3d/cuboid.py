@@ -147,12 +147,8 @@ class Cuboid:
 
             # Now we use another point to find a orthogonal plane 2
             # Calculate distance from the point to the first plane
-            dist_p4_plane = (
-                plane_eq[0][0] * pt_samples[3, 0]
-                + plane_eq[0][1] * pt_samples[3, 1]
-                + plane_eq[0][2] * pt_samples[3, 2]
-                + plane_eq[0][3]
-            ) / np.sqrt(plane_eq[0][0] ** 2 + plane_eq[0][1] ** 2 + plane_eq[0][2] ** 2)
+            # vecC is already unitary, so no division by its norm is needed
+            dist_p4_plane = np.dot(vecC, pt_samples[3, :]) + k
 
             # vecC is already normal (module 1) so we only have to discount from the point, the distance*unity = distance*normal
             # A simple way of understanding this is we move our point along the normal until it reaches the plane
@@ -171,6 +167,7 @@ class Cuboid:
 
             # The last plane will be orthogonal to the first and sacond plane (and its normals will be orthogonal to first and second planes' normal)
             vecG = np.cross(vecC, vecF)
+            vecG = vecG / np.linalg.norm(vecG)  # Normal
 
             k = -np.sum(np.multiply(vecG, pt_samples[5, :]))
             plane_eq.append([vecG[0], vecG[1], vecG[2], k])
@@ -179,23 +176,11 @@ class Cuboid:
 
             # Distance from a point to a plane
             # https://mathworld.wolfram.com/Point-PlaneDistance.html
+            # The 3 normals are already unitary, so no division by their norms is needed
             pt_id_inliers = []  # list of inliers ids
-            dist_pt = []
-            for id_plane in range(plane_eq.shape[0]):
-                dist_pt.append(
-                    np.abs(
-                        (
-                            plane_eq[id_plane, 0] * pts[:, 0]
-                            + plane_eq[id_plane, 1] * pts[:, 1]
-                            + plane_eq[id_plane, 2] * pts[:, 2]
-                            + plane_eq[id_plane, 3]
-                        )
-                        / np.sqrt(plane_eq[id_plane, 0] ** 2 + plane_eq[id_plane, 1] ** 2 + plane_eq[id_plane, 2] ** 2)
-                    )
-                )
+            dist_pt = np.abs(pts.dot(plane_eq[:, 0:3].T) + plane_eq[:, 3]).T
 
             # Select indexes where distance is biggers than the threshold
-            dist_pt = np.asarray(dist_pt)
             min_dist_pt = np.amin(dist_pt, axis=0)
             pt_id_inliers = np.where(np.abs(min_dist_pt) <= thresh)[0]
 

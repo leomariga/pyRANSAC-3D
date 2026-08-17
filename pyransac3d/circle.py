@@ -151,9 +151,8 @@ class Circle:
             pt_id_inliers = []  # list of inliers ids
 
             # Distance from a point to the circle's plane
-            dist_pt_plane = (
-                plane_eq[0] * pts[:, 0] + plane_eq[1] * pts[:, 1] + plane_eq[2] * pts[:, 2] + plane_eq[3]
-            ) / np.sqrt(plane_eq[0] ** 2 + plane_eq[1] ** 2 + plane_eq[2] ** 2)
+            # vecC is already unitary, so no division by its norm is needed
+            dist_pt_plane = pts.dot(vecC) + k
             vecC_stakado = np.stack([vecC] * n_points, 0)
             # Distance from a point to the circle hull if it is infinite along its axis (perpendicular distance to the plane)
             # The norm of the cross product in this case is the distance from the point to circle's axis (using the normal vector of the plane)
