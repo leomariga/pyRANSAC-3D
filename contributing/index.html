@@ -1125,10 +1125,9 @@ There is also <code>early_stop_callback.py</code>, which uses the same <code>cal
 <li>Render the markdown pages and the <code>mkdocs.yml</code> into <code>build/docs</code>:
    <div class="highlight"><pre><span></span><code>uv<span class="w"> </span>run<span class="w"> </span>pydoc-markdown
 </code></pre></div>
-   To preview the site locally before deploying, add <code>--build --site-dir _site</code> (the <code>--site-dir</code> is required, <code>--build</code> alone fails) or run <code>cd build/docs &amp;&amp; uv run mkdocs serve</code>.</li>
-<li>Deploy to <code>gh-pages</code>:
-   <div class="highlight"><pre><span></span><code><span class="nb">cd</span><span class="w"> </span>build/docs
-uv<span class="w"> </span>run<span class="w"> </span>mkdocs<span class="w"> </span>gh-deploy<span class="w"> </span>--force
+   To preview the site locally before deploying, add <code>--build --site-dir _site</code> (the <code>--site-dir</code> is required, <code>--build</code> alone fails) or run <code>uv run mkdocs serve -f build/docs/mkdocs.yml</code>.</li>
+<li>Deploy to <code>gh-pages</code> (from the repo root; <code>mkdocs.yml</code> lives in <code>build/docs</code>):
+   <div class="highlight"><pre><span></span><code>uv<span class="w"> </span>run<span class="w"> </span>mkdocs<span class="w"> </span>gh-deploy<span class="w"> </span>--force<span class="w"> </span>-f<span class="w"> </span>build/docs/mkdocs.yml
 </code></pre></div>
    <code>--force</code> overwrites <code>gh-pages</code> with the new build; that branch only ever holds generated site output, so this is expected/safe.</li>
 <li>Verify at <a href="https://leomariga.github.io/pyRANSAC-3D/">leomariga.github.io/pyRANSAC-3D</a> (allow a minute or two for GitHub Pages to update).</li>

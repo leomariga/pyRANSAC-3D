@@ -809,16 +809,12 @@ The point with more neighbors in a determined radius (<code>thresh</code>) will 
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">]</span> <span class="o">|</span> <span class="nb">list</span><span class="p">[</span><span class="nb">float</span><span class="p">],</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">intp</span><span class="p">]</span> <span class="o">|</span> <span class="nb">list</span><span class="p">[</span><span class="nb">int</span><span class="p">]]</span>
 </code></pre></div>
 <p>Find the best point for the 3D Point representaiton. The Point in a 3d enviroment is defined as a X, Y Z coordinate with more neighbors around.</p>
-<p><strong>Arguments</strong>:</p>
+<p>The optional <code>callback</code> is invoked after every iteration with a state <code>dict</code>.
+Useful to plot the fitting progress, inspect intermediate results, or implement
+a custom early-stopping criterion. If it returns a truthy value, fitting stops
+early and the current best result is returned. Treat the arrays in the state
+<code>dict</code> as read-only. State keys:</p>
 <ul>
-<li><code>pts</code>: 3D point cloud as a <code>np.array (N,3)</code>.</li>
-<li><code>thresh</code>: Threshold radius from the point which is considered inlier.</li>
-<li><code>maxIteration</code>: Number of maximum iteration which RANSAC will loop over.</li>
-<li><code>callback</code>: Optional callable invoked after every iteration with a state
-<code>dict</code>. Useful to plot the fitting progress, inspect intermediate results,
-or implement a custom early-stopping criterion. If it returns a truthy
-value, fitting stops early and the current best result is returned. Treat
-the arrays in the state <code>dict</code> as read-only. State keys:</li>
 <li><code>iteration</code>: current iteration index (0-based)</li>
 <li><code>sample_indices</code>: indices of the points sampled this iteration</li>
 <li><code>sample_points</code>: the sampled points, <code>np.array (1, 3)</code></li>
@@ -827,6 +823,14 @@ the arrays in the state <code>dict</code> as read-only. State keys:</li>
 <li><code>best_model</code>: <code>dict</code> with the best <code>center</code> found so far</li>
 <li><code>best_inliers</code>: best inlier indices found so far</li>
 <li><code>is_best</code>: <code>True</code> if this iteration became the new best candidate</li>
+</ul>
+<p><strong>Arguments</strong>:</p>
+<ul>
+<li><code>pts</code>: 3D point cloud as a <code>np.array (N,3)</code>.</li>
+<li><code>thresh</code>: Threshold radius from the point which is considered inlier.</li>
+<li><code>maxIteration</code>: Number of maximum iteration which RANSAC will loop over.</li>
+<li><code>callback</code>: Optional callable invoked after every iteration with a state
+<code>dict</code>. If it returns a truthy value, fitting stops early.</li>
 </ul>
 <p><strong>Returns</strong>:</p>
 <ul>

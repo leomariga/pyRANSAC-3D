@@ -839,9 +839,8 @@
 <div class="highlight"><pre><span></span><code><span class="k">class</span><span class="w"> </span><span class="nc">Cuboid</span><span class="p">()</span>
 </code></pre></div>
 <p>Implementation for box (Cuboid) RANSAC.</p>
-<p>A cuboid is defined as convex polyhedron bounded by six faces formed by three orthogonal normal vectors. Cats love to play with this kind of geometry.
+<p>A cuboid is defined as convex polyhedron bounded by six faces formed by three orthogonal normal vectors.
 This method uses 6 points to find 3 best plane equations orthogonal to eachother.</p>
-<p>We could use a recursive planar RANSAC, but it would use 9 points instead. Orthogonality makes this algorithm more efficient.</p>
 <p>Once the three faces are found, the bounded box which contains them is measured. The face with
 most inliers gives the reference axis, and the remaining rotation around it is the one which
 makes the smallest footprint when the inliers are projected on the plane orthogonal to that
@@ -864,26 +863,31 @@ and not only the equations of three infinite planes.</p>
 <span class="p">]</span>
 </code></pre></div>
 <p>Find the cuboid which best fits the point cloud, from the 3 orthogonal planes of its faces.</p>
-<p><strong>Arguments</strong>:</p>
+<p>The optional <code>callback</code> is invoked after every non-degenerate iteration with a
+state <code>dict</code>. Useful to plot the fitting progress, inspect intermediate results,
+or implement a custom early-stopping criterion. If it returns a truthy value,
+fitting stops early and the current best result is returned. Treat the arrays
+in the state <code>dict</code> as read-only. State keys:</p>
 <ul>
-<li><code>pts</code>: 3D point cloud as a <code>np.array (N,3)</code>.</li>
-<li><code>thresh</code>: Threshold distance from the cylinder radius which is considered inlier.</li>
-<li><code>maxIteration</code>: Number of maximum iteration which RANSAC will loop over.</li>
-<li><code>callback</code>: Optional callable invoked after every non-degenerate iteration
-with a state <code>dict</code>. Useful to plot the fitting progress, inspect
-intermediate results, or implement a custom early-stopping criterion. If it
-returns a truthy value, fitting stops early and the current best result is
-returned. Treat the arrays in the state <code>dict</code> as read-only. State keys:</li>
 <li><code>iteration</code>: current iteration index (0-based)</li>
 <li><code>sample_indices</code>: indices of the points sampled this iteration</li>
 <li><code>sample_points</code>: the sampled points, <code>np.array (6, 3)</code></li>
 <li><code>model</code>: <code>dict</code> with this iteration's candidate <code>equation</code> (3 planes)</li>
 <li><code>inliers</code>: inlier indices found for this iteration's candidate</li>
 <li><code>best_model</code>: <code>dict</code> with the best <code>equation</code> (3 planes) found so far and the
-<code>center</code>, <code>extents</code> and <code>axes</code> of its box. Measuring the box is much more expensive
-than testing a candidate, so it only happens when the best candidate changes</li>
+  <code>center</code>, <code>extents</code> and <code>axes</code> of its box. Measuring the box is much more
+  expensive than testing a candidate, so it only happens when the best
+  candidate changes</li>
 <li><code>best_inliers</code>: best inlier indices found so far</li>
 <li><code>is_best</code>: <code>True</code> if this iteration became the new best candidate</li>
+</ul>
+<p><strong>Arguments</strong>:</p>
+<ul>
+<li><code>pts</code>: 3D point cloud as a <code>np.array (N,3)</code>.</li>
+<li><code>thresh</code>: Threshold distance from the cylinder radius which is considered inlier.</li>
+<li><code>maxIteration</code>: Number of maximum iteration which RANSAC will loop over.</li>
+<li><code>callback</code>: Optional callable invoked after every non-degenerate iteration
+with a state <code>dict</code>. If it returns a truthy value, fitting stops early.</li>
 </ul>
 <p><strong>Returns</strong>:</p>
 <ul>

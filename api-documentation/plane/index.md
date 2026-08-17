@@ -27,12 +27,8 @@ def fit(
 
 Find the best equation for a plane.
 
-**Arguments**:
+The optional `callback` is invoked after every non-degenerate iteration with a state `dict`. Useful to plot the fitting progress, inspect intermediate results, or implement a custom early-stopping criterion. If it returns a truthy value, fitting stops early and the current best result is returned. Treat the arrays in the state `dict` as read-only. State keys:
 
-- `pts`: 3D point cloud as a `np.array (N,3)`.
-- `thresh`: Threshold distance from the plane which is considered inlier.
-- `maxIteration`: Number of maximum iteration which RANSAC will loop over.
-- `callback`: Optional callable invoked after every non-degenerate iteration with a state `dict`. Useful to plot the fitting progress, inspect intermediate results, or implement a custom early-stopping criterion. If it returns a truthy value, fitting stops early and the current best result is returned. Treat the arrays in the state `dict` as read-only. State keys:
 - `iteration`: current iteration index (0-based)
 - `sample_indices`: indices of the points sampled this iteration
 - `sample_points`: the sampled points, `np.array (3, 3)`
@@ -41,6 +37,13 @@ Find the best equation for a plane.
 - `best_model`: `dict` with the best `equation` found so far
 - `best_inliers`: best inlier indices found so far
 - `is_best`: `True` if this iteration became the new best candidate
+
+**Arguments**:
+
+- `pts`: 3D point cloud as a `np.array (N,3)`.
+- `thresh`: Threshold distance from the plane which is considered inlier.
+- `maxIteration`: Number of maximum iteration which RANSAC will loop over.
+- `callback`: Optional callable invoked after every non-degenerate iteration with a state `dict`. If it returns a truthy value, fitting stops early.
 
 **Returns**:
 

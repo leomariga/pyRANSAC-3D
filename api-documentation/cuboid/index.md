@@ -8,9 +8,7 @@ class Cuboid()
 
 Implementation for box (Cuboid) RANSAC.
 
-A cuboid is defined as convex polyhedron bounded by six faces formed by three orthogonal normal vectors. Cats love to play with this kind of geometry. This method uses 6 points to find 3 best plane equations orthogonal to eachother.
-
-We could use a recursive planar RANSAC, but it would use 9 points instead. Orthogonality makes this algorithm more efficient.
+A cuboid is defined as convex polyhedron bounded by six faces formed by three orthogonal normal vectors. This method uses 6 points to find 3 best plane equations orthogonal to eachother.
 
 Once the three faces are found, the bounded box which contains them is measured. The face with most inliers gives the reference axis, and the remaining rotation around it is the one which makes the smallest footprint when the inliers are projected on the plane orthogonal to that axis. This way `fit(.)` also gives the `center`, the `extents` and the `axes` of a real box, and not only the equations of three infinite planes.
 
@@ -34,12 +32,8 @@ def fit(
 
 Find the cuboid which best fits the point cloud, from the 3 orthogonal planes of its faces.
 
-**Arguments**:
+The optional `callback` is invoked after every non-degenerate iteration with a state `dict`. Useful to plot the fitting progress, inspect intermediate results, or implement a custom early-stopping criterion. If it returns a truthy value, fitting stops early and the current best result is returned. Treat the arrays in the state `dict` as read-only. State keys:
 
-- `pts`: 3D point cloud as a `np.array (N,3)`.
-- `thresh`: Threshold distance from the cylinder radius which is considered inlier.
-- `maxIteration`: Number of maximum iteration which RANSAC will loop over.
-- `callback`: Optional callable invoked after every non-degenerate iteration with a state `dict`. Useful to plot the fitting progress, inspect intermediate results, or implement a custom early-stopping criterion. If it returns a truthy value, fitting stops early and the current best result is returned. Treat the arrays in the state `dict` as read-only. State keys:
 - `iteration`: current iteration index (0-based)
 - `sample_indices`: indices of the points sampled this iteration
 - `sample_points`: the sampled points, `np.array (6, 3)`
@@ -48,6 +42,13 @@ Find the cuboid which best fits the point cloud, from the 3 orthogonal planes of
 - `best_model`: `dict` with the best `equation` (3 planes) found so far and the `center`, `extents` and `axes` of its box. Measuring the box is much more expensive than testing a candidate, so it only happens when the best candidate changes
 - `best_inliers`: best inlier indices found so far
 - `is_best`: `True` if this iteration became the new best candidate
+
+**Arguments**:
+
+- `pts`: 3D point cloud as a `np.array (N,3)`.
+- `thresh`: Threshold distance from the cylinder radius which is considered inlier.
+- `maxIteration`: Number of maximum iteration which RANSAC will loop over.
+- `callback`: Optional callable invoked after every non-degenerate iteration with a state `dict`. If it returns a truthy value, fitting stops early.
 
 **Returns**:
 
