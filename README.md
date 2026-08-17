@@ -74,6 +74,10 @@ radius: 5.085218633039647
 
 ![3D Sphere](https://raw.githubusercontent.com/leomariga/pyRANSAC-3D/master/doc/sphere.gif "3D Sphere")
 
+### More examples
+
+Runnable examples of every shape are in the [examples folder](https://github.com/leomariga/pyRANSAC-3D/tree/master/examples).
+
 
 ## Documentation & other links
  - The [documentation is this Ṕage](https://leomariga.github.io/pyRANSAC-3D/).

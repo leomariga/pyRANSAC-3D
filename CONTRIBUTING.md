@@ -32,10 +32,19 @@ uv run invoke test
 ```
 They only depend on NumPy: the point clouds are built by `pyransac3d.ShapeGenerator` from the parameters of each shape, so every test checks the fitted shape against the shape it generated, and the whole suite runs in a few seconds without opening any window.
 
-The `examples` folder has the scripts which show how to use the library. They use Open3D to plot the results, so they open a window and are meant to be run one at a time:
+The `examples` folder has the scripts which show how to use the library, one file per shape and per kind of example, so the name says what to expect from it:
+
+| Name | What it does |
+| --- | --- |
+| `{shape}_simple.py` | The shortest way to call the fitter. Only NumPy, no window, it just prints the parameters it found |
+| `{shape}_visual.py` | Fits a shape and plots the result with Open3D, which opens a window |
+| `{shape}_animation.py` | Plots every candidate with Open3D while RANSAC is running, using the `callback` of the fitter |
+
+Run them one at a time, e.g.:
 ```sh
-uv run python examples/plane_demo.py
+uv run python examples/plane_simple.py
 ```
+There is also `early_stop_callback.py`, which uses the same `callback` to stop the fitting as soon as the result is good enough, instead of plotting it.
 
 ## We Use [Github Flow](https://guides.github.com/introduction/flow/index.html), So All Code Changes Happen Through Pull Requests
 Pull requests are the best way to propose changes to the codebase (we use [Github Flow](https://guides.github.com/introduction/flow/index.html)). We actively welcome your pull requests:
