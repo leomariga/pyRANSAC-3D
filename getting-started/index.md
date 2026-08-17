@@ -7,7 +7,6 @@ The library fits simple 3D primitives to point clouds with RANSAC. Start here if
 ## On This Page
 
 - [Install](#install)
-- [The Basic Workflow](#the-basic-workflow)
 - [Choose a Shape](#choose-a-shape)
 - [First Fit: Plane](#first-fit-plane)
 - [Fit a Sphere](#fit-a-sphere)
@@ -22,27 +21,6 @@ The library fits simple 3D primitives to point clouds with RANSAC. Start here if
 ```
 pip install pyransac3d
 ```
-
-## The Basic Workflow
-
-pyRANSAC-3D expects point clouds as NumPy-compatible arrays with shape `(N, 3)`, where each row is one point:
-
-```
-[
-    [x0, y0, z0],
-    [x1, y1, z1],
-    ...
-]
-```
-
-Most shapes follow the same pattern:
-
-1. Load or create a point cloud.
-1. Create the shape fitter.
-1. Call `.fit(points, thresh=...)`.
-1. Use the fitted parameters and the inlier indexes.
-
-`thresh` is the maximum distance a point can be from the fitted shape and still count as an inlier. Smaller values are stricter; larger values accept more noisy points.
 
 ## Choose a Shape
 
@@ -59,6 +37,8 @@ pyRANSAC-3D exposes one fitter class per primitive:
 | `Cuboid`   | Box-like objects                               | Center, extents, axes, and inliers              |
 
 The exact return values are documented in each API page, but every fitter returns the indexes of the inlier points. Those indexes are useful for extracting the part of your point cloud that matched the fitted shape.
+
+pyRANSAC-3D expects point clouds as NumPy-compatible arrays with shape `(N, 3)`
 
 ## First Fit: Plane
 
@@ -131,28 +111,17 @@ print(f"Inliers: {len(inliers)} of {len(points)}")
 
 ## Callbacks
 
-Every fitter accepts an optional `callback`. The callback runs during RANSAC and receives a `state` dictionary with information about the current iteration and the best result found so far.
+Every fitter accepts an optional `callback`. The callback runs during RANSAC and receives a `state` dictionary for the current iteration, including values such as `iteration` and `best_inliers`.
 
-Use a callback when you want to react while fitting is still running. For example, you can stop early with your own criteria, log intermediate values, inspect candidate parameters, or update a visualization.
+Use a callback when you want to react while fitting is still running: stop early with your own criteria, log intermediate values, inspect candidate parameters, or update a visualization.
 
-Common `state` values include:
-
-- `iteration`: current RANSAC iteration.
-- `sample_indices`: indexes of the points sampled for the current candidate.
-- `sample_points`: sampled points used to build the current candidate.
-- `model`: parameters of the current candidate.
-- `inliers`: inliers of the current candidate.
-- `best_model`: best candidate found so far.
-- `best_inliers`: inliers of the best candidate found so far.
-- `is_best`: `True` when the current candidate became the new best result.
+The full `state` dictionary is documented on each fitter: [Plane](https://leomariga.github.io/pyRANSAC-3D/api-documentation/plane/index.md), [Sphere](https://leomariga.github.io/pyRANSAC-3D/api-documentation/sphere/index.md), [Cylinder](https://leomariga.github.io/pyRANSAC-3D/api-documentation/cylinder/index.md), [Cuboid](https://leomariga.github.io/pyRANSAC-3D/api-documentation/cuboid/index.md), [Line](https://leomariga.github.io/pyRANSAC-3D/api-documentation/line/index.md), [Circle](https://leomariga.github.io/pyRANSAC-3D/api-documentation/circle/index.md), and [Point](https://leomariga.github.io/pyRANSAC-3D/api-documentation/point/index.md).
 
 ### Early Stop With Your Own Criteria
 
 If the callback returns `True`, the fit stops early and returns the best result found so far. This is useful when you already know what a good enough result looks like:
 
 ```
-from typing import Any
-
 import pyransac3d as pyrsc
 
 points = pyrsc.ShapeGenerator(seed=0).plane(
@@ -166,7 +135,7 @@ n_points = len(points)
 target_inlier_ratio = 0.8
 
 
-def stop_when_enough_points_fit(state: dict[str, Any]) -> bool:
+def stop_when_enough_points_fit(state):
     inlier_ratio = len(state["best_inliers"]) / n_points
     if state["is_best"]:
         print(
@@ -195,8 +164,6 @@ See the full runnable [early stop callback example](https://github.com/leomariga
 Callbacks can also be used without stopping the fit. Return `False` or `None` to keep RANSAC running, and use the `state` values to log progress, compare candidate parameters, or update a live plot.
 
 ```
-from typing import Any
-
 import pyransac3d as pyrsc
 
 points = pyrsc.ShapeGenerator(seed=0).plane(
@@ -208,7 +175,7 @@ points = pyrsc.ShapeGenerator(seed=0).plane(
 )
 
 
-def print_progress(state: dict[str, Any]) -> bool:
+def print_progress(state):
     if state["is_best"]:
         print(
             f"iteration {state['iteration']:>4} | "

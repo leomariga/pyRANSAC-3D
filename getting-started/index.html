@@ -339,17 +339,6 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#the-basic-workflow" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        The Basic Workflow
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
   <a href="#choose-a-shape" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -882,17 +871,6 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#the-basic-workflow" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        The Basic Workflow
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
   <a href="#choose-a-shape" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -1034,7 +1012,6 @@
 <h2 id="on-this-page">On This Page<a class="headerlink" href="#on-this-page" title="Permanent link">&para;</a></h2>
 <ul>
 <li><a href="#install">Install</a></li>
-<li><a href="#the-basic-workflow">The Basic Workflow</a></li>
 <li><a href="#choose-a-shape">Choose a Shape</a></li>
 <li><a href="#first-fit-plane">First Fit: Plane</a></li>
 <li><a href="#fit-a-sphere">Fit a Sphere</a></li>
@@ -1047,22 +1024,6 @@
 <h2 id="install">Install<a class="headerlink" href="#install" title="Permanent link">&para;</a></h2>
 <div class="highlight"><pre><span></span><code>pip<span class="w"> </span>install<span class="w"> </span>pyransac3d
 </code></pre></div>
-<h2 id="the-basic-workflow">The Basic Workflow<a class="headerlink" href="#the-basic-workflow" title="Permanent link">&para;</a></h2>
-<p>pyRANSAC-3D expects point clouds as NumPy-compatible arrays with shape <code>(N, 3)</code>, where each row is one point:</p>
-<div class="highlight"><pre><span></span><code><span class="p">[</span>
-    <span class="p">[</span><span class="n">x0</span><span class="p">,</span> <span class="n">y0</span><span class="p">,</span> <span class="n">z0</span><span class="p">],</span>
-    <span class="p">[</span><span class="n">x1</span><span class="p">,</span> <span class="n">y1</span><span class="p">,</span> <span class="n">z1</span><span class="p">],</span>
-    <span class="o">...</span>
-<span class="p">]</span>
-</code></pre></div>
-<p>Most shapes follow the same pattern:</p>
-<ol>
-<li>Load or create a point cloud.</li>
-<li>Create the shape fitter.</li>
-<li>Call <code>.fit(points, thresh=...)</code>.</li>
-<li>Use the fitted parameters and the inlier indexes.</li>
-</ol>
-<p><code>thresh</code> is the maximum distance a point can be from the fitted shape and still count as an inlier. Smaller values are stricter; larger values accept more noisy points.</p>
 <h2 id="choose-a-shape">Choose a Shape<a class="headerlink" href="#choose-a-shape" title="Permanent link">&para;</a></h2>
 <p>pyRANSAC-3D exposes one fitter class per primitive:</p>
 <table>
@@ -1112,6 +1073,7 @@
 </tbody>
 </table>
 <p>The exact return values are documented in each API page, but every fitter returns the indexes of the inlier points. Those indexes are useful for extracting the part of your point cloud that matched the fitted shape.</p>
+<p>pyRANSAC-3D expects point clouds as NumPy-compatible arrays with shape <code>(N, 3)</code></p>
 <h2 id="first-fit-plane">First Fit: Plane<a class="headerlink" href="#first-fit-plane" title="Permanent link">&para;</a></h2>
 <p>Planes are a good first example because many point clouds contain floors, walls, tables, or other flat surfaces.</p>
 <p><img alt="Plane fitting animation" src="https://raw.githubusercontent.com/leomariga/pyRANSAC-3D/master/doc/plano.gif" /></p>
@@ -1170,24 +1132,12 @@
 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Inliers: </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">inliers</span><span class="p">)</span><span class="si">}</span><span class="s2"> of </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">points</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 </code></pre></div>
 <h2 id="callbacks">Callbacks<a class="headerlink" href="#callbacks" title="Permanent link">&para;</a></h2>
-<p>Every fitter accepts an optional <code>callback</code>. The callback runs during RANSAC and receives a <code>state</code> dictionary with information about the current iteration and the best result found so far.</p>
-<p>Use a callback when you want to react while fitting is still running. For example, you can stop early with your own criteria, log intermediate values, inspect candidate parameters, or update a visualization.</p>
-<p>Common <code>state</code> values include:</p>
-<ul>
-<li><code>iteration</code>: current RANSAC iteration.</li>
-<li><code>sample_indices</code>: indexes of the points sampled for the current candidate.</li>
-<li><code>sample_points</code>: sampled points used to build the current candidate.</li>
-<li><code>model</code>: parameters of the current candidate.</li>
-<li><code>inliers</code>: inliers of the current candidate.</li>
-<li><code>best_model</code>: best candidate found so far.</li>
-<li><code>best_inliers</code>: inliers of the best candidate found so far.</li>
-<li><code>is_best</code>: <code>True</code> when the current candidate became the new best result.</li>
-</ul>
+<p>Every fitter accepts an optional <code>callback</code>. The callback runs during RANSAC and receives a <code>state</code> dictionary for the current iteration, including values such as <code>iteration</code> and <code>best_inliers</code>.</p>
+<p>Use a callback when you want to react while fitting is still running: stop early with your own criteria, log intermediate values, inspect candidate parameters, or update a visualization.</p>
+<p>The full <code>state</code> dictionary is documented on each fitter: <a href="../api-documentation/plane/">Plane</a>, <a href="../api-documentation/sphere/">Sphere</a>, <a href="../api-documentation/cylinder/">Cylinder</a>, <a href="../api-documentation/cuboid/">Cuboid</a>, <a href="../api-documentation/line/">Line</a>, <a href="../api-documentation/circle/">Circle</a>, and <a href="../api-documentation/point/">Point</a>.</p>
 <h3 id="early-stop-with-your-own-criteria">Early Stop With Your Own Criteria<a class="headerlink" href="#early-stop-with-your-own-criteria" title="Permanent link">&para;</a></h3>
 <p>If the callback returns <code>True</code>, the fit stops early and returns the best result found so far. This is useful when you already know what a good enough result looks like:</p>
-<div class="highlight"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Any</span>
-
-<span class="kn">import</span><span class="w"> </span><span class="nn">pyransac3d</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pyrsc</span>
+<div class="highlight"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">pyransac3d</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pyrsc</span>
 
 <span class="n">points</span> <span class="o">=</span> <span class="n">pyrsc</span><span class="o">.</span><span class="n">ShapeGenerator</span><span class="p">(</span><span class="n">seed</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">plane</span><span class="p">(</span>
     <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span>
@@ -1200,7 +1150,7 @@
 <span class="n">target_inlier_ratio</span> <span class="o">=</span> <span class="mf">0.8</span>
 
 
-<span class="k">def</span><span class="w"> </span><span class="nf">stop_when_enough_points_fit</span><span class="p">(</span><span class="n">state</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">stop_when_enough_points_fit</span><span class="p">(</span><span class="n">state</span><span class="p">):</span>
     <span class="n">inlier_ratio</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">state</span><span class="p">[</span><span class="s2">&quot;best_inliers&quot;</span><span class="p">])</span> <span class="o">/</span> <span class="n">n_points</span>
     <span class="k">if</span> <span class="n">state</span><span class="p">[</span><span class="s2">&quot;is_best&quot;</span><span class="p">]:</span>
         <span class="nb">print</span><span class="p">(</span>
@@ -1224,9 +1174,7 @@
 <p>See the full runnable <a href="https://github.com/leomariga/pyRANSAC-3D/blob/master/examples/early_stop_callback.py">early stop callback example</a>.</p>
 <h3 id="inspect-progress-or-build-visualizations">Inspect Progress or Build Visualizations<a class="headerlink" href="#inspect-progress-or-build-visualizations" title="Permanent link">&para;</a></h3>
 <p>Callbacks can also be used without stopping the fit. Return <code>False</code> or <code>None</code> to keep RANSAC running, and use the <code>state</code> values to log progress, compare candidate parameters, or update a live plot.</p>
-<div class="highlight"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Any</span>
-
-<span class="kn">import</span><span class="w"> </span><span class="nn">pyransac3d</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pyrsc</span>
+<div class="highlight"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">pyransac3d</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pyrsc</span>
 
 <span class="n">points</span> <span class="o">=</span> <span class="n">pyrsc</span><span class="o">.</span><span class="n">ShapeGenerator</span><span class="p">(</span><span class="n">seed</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">plane</span><span class="p">(</span>
     <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span>
@@ -1237,7 +1185,7 @@
 <span class="p">)</span>
 
 
-<span class="k">def</span><span class="w"> </span><span class="nf">print_progress</span><span class="p">(</span><span class="n">state</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">print_progress</span><span class="p">(</span><span class="n">state</span><span class="p">):</span>
     <span class="k">if</span> <span class="n">state</span><span class="p">[</span><span class="s2">&quot;is_best&quot;</span><span class="p">]:</span>
         <span class="nb">print</span><span class="p">(</span>
             <span class="sa">f</span><span class="s2">&quot;iteration </span><span class="si">{</span><span class="n">state</span><span class="p">[</span><span class="s1">&#39;iteration&#39;</span><span class="p">]</span><span class="si">:</span><span class="s2">&gt;4</span><span class="si">}</span><span class="s2"> | &quot;</span>
