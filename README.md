@@ -38,7 +38,7 @@ Install from [PyPI](https://pypi.org/project/pyransac3d/):
 pip install pyransac3d
 ```
 
-For a complete introduction, shape-selection guide, and runnable examples, see the [Getting Started guide](https://leomariga.github.io/pyRANSAC-3D/getting-started/).
+For a complete introduction see the [Getting Started guide](https://leomariga.github.io/pyRANSAC-3D/getting-started/).
 
 ## Quick start
 
