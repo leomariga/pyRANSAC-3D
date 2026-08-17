@@ -110,10 +110,11 @@ These steps are infrequent, so they're documented here as a reminder.
 ### Generating and publishing docs
 Docs are generated from source docstrings via `pydoc-markdown` (config: `pydoc-markdown.yml`) using the `mkdocs` renderer, then deployed to the `gh-pages` branch (served by GitHub Pages).
 
-1. Build the docs site:
+1. Render the markdown pages and the `mkdocs.yml` into `build/docs`:
    ```sh
-   uv run pydoc-markdown --build
+   uv run pydoc-markdown
    ```
+   To preview the site locally before deploying, add `--build --site-dir _site` (the `--site-dir` is required, `--build` alone fails) or run `cd build/docs && uv run mkdocs serve`.
 2. Deploy to `gh-pages`:
    ```sh
    cd build/docs
