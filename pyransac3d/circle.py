@@ -50,18 +50,7 @@ class Circle:
         :param thresh: Threshold distance from the cylinder hull which is considered inlier.
         :param maxIteration: Number of maximum iteration which RANSAC will loop over.
         :param callback: Optional callable invoked after every non-degenerate iteration
-            with a state `dict`. Useful to plot the fitting progress, inspect
-            intermediate results, or implement a custom early-stopping criterion. If it
-            returns a truthy value, fitting stops early and the current best result is
-            returned. Treat the arrays in the state `dict` as read-only. State keys:
-            - `iteration`: current iteration index (0-based)
-            - `sample_indices`: indices of the points sampled this iteration
-            - `sample_points`: the sampled points, `np.array (3, 3)`
-            - `model`: `dict` with this iteration's candidate `center`, `axis`, `radius`
-            - `inliers`: inlier indices found for this iteration's candidate
-            - `best_model`: `dict` with the best `center`, `axis`, `radius` found so far
-            - `best_inliers`: best inlier indices found so far
-            - `is_best`: `True` if this iteration became the new best candidate
+            with a state `dict`. If it returns a truthy value, fitting stops early.
 
         :returns:
         - `center`: Center of the circle np.array(1,3) which the circle center is passing through.
@@ -79,6 +68,22 @@ class Circle:
         - `self.radial_distances`: distance from each point to the hull of the circle if it was
         extruded along its axis, which is negative for points inside of it
         - `self.distances`: distance from each point to the hull of the circle
+
+        The optional `callback` is invoked after every non-degenerate iteration with a
+        state `dict`. Useful to plot the fitting progress, inspect intermediate results,
+        or implement a custom early-stopping criterion. If it returns a truthy value,
+        fitting stops early and the current best result is returned. Treat the arrays
+        in the state `dict` as read-only. State keys:
+
+        - `iteration`: current iteration index (0-based)
+        - `sample_indices`: indices of the points sampled this iteration
+        - `sample_points`: the sampled points, `np.array (3, 3)`
+        - `model`: `dict` with this iteration's candidate `center`, `axis`, `radius`
+        - `inliers`: inlier indices found for this iteration's candidate
+        - `best_model`: `dict` with the best `center`, `axis`, `radius` found so far
+        - `best_inliers`: best inlier indices found so far
+        - `is_best`: `True` if this iteration became the new best candidate
+
         ---
         """
 

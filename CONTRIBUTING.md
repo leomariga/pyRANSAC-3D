@@ -114,11 +114,10 @@ Docs are generated from source docstrings via `pydoc-markdown` (config: `pydoc-m
    ```sh
    uv run pydoc-markdown
    ```
-   To preview the site locally before deploying, add `--build --site-dir _site` (the `--site-dir` is required, `--build` alone fails) or run `cd build/docs && uv run mkdocs serve`.
-2. Deploy to `gh-pages`:
+   To preview the site locally before deploying, add `--build --site-dir _site` (the `--site-dir` is required, `--build` alone fails) or run `uv run mkdocs serve -f build/docs/mkdocs.yml`.
+2. Deploy to `gh-pages` (from the repo root; `mkdocs.yml` lives in `build/docs`):
    ```sh
-   cd build/docs
-   uv run mkdocs gh-deploy --force
+   uv run mkdocs gh-deploy --force -f build/docs/mkdocs.yml
    ```
    `--force` overwrites `gh-pages` with the new build; that branch only ever holds generated site output, so this is expected/safe.
 3. Verify at [leomariga.github.io/pyRANSAC-3D](https://leomariga.github.io/pyRANSAC-3D/) (allow a minute or two for GitHub Pages to update).
