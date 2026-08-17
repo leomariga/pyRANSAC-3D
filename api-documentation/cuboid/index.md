@@ -32,17 +32,6 @@ def fit(
 
 Find the cuboid which best fits the point cloud, from the 3 orthogonal planes of its faces.
 
-The optional `callback` is invoked after every non-degenerate iteration with a state `dict`. Useful to plot the fitting progress, inspect intermediate results, or implement a custom early-stopping criterion. If it returns a truthy value, fitting stops early and the current best result is returned. Treat the arrays in the state `dict` as read-only. State keys:
-
-- `iteration`: current iteration index (0-based)
-- `sample_indices`: indices of the points sampled this iteration
-- `sample_points`: the sampled points, `np.array (6, 3)`
-- `model`: `dict` with this iteration's candidate `equation` (3 planes)
-- `inliers`: inlier indices found for this iteration's candidate
-- `best_model`: `dict` with the best `equation` (3 planes) found so far and the `center`, `extents` and `axes` of its box. Measuring the box is much more expensive than testing a candidate, so it only happens when the best candidate changes
-- `best_inliers`: best inlier indices found so far
-- `is_best`: `True` if this iteration became the new best candidate
-
 **Arguments**:
 
 - `pts`: 3D point cloud as a `np.array (N,3)`.
@@ -73,6 +62,17 @@ The measurements used to build the box from the 3 planes are kept in the object 
 - `self.hull_angle`: rotation around the reference axis, in radians, which gives the smallest footprint of the inliers `float`
 
 Call `get_corners(.)` to get the 8 vertices of the box and `get_transform(.)` to get its rotation and translation as a single matrix.
+
+The optional `callback` is invoked after every non-degenerate iteration with a state `dict`. Useful to plot the fitting progress, inspect intermediate results, or implement a custom early-stopping criterion. If it returns a truthy value, fitting stops early and the current best result is returned. Treat the arrays in the state `dict` as read-only. State keys:
+
+- `iteration`: current iteration index (0-based)
+- `sample_indices`: indices of the points sampled this iteration
+- `sample_points`: the sampled points, `np.array (6, 3)`
+- `model`: `dict` with this iteration's candidate `equation` (3 planes)
+- `inliers`: inlier indices found for this iteration's candidate
+- `best_model`: `dict` with the best `equation` (3 planes) found so far and the `center`, `extents` and `axes` of its box. Measuring the box is much more expensive than testing a candidate, so it only happens when the best candidate changes
+- `best_inliers`: best inlier indices found so far
+- `is_best`: `True` if this iteration became the new best candidate
 
 ______________________________________________________________________
 

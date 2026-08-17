@@ -814,21 +814,6 @@ This method uses 3 points to find the circle's plane, center and radius.</p>
 <span class="p">]</span>
 </code></pre></div>
 <p>Find the parameters (axis and radius and center) to define a circle.</p>
-<p>The optional <code>callback</code> is invoked after every non-degenerate iteration with a
-state <code>dict</code>. Useful to plot the fitting progress, inspect intermediate results,
-or implement a custom early-stopping criterion. If it returns a truthy value,
-fitting stops early and the current best result is returned. Treat the arrays
-in the state <code>dict</code> as read-only. State keys:</p>
-<ul>
-<li><code>iteration</code>: current iteration index (0-based)</li>
-<li><code>sample_indices</code>: indices of the points sampled this iteration</li>
-<li><code>sample_points</code>: the sampled points, <code>np.array (3, 3)</code></li>
-<li><code>model</code>: <code>dict</code> with this iteration's candidate <code>center</code>, <code>axis</code>, <code>radius</code></li>
-<li><code>inliers</code>: inlier indices found for this iteration's candidate</li>
-<li><code>best_model</code>: <code>dict</code> with the best <code>center</code>, <code>axis</code>, <code>radius</code> found so far</li>
-<li><code>best_inliers</code>: best inlier indices found so far</li>
-<li><code>is_best</code>: <code>True</code> if this iteration became the new best candidate</li>
-</ul>
 <p><strong>Arguments</strong>:</p>
 <ul>
 <li><code>pts</code>: 3D point cloud as a numpy array (N,3).</li>
@@ -853,6 +838,21 @@ the object, all of them as a <code>np.array (N,)</code> in the same order of <co
 - <code>self.radial_distances</code>: distance from each point to the hull of the circle if it was
 extruded along its axis, which is negative for points inside of it
 - <code>self.distances</code>: distance from each point to the hull of the circle</p>
+<p>The optional <code>callback</code> is invoked after every non-degenerate iteration with a
+state <code>dict</code>. Useful to plot the fitting progress, inspect intermediate results,
+or implement a custom early-stopping criterion. If it returns a truthy value,
+fitting stops early and the current best result is returned. Treat the arrays
+in the state <code>dict</code> as read-only. State keys:</p>
+<ul>
+<li><code>iteration</code>: current iteration index (0-based)</li>
+<li><code>sample_indices</code>: indices of the points sampled this iteration</li>
+<li><code>sample_points</code>: the sampled points, <code>np.array (3, 3)</code></li>
+<li><code>model</code>: <code>dict</code> with this iteration's candidate <code>center</code>, <code>axis</code>, <code>radius</code></li>
+<li><code>inliers</code>: inlier indices found for this iteration's candidate</li>
+<li><code>best_model</code>: <code>dict</code> with the best <code>center</code>, <code>axis</code>, <code>radius</code> found so far</li>
+<li><code>best_inliers</code>: best inlier indices found so far</li>
+<li><code>is_best</code>: <code>True</code> if this iteration became the new best candidate</li>
+</ul>
 <hr />
 
 
