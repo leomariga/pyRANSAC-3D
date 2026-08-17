@@ -1,7 +1,10 @@
 import random
+from collections.abc import Callable
+from typing import Any
 
 import numpy as np
 import pytest
+from numpy.typing import NDArray
 
 import pyransac3d as pyrsc
 
@@ -19,31 +22,31 @@ STATE_KEYS = {
 }
 
 
-def _point_cloud(generator):
+def _point_cloud(generator: pyrsc.ShapeGenerator) -> NDArray[np.float64]:
     return generator.point([1.0, -2.0, 3.0], n_points=80, noise=0.05, n_outliers=40, outlier_bounds=4.0)
 
 
-def _line_cloud(generator):
+def _line_cloud(generator: pyrsc.ShapeGenerator) -> NDArray[np.float64]:
     return generator.line([1.0, 2.0, -1.0], [1.0, 1.0, 0.5], length=10.0, n_points=80, noise=0.05, n_outliers=40)
 
 
-def _plane_cloud(generator):
+def _plane_cloud(generator: pyrsc.ShapeGenerator) -> NDArray[np.float64]:
     return generator.plane([0.5, 1.0, -2.0], [1.0, 2.0, 3.0], size=8.0, n_points=80, noise=0.02, n_outliers=40)
 
 
-def _circle_cloud(generator):
+def _circle_cloud(generator: pyrsc.ShapeGenerator) -> NDArray[np.float64]:
     return generator.circle([1.0, -1.0, 2.0], [0.0, 1.0, 1.0], 3.0, n_points=80, noise=0.02, n_outliers=40)
 
 
-def _cylinder_cloud(generator):
+def _cylinder_cloud(generator: pyrsc.ShapeGenerator) -> NDArray[np.float64]:
     return generator.cylinder([1.0, 1.0, 0.0], [0.2, 0.0, 1.0], 3.0, height=4.0, n_points=80, noise=0.02)
 
 
-def _sphere_cloud(generator):
+def _sphere_cloud(generator: pyrsc.ShapeGenerator) -> NDArray[np.float64]:
     return generator.sphere([2.0, 1.0, -1.0], 3.0, n_points=80, noise=0.02, n_outliers=40)
 
 
-def _cuboid_cloud(generator):
+def _cuboid_cloud(generator: pyrsc.ShapeGenerator) -> NDArray[np.float64]:
     return generator.cuboid([1.0, -1.0, 2.0], [4.0, 3.0, 2.0], n_points=120, noise=0.01)
 
 
@@ -64,13 +67,17 @@ FITTER_IDS = [fitter[0].__name__ for fitter in FITTERS]
 
 @pytest.mark.parametrize("shape_class, build_cloud, n_samples, model_keys, best_model_keys", FITTERS, ids=FITTER_IDS)
 def test_callback_receives_the_state_of_every_iteration(
-    shape_class, build_cloud, n_samples, model_keys, best_model_keys
-):
+    shape_class: type,
+    build_cloud: Callable[[pyrsc.ShapeGenerator], NDArray[np.float64]],
+    n_samples: int,
+    model_keys: set[str],
+    best_model_keys: set[str],
+) -> None:
     # Seeding both generators makes the cloud and the samples taken by RANSAC the same on every run
     random.seed(0)
     points = build_cloud(pyrsc.ShapeGenerator(seed=0))
 
-    states = []
+    states: list[dict[str, Any]] = []
     max_iteration = 5
     shape_class().fit(points, maxIteration=max_iteration, callback=states.append)
 
@@ -106,14 +113,18 @@ def test_callback_receives_the_state_of_every_iteration(
 
 @pytest.mark.parametrize("shape_class, build_cloud, n_samples, model_keys, best_model_keys", FITTERS, ids=FITTER_IDS)
 def test_callback_stops_the_fitting_when_it_returns_true(
-    shape_class, build_cloud, n_samples, model_keys, best_model_keys
-):
+    shape_class: type,
+    build_cloud: Callable[[pyrsc.ShapeGenerator], NDArray[np.float64]],
+    n_samples: int,
+    model_keys: set[str],
+    best_model_keys: set[str],
+) -> None:
     random.seed(0)
     points = build_cloud(pyrsc.ShapeGenerator(seed=0))
 
-    states = []
+    states: list[dict[str, Any]] = []
 
-    def stop_on_the_second_iteration(state):
+    def stop_on_the_second_iteration(state: dict[str, Any]) -> bool:
         states.append(state)
         return state["iteration"] == 1
 

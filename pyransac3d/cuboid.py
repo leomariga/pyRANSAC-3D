@@ -1,6 +1,9 @@
 import random
+from collections.abc import Callable
+from typing import Any
 
 import numpy as np
+from numpy.typing import NDArray
 
 from .aux_functions import convex_hull_2d, min_bounding_rect, rodrigues_rot
 
@@ -25,21 +28,32 @@ class Cuboid:
     ---
     """
 
-    def __init__(self):
-        self.inliers = []
-        self.equation = []
-        self.center = []
-        self.extents = []
-        self.axes = []
-        self.distances = []
-        self.plane_distances = []
-        self.face_normals = []
-        self.face_inlier_count = []
-        self.ref_face_index = 0
-        self.z_bounds = []
-        self.hull_angle = 0
+    def __init__(self) -> None:
+        self.inliers: NDArray[np.intp] | list[int] = []
+        self.equation: NDArray[np.float64] | list[float] = []
+        self.center: NDArray[np.float64] | list[float] = []
+        self.extents: NDArray[np.float64] | list[float] = []
+        self.axes: NDArray[np.float64] | list[float] = []
+        self.distances: NDArray[np.float64] | list[float] = []
+        self.plane_distances: NDArray[np.float64] | list[float] = []
+        self.face_normals: NDArray[np.float64] | list[float] = []
+        self.face_inlier_count: NDArray[np.intp] | list[int] = []
+        self.ref_face_index: int | np.intp = 0
+        self.z_bounds: NDArray[np.float64] | list[float] = []
+        self.hull_angle: float = 0
 
-    def fit(self, pts, thresh=0.05, maxIteration=5000, callback=None):
+    def fit(
+        self,
+        pts: NDArray[np.float64],
+        thresh: float = 0.05,
+        maxIteration: int = 5000,
+        callback: Callable[[dict[str, Any]], bool | None] | None = None,
+    ) -> tuple[
+        NDArray[np.float64] | list[float],
+        NDArray[np.float64] | list[float],
+        NDArray[np.float64] | list[float],
+        NDArray[np.intp] | list[int],
+    ]:
         """
         Find the cuboid which best fits the point cloud, from the 3 orthogonal planes of its faces.
 
@@ -225,7 +239,7 @@ class Cuboid:
 
         return self.center, self.extents, self.axes, self.inliers
 
-    def _measure_box(self, pts_inliers, plane_eq):
+    def _measure_box(self, pts_inliers: NDArray[np.float64], plane_eq: NDArray[np.float64]) -> None:
         """
         Measure the box which contains the inliers of 3 orthogonal planes.
 
@@ -278,7 +292,7 @@ class Cuboid:
         self.z_bounds = np.asarray([z_min, z_max])
         self.hull_angle = angle
 
-    def get_corners(self):
+    def get_corners(self) -> NDArray[np.float64]:
         """
         Get the vertices of the fitted cuboid.
 
@@ -307,7 +321,7 @@ class Cuboid:
         # Walk from the center along each axis by half of its extent
         return self.center + (signs * (self.extents / 2)).dot(self.axes)
 
-    def get_transform(self):
+    def get_transform(self) -> NDArray[np.float64]:
         """
         Get the rotation and the translation of the fitted cuboid as a single matrix.
 

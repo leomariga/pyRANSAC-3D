@@ -1,6 +1,9 @@
 import random
+from collections.abc import Callable
+from typing import Any
 
 import numpy as np
+from numpy.typing import NDArray
 
 from .aux_functions import rodrigues_rot
 
@@ -19,15 +22,26 @@ class Cylinder:
     ---
     """
 
-    def __init__(self):
-        self.inliers = []
-        self.center = []
-        self.axis = []
-        self.radius = 0
-        self.distances = []
-        self.radial_distances = []
+    def __init__(self) -> None:
+        self.inliers: NDArray[np.intp] | list[int] = []
+        self.center: NDArray[np.float64] | list[float] = []
+        self.axis: NDArray[np.float64] | list[float] = []
+        self.radius: float = 0
+        self.distances: NDArray[np.float64] | list[float] = []
+        self.radial_distances: NDArray[np.float64] | list[float] = []
 
-    def fit(self, pts, thresh=0.2, maxIteration=10000, callback=None):
+    def fit(
+        self,
+        pts: NDArray[np.float64],
+        thresh: float = 0.2,
+        maxIteration: int = 10000,
+        callback: Callable[[dict[str, Any]], bool | None] | None = None,
+    ) -> tuple[
+        NDArray[np.float64] | list[float],
+        NDArray[np.float64] | list[float],
+        float,
+        NDArray[np.intp] | list[int],
+    ]:
         """
         Find the parameters (axis and radius) defining a cylinder.
 

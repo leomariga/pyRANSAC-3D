@@ -19,7 +19,7 @@ MINIMUM_POINTS = [
 
 
 @pytest.mark.parametrize("shape_class, minimum", MINIMUM_POINTS)
-def test_fit_rejects_a_cloud_smaller_than_the_sample(shape_class, minimum):
+def test_fit_rejects_a_cloud_smaller_than_the_sample(shape_class: type, minimum: int) -> None:
     points = np.zeros((minimum - 1, 3))
 
     with pytest.raises(ValueError, match=f"at least {minimum} point"):
@@ -27,7 +27,7 @@ def test_fit_rejects_a_cloud_smaller_than_the_sample(shape_class, minimum):
 
 
 @pytest.mark.parametrize("shape_class, minimum", MINIMUM_POINTS)
-def test_fit_accepts_a_cloud_with_exactly_the_sample_size(shape_class, minimum):
+def test_fit_accepts_a_cloud_with_exactly_the_sample_size(shape_class: type, minimum: int) -> None:
     # Seeding both generators makes the cloud and the samples taken by RANSAC the same on every run
     random.seed(0)
 

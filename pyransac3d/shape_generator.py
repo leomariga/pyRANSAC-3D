@@ -1,4 +1,5 @@
 import numpy as np
+from numpy.typing import ArrayLike, NDArray
 
 # How much bigger than the shape itself is the box where the outliers are scattered, when the
 # caller does not give explicit bounds
@@ -24,7 +25,7 @@ class ShapeGenerator:
     ---
     """
 
-    def __init__(self, seed=None):
+    def __init__(self, seed: int | None = None) -> None:
         """
         Create a generator of point clouds.
 
@@ -36,7 +37,14 @@ class ShapeGenerator:
 
         self.rng = np.random.default_rng(seed)
 
-    def point(self, center, n_points=200, noise=0.05, n_outliers=0, outlier_bounds=None):
+    def point(
+        self,
+        center: ArrayLike,
+        n_points: int = 200,
+        noise: float = 0.05,
+        n_outliers: int = 0,
+        outlier_bounds: ArrayLike | None = None,
+    ) -> NDArray[np.float64]:
         """
         Generate a cloud of points gathered around a single 3D coordinate.
 
@@ -60,7 +68,16 @@ class ShapeGenerator:
 
         return self._finish(pts, noise, n_outliers, outlier_bounds)
 
-    def line(self, anchor, direction, length=10.0, n_points=200, noise=0.05, n_outliers=0, outlier_bounds=None):
+    def line(
+        self,
+        anchor: ArrayLike,
+        direction: ArrayLike,
+        length: float = 10.0,
+        n_points: int = 200,
+        noise: float = 0.05,
+        n_outliers: int = 0,
+        outlier_bounds: ArrayLike | None = None,
+    ) -> NDArray[np.float64]:
         """
         Generate a cloud of points along a 3D line.
 
@@ -89,7 +106,16 @@ class ShapeGenerator:
 
         return self._finish(pts, noise, n_outliers, outlier_bounds)
 
-    def plane(self, center, normal, size=10.0, n_points=400, noise=0.02, n_outliers=0, outlier_bounds=None):
+    def plane(
+        self,
+        center: ArrayLike,
+        normal: ArrayLike,
+        size: ArrayLike = 10.0,
+        n_points: int = 400,
+        noise: float = 0.02,
+        n_outliers: int = 0,
+        outlier_bounds: ArrayLike | None = None,
+    ) -> NDArray[np.float64]:
         """
         Generate a cloud of points on a rectangular patch of a plane.
 
@@ -120,7 +146,16 @@ class ShapeGenerator:
 
         return self._finish(pts, noise, n_outliers, outlier_bounds)
 
-    def circle(self, center, axis, radius, n_points=300, noise=0.02, n_outliers=0, outlier_bounds=None):
+    def circle(
+        self,
+        center: ArrayLike,
+        axis: ArrayLike,
+        radius: float,
+        n_points: int = 300,
+        noise: float = 0.02,
+        n_outliers: int = 0,
+        outlier_bounds: ArrayLike | None = None,
+    ) -> NDArray[np.float64]:
         """
         Generate a cloud of points on the hull of a circle.
 
@@ -153,7 +188,15 @@ class ShapeGenerator:
 
         return self._finish(pts, noise, n_outliers, outlier_bounds)
 
-    def sphere(self, center, radius, n_points=500, noise=0.02, n_outliers=0, outlier_bounds=None):
+    def sphere(
+        self,
+        center: ArrayLike,
+        radius: float,
+        n_points: int = 500,
+        noise: float = 0.02,
+        n_outliers: int = 0,
+        outlier_bounds: ArrayLike | None = None,
+    ) -> NDArray[np.float64]:
         """
         Generate a cloud of points on the hull of a sphere.
 
@@ -183,7 +226,17 @@ class ShapeGenerator:
 
         return self._finish(pts, noise, n_outliers, outlier_bounds)
 
-    def cylinder(self, center, axis, radius, height=10.0, n_points=500, noise=0.02, n_outliers=0, outlier_bounds=None):
+    def cylinder(
+        self,
+        center: ArrayLike,
+        axis: ArrayLike,
+        radius: float,
+        height: float = 10.0,
+        n_points: int = 500,
+        noise: float = 0.02,
+        n_outliers: int = 0,
+        outlier_bounds: ArrayLike | None = None,
+    ) -> NDArray[np.float64]:
         """
         Generate a cloud of points on the lateral surface of a cylinder.
 
@@ -223,7 +276,16 @@ class ShapeGenerator:
 
         return self._finish(pts, noise, n_outliers, outlier_bounds)
 
-    def cuboid(self, center, extents, axes=None, n_points=900, noise=0.01, n_outliers=0, outlier_bounds=None):
+    def cuboid(
+        self,
+        center: ArrayLike,
+        extents: ArrayLike,
+        axes: ArrayLike | None = None,
+        n_points: int = 900,
+        noise: float = 0.01,
+        n_outliers: int = 0,
+        outlier_bounds: ArrayLike | None = None,
+    ) -> NDArray[np.float64]:
         """
         Generate a cloud of points on the 6 faces of a cuboid.
 
@@ -266,7 +328,13 @@ class ShapeGenerator:
 
         return self._finish(pts, noise, n_outliers, outlier_bounds)
 
-    def _finish(self, pts, noise, n_outliers, outlier_bounds):
+    def _finish(
+        self,
+        pts: NDArray[np.float64],
+        noise: float,
+        n_outliers: int,
+        outlier_bounds: ArrayLike | None,
+    ) -> NDArray[np.float64]:
         """
         Turn the points of an ideal shape into a realistic point cloud.
 
@@ -287,7 +355,7 @@ class ShapeGenerator:
         # never tells which ones belong to the shape
         return self.rng.permutation(pts)
 
-    def _add_noise(self, pts, noise):
+    def _add_noise(self, pts: NDArray[np.float64], noise: float) -> NDArray[np.float64]:
         """
         Scatter the points around the surface of the shape.
 
@@ -307,7 +375,12 @@ class ShapeGenerator:
 
         return pts + self.rng.normal(0.0, noise, size=pts.shape)
 
-    def _add_outliers(self, pts, n_outliers, outlier_bounds):
+    def _add_outliers(
+        self,
+        pts: NDArray[np.float64],
+        n_outliers: int,
+        outlier_bounds: ArrayLike | None,
+    ) -> NDArray[np.float64]:
         """
         Scatter points which do not belong to the shape around it.
 
@@ -343,7 +416,7 @@ class ShapeGenerator:
         return np.vstack((pts, outliers))
 
     @staticmethod
-    def _basis_from_axis(axis):
+    def _basis_from_axis(axis: NDArray[np.float64]) -> tuple[NDArray[np.float64], NDArray[np.float64]]:
         """
         Build the two directions which are orthogonal to an axis and to each other.
 
@@ -366,7 +439,7 @@ class ShapeGenerator:
         return first_axis, second_axis
 
     @staticmethod
-    def _as_point(value, name):
+    def _as_point(value: ArrayLike, name: str) -> NDArray[np.float64]:
         """
         Validate a 3D coordinate given by the caller.
 
@@ -387,7 +460,7 @@ class ShapeGenerator:
         return point
 
     @staticmethod
-    def _as_direction(value, name):
+    def _as_direction(value: ArrayLike, name: str) -> NDArray[np.float64]:
         """
         Validate a direction given by the caller and make it unitary.
 
@@ -407,7 +480,7 @@ class ShapeGenerator:
         return direction / norm
 
     @staticmethod
-    def _as_sizes(value, n_sizes, name):
+    def _as_sizes(value: ArrayLike, n_sizes: int, name: str) -> NDArray[np.float64]:
         """
         Validate the dimensions of a shape given by the caller.
 
@@ -432,7 +505,7 @@ class ShapeGenerator:
         return sizes
 
     @staticmethod
-    def _as_count(value, name, minimum):
+    def _as_count(value: float, name: str, minimum: int) -> int:
         """
         Validate a number of points given by the caller.
 
@@ -452,7 +525,7 @@ class ShapeGenerator:
         return count
 
     @staticmethod
-    def _as_axes(value):
+    def _as_axes(value: ArrayLike | None) -> NDArray[np.float64]:
         """
         Validate the axes of a cuboid given by the caller.
 

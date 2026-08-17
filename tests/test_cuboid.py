@@ -2,6 +2,7 @@ import random
 
 import numpy as np
 import pytest
+from numpy.typing import NDArray
 
 import pyransac3d as pyrsc
 
@@ -20,7 +21,7 @@ CORNER_SIGNS = np.asarray(
 )
 
 
-def _fit_generated_cuboid():
+def _fit_generated_cuboid() -> tuple[NDArray[np.float64], pyrsc.Cuboid]:
     """Fit a cuboid on a cloud generated from known parameters, the same way of the first test."""
 
     random.seed(0)
@@ -42,7 +43,7 @@ def _fit_generated_cuboid():
     return points, cuboid
 
 
-def test_cuboid_finds_the_generated_cuboid():
+def test_cuboid_finds_the_generated_cuboid() -> None:
     # Seeding both generators makes the cloud and the samples taken by RANSAC the same on every run
     random.seed(0)
     generator = pyrsc.ShapeGenerator(seed=0)
@@ -89,7 +90,7 @@ def test_cuboid_finds_the_generated_cuboid():
     )
 
 
-def test_cuboid_has_no_box_before_being_fitted():
+def test_cuboid_has_no_box_before_being_fitted() -> None:
     cuboid = pyrsc.Cuboid()
 
     with pytest.raises(ValueError, match="not fitted yet"):
@@ -99,7 +100,7 @@ def test_cuboid_has_no_box_before_being_fitted():
         cuboid.get_transform()
 
 
-def test_cuboid_transform_takes_the_box_frame_to_the_point_cloud_frame():
+def test_cuboid_transform_takes_the_box_frame_to_the_point_cloud_frame() -> None:
     _, cuboid = _fit_generated_cuboid()
 
     transform = cuboid.get_transform()
@@ -121,7 +122,7 @@ def test_cuboid_transform_takes_the_box_frame_to_the_point_cloud_frame():
     np.testing.assert_allclose(corners, cuboid.get_corners())
 
 
-def test_cuboid_keeps_the_distances_of_the_best_candidate():
+def test_cuboid_keeps_the_distances_of_the_best_candidate() -> None:
     points, cuboid = _fit_generated_cuboid()
 
     equation = np.asarray(cuboid.equation)
@@ -141,7 +142,7 @@ def test_cuboid_keeps_the_distances_of_the_best_candidate():
     np.testing.assert_array_equal(cuboid.inliers, np.where(cuboid.distances <= 0.05)[0])
 
 
-def test_cuboid_keeps_the_measurements_used_to_build_the_box():
+def test_cuboid_keeps_the_measurements_used_to_build_the_box() -> None:
     _, cuboid = _fit_generated_cuboid()
 
     np.testing.assert_allclose(cuboid.face_normals, np.asarray(cuboid.equation)[:, 0:3])

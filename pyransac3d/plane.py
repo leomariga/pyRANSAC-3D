@@ -1,6 +1,9 @@
 import random
+from collections.abc import Callable
+from typing import Any
 
 import numpy as np
+from numpy.typing import NDArray
 
 
 class Plane:
@@ -16,12 +19,18 @@ class Plane:
     ---
     """
 
-    def __init__(self):
-        self.inliers = []
-        self.equation = []
-        self.distances = []
+    def __init__(self) -> None:
+        self.inliers: NDArray[np.intp] | list[int] = []
+        self.equation: list[float] = []
+        self.distances: NDArray[np.float64] | list[float] = []
 
-    def fit(self, pts, thresh=0.05, maxIteration=1000, callback=None):
+    def fit(
+        self,
+        pts: NDArray[np.float64],
+        thresh: float = 0.05,
+        maxIteration: int = 1000,
+        callback: Callable[[dict[str, Any]], bool | None] | None = None,
+    ) -> tuple[list[float], NDArray[np.intp] | list[int]]:
         """
         Find the best equation for a plane.
 

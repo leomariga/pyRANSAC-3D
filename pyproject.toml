@@ -8,7 +8,7 @@ version = "0.6.1"
 description = "A python tool for fitting primitives 3D shapes in point clouds using RANSAC algorithm "
 readme = "README.md"
 license = "Apache-2.0"
-requires-python = ">=3.9"
+requires-python = ">=3.10"
 authors = [
     { name = "Leonardo Mariga", email = "leomariga@gmail.com" },
 ]

@@ -1,6 +1,9 @@
 import random
+from collections.abc import Callable
+from typing import Any
 
 import numpy as np
+from numpy.typing import NDArray
 
 
 class Sphere:
@@ -15,14 +18,20 @@ class Sphere:
     ---
     """
 
-    def __init__(self):
-        self.inliers = []
-        self.center = []
-        self.radius = 0
-        self.distances = []
-        self.radial_distances = []
+    def __init__(self) -> None:
+        self.inliers: NDArray[np.intp] | list[int] = []
+        self.center: list[float] = []
+        self.radius: float = 0
+        self.distances: NDArray[np.float64] | list[float] = []
+        self.radial_distances: NDArray[np.float64] | list[float] = []
 
-    def fit(self, pts, thresh=0.2, maxIteration=1000, callback=None):
+    def fit(
+        self,
+        pts: NDArray[np.float64],
+        thresh: float = 0.2,
+        maxIteration: int = 1000,
+        callback: Callable[[dict[str, Any]], bool | None] | None = None,
+    ) -> tuple[list[float], float, NDArray[np.intp] | list[int]]:
         """
         Find the parameters (center and radius) to define a Sphere.
 

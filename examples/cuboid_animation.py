@@ -1,5 +1,6 @@
 import time
 from pathlib import Path
+from typing import Any
 
 import numpy as np
 import open3d as o3d
@@ -42,7 +43,7 @@ view_control = vis.get_view_control()
 cuboid1 = pyrsc.Cuboid()
 
 
-def plot_callback(state):
+def plot_callback(state: dict[str, Any]) -> bool:
     colors = original_colors.copy()
     colors[state["best_inliers"]] = [0.0, 1.0, 0.0]
     colors[state["inliers"]] = [1.0, 0.0, 0.0]

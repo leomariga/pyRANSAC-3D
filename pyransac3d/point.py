@@ -1,6 +1,9 @@
 import random
+from collections.abc import Callable
+from typing import Any
 
 import numpy as np
+from numpy.typing import NDArray
 
 
 class Point:
@@ -15,12 +18,18 @@ class Point:
     ---
     """
 
-    def __init__(self):
-        self.inliers = []
-        self.center = []
-        self.distances = []
+    def __init__(self) -> None:
+        self.inliers: NDArray[np.intp] | list[int] = []
+        self.center: NDArray[np.float64] | list[float] = []
+        self.distances: NDArray[np.float64] | list[float] = []
 
-    def fit(self, pts, thresh=0.2, maxIteration=10000, callback=None):
+    def fit(
+        self,
+        pts: NDArray[np.float64],
+        thresh: float = 0.2,
+        maxIteration: int = 10000,
+        callback: Callable[[dict[str, Any]], bool | None] | None = None,
+    ) -> tuple[NDArray[np.float64] | list[float], NDArray[np.intp] | list[int]]:
         """
         Find the best point for the 3D Point representaiton. The Point in a 3d enviroment is defined as a X, Y Z coordinate with more neighbors around.
 

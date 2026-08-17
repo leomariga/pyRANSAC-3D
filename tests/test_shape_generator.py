@@ -1,5 +1,8 @@
+from collections.abc import Callable
+
 import numpy as np
 import pytest
+from numpy.typing import NDArray
 
 import pyransac3d as pyrsc
 from pyransac3d.shape_generator import OUTLIER_MARGIN
@@ -20,7 +23,9 @@ SHAPE_IDS = [shape[0] for shape in SHAPES]
 
 
 @pytest.mark.parametrize("name, build_cloud, minimum", SHAPES, ids=SHAPE_IDS)
-def test_generated_cloud_has_the_shape_points_plus_the_outliers(name, build_cloud, minimum):
+def test_generated_cloud_has_the_shape_points_plus_the_outliers(
+    name: str, build_cloud: Callable[..., NDArray[np.float64]], minimum: int
+) -> None:
     points = build_cloud(pyrsc.ShapeGenerator(seed=0), n_points=50, noise=0.0, n_outliers=20)
 
     assert points.shape == (70, 3)
@@ -28,7 +33,9 @@ def test_generated_cloud_has_the_shape_points_plus_the_outliers(name, build_clou
 
 
 @pytest.mark.parametrize("name, build_cloud, minimum", SHAPES, ids=SHAPE_IDS)
-def test_the_same_seed_generates_the_same_cloud(name, build_cloud, minimum):
+def test_the_same_seed_generates_the_same_cloud(
+    name: str, build_cloud: Callable[..., NDArray[np.float64]], minimum: int
+) -> None:
     first = build_cloud(pyrsc.ShapeGenerator(seed=7), n_points=40, noise=0.05, n_outliers=10)
     same = build_cloud(pyrsc.ShapeGenerator(seed=7), n_points=40, noise=0.05, n_outliers=10)
     other = build_cloud(pyrsc.ShapeGenerator(seed=8), n_points=40, noise=0.05, n_outliers=10)
@@ -38,18 +45,22 @@ def test_the_same_seed_generates_the_same_cloud(name, build_cloud, minimum):
 
 
 @pytest.mark.parametrize("name, build_cloud, minimum", SHAPES, ids=SHAPE_IDS)
-def test_generator_rejects_a_cloud_smaller_than_the_shape_needs(name, build_cloud, minimum):
+def test_generator_rejects_a_cloud_smaller_than_the_shape_needs(
+    name: str, build_cloud: Callable[..., NDArray[np.float64]], minimum: int
+) -> None:
     with pytest.raises(ValueError, match=f"n_points must be an integer of at least {minimum}"):
         build_cloud(pyrsc.ShapeGenerator(seed=0), n_points=minimum - 1)
 
 
 @pytest.mark.parametrize("name, build_cloud, minimum", SHAPES, ids=SHAPE_IDS)
-def test_generator_rejects_a_number_of_points_which_is_not_an_integer(name, build_cloud, minimum):
+def test_generator_rejects_a_number_of_points_which_is_not_an_integer(
+    name: str, build_cloud: Callable[..., NDArray[np.float64]], minimum: int
+) -> None:
     with pytest.raises(ValueError, match="n_points must be an integer"):
         build_cloud(pyrsc.ShapeGenerator(seed=0), n_points=10.5)
 
 
-def test_point_cloud_is_gathered_around_the_center():
+def test_point_cloud_is_gathered_around_the_center() -> None:
     center = np.asarray([1.0, -2.0, 3.0])
 
     points = pyrsc.ShapeGenerator(seed=0).point(center, n_points=100, noise=0.0)
@@ -57,7 +68,7 @@ def test_point_cloud_is_gathered_around_the_center():
     np.testing.assert_array_equal(points, np.tile(center, (100, 1)))
 
 
-def test_line_cloud_lies_on_the_line():
+def test_line_cloud_lies_on_the_line() -> None:
     anchor = np.asarray([1.0, 2.0, -1.0])
     direction = np.asarray([1.0, 1.0, 0.5]) / np.linalg.norm([1.0, 1.0, 0.5])
     length = 10.0
@@ -76,7 +87,7 @@ def test_line_cloud_lies_on_the_line():
     assert np.amax(np.abs(along)) > 0.9 * length / 2
 
 
-def test_plane_cloud_lies_on_the_plane():
+def test_plane_cloud_lies_on_the_plane() -> None:
     center = np.asarray([0.5, 1.0, -2.0])
     normal = np.asarray([1.0, 2.0, 3.0]) / np.linalg.norm([1.0, 2.0, 3.0])
 
@@ -88,7 +99,7 @@ def test_plane_cloud_lies_on_the_plane():
     assert np.amax(np.linalg.norm(points - center, axis=1)) <= 8.0 * np.sqrt(2) / 2
 
 
-def test_plane_cloud_accepts_a_different_size_on_each_direction():
+def test_plane_cloud_accepts_a_different_size_on_each_direction() -> None:
     center = np.asarray([0.0, 0.0, 0.0])
 
     points = pyrsc.ShapeGenerator(seed=0).plane(center, [0.0, 0.0, 1.0], size=[10.0, 2.0], n_points=500, noise=0.0)
@@ -98,7 +109,7 @@ def test_plane_cloud_accepts_a_different_size_on_each_direction():
     np.testing.assert_allclose(np.amin(points, axis=0), [-1.0, -5.0, 0.0], atol=0.1)
 
 
-def test_circle_cloud_lies_on_the_hull_of_the_circle():
+def test_circle_cloud_lies_on_the_hull_of_the_circle() -> None:
     center = np.asarray([1.0, -1.0, 2.0])
     axis = np.asarray([0.0, 1.0, 1.0]) / np.linalg.norm([0.0, 1.0, 1.0])
     radius = 3.0
@@ -110,7 +121,7 @@ def test_circle_cloud_lies_on_the_hull_of_the_circle():
     np.testing.assert_allclose(np.linalg.norm(points - center, axis=1), np.full(200, radius))
 
 
-def test_sphere_cloud_lies_on_the_hull_of_the_sphere():
+def test_sphere_cloud_lies_on_the_hull_of_the_sphere() -> None:
     center = np.asarray([2.0, 1.0, -1.0])
     radius = 3.0
 
@@ -122,7 +133,7 @@ def test_sphere_cloud_lies_on_the_hull_of_the_sphere():
     np.testing.assert_allclose(np.mean(points - center, axis=0), np.zeros(3), atol=0.5)
 
 
-def test_cylinder_cloud_lies_on_the_lateral_surface():
+def test_cylinder_cloud_lies_on_the_lateral_surface() -> None:
     center = np.asarray([1.0, 1.0, 0.0])
     axis = np.asarray([0.2, 0.0, 1.0]) / np.linalg.norm([0.2, 0.0, 1.0])
     radius = 3.0
@@ -138,7 +149,7 @@ def test_cylinder_cloud_lies_on_the_lateral_surface():
     assert np.all(np.abs(along) <= height / 2 + 1e-12)
 
 
-def test_cuboid_cloud_lies_on_the_faces_of_the_box():
+def test_cuboid_cloud_lies_on_the_faces_of_the_box() -> None:
     center = np.asarray([1.0, -1.0, 2.0])
     extents = np.asarray([4.0, 3.0, 2.0])
     angle = np.radians(25.0)
@@ -160,7 +171,7 @@ def test_cuboid_cloud_lies_on_the_faces_of_the_box():
     assert np.all(ratios <= 1 + 1e-12)
 
 
-def test_cuboid_cloud_uses_the_coordinate_axes_and_a_scalar_size_by_default():
+def test_cuboid_cloud_uses_the_coordinate_axes_and_a_scalar_size_by_default() -> None:
     points = pyrsc.ShapeGenerator(seed=0).cuboid([0.0, 0.0, 0.0], 2.0, n_points=600, noise=0.0)
 
     # A scalar gives a cube, which is aligned with the coordinate axes when no axes are given
@@ -168,7 +179,7 @@ def test_cuboid_cloud_uses_the_coordinate_axes_and_a_scalar_size_by_default():
     np.testing.assert_allclose(np.amin(points, axis=0), -np.ones(3))
 
 
-def test_noise_scatters_the_points_around_the_surface():
+def test_noise_scatters_the_points_around_the_surface() -> None:
     center = np.asarray([2.0, 1.0, -1.0])
     radius = 3.0
     noise = 0.05
@@ -182,12 +193,12 @@ def test_noise_scatters_the_points_around_the_surface():
     assert 0.5 * noise < np.std(deviation) < 1.5 * noise
 
 
-def test_noise_must_not_be_negative():
+def test_noise_must_not_be_negative() -> None:
     with pytest.raises(ValueError, match="noise must not be negative"):
         pyrsc.ShapeGenerator(seed=0).sphere([0.0, 0.0, 0.0], 1.0, noise=-0.1)
 
 
-def test_outliers_are_scattered_inside_the_default_box():
+def test_outliers_are_scattered_inside_the_default_box() -> None:
     center = np.asarray([2.0, 1.0, -1.0])
     radius = 3.0
 
@@ -203,7 +214,7 @@ def test_outliers_are_scattered_inside_the_default_box():
     assert np.count_nonzero(np.abs(distances - radius) > 1e-9) == 100
 
 
-def test_outlier_bounds_replace_the_default_box():
+def test_outlier_bounds_replace_the_default_box() -> None:
     center = np.asarray([1.0, -2.0, 3.0])
     bounds = 4.0
 
@@ -214,7 +225,7 @@ def test_outlier_bounds_replace_the_default_box():
     assert np.amax(np.abs(points - center)) > 0.5 * bounds
 
 
-def test_outliers_are_mixed_with_the_points_of_the_shape():
+def test_outliers_are_mixed_with_the_points_of_the_shape() -> None:
     center = np.asarray([1.0, -2.0, 3.0])
     n_points = 100
 
@@ -226,43 +237,43 @@ def test_outliers_are_mixed_with_the_points_of_the_shape():
     assert np.count_nonzero(is_outlier[n_points:]) < 100
 
 
-def test_number_of_outliers_must_not_be_negative():
+def test_number_of_outliers_must_not_be_negative() -> None:
     with pytest.raises(ValueError, match="n_outliers must be an integer of at least 0"):
         pyrsc.ShapeGenerator(seed=0).sphere([0.0, 0.0, 0.0], 1.0, n_outliers=-1)
 
 
-def test_generator_rejects_a_center_which_is_not_a_3d_coordinate():
+def test_generator_rejects_a_center_which_is_not_a_3d_coordinate() -> None:
     with pytest.raises(ValueError, match=r"center must be a 3D coordinate as a np.array \(3,\)"):
         pyrsc.ShapeGenerator(seed=0).point([1.0, 2.0])
 
 
-def test_generator_rejects_a_center_which_is_not_finite():
+def test_generator_rejects_a_center_which_is_not_finite() -> None:
     with pytest.raises(ValueError, match="center must be finite"):
         pyrsc.ShapeGenerator(seed=0).point([1.0, 2.0, np.inf])
 
 
-def test_generator_rejects_a_direction_without_a_direction():
+def test_generator_rejects_a_direction_without_a_direction() -> None:
     with pytest.raises(ValueError, match="direction must not be a zero vector"):
         pyrsc.ShapeGenerator(seed=0).line([0.0, 0.0, 0.0], [0.0, 0.0, 0.0])
 
 
 @pytest.mark.parametrize("radius", [0.0, -1.0, np.inf])
-def test_generator_rejects_a_radius_which_is_not_a_real_size(radius):
+def test_generator_rejects_a_radius_which_is_not_a_real_size(radius: float) -> None:
     with pytest.raises(ValueError, match="radius must be finite and bigger than zero"):
         pyrsc.ShapeGenerator(seed=0).sphere([0.0, 0.0, 0.0], radius)
 
 
-def test_generator_rejects_a_size_with_the_wrong_number_of_dimensions():
+def test_generator_rejects_a_size_with_the_wrong_number_of_dimensions() -> None:
     with pytest.raises(ValueError, match=r"size must be a scalar or a np.array \(2,\)"):
         pyrsc.ShapeGenerator(seed=0).plane([0.0, 0.0, 0.0], [0.0, 0.0, 1.0], size=[1.0, 2.0, 3.0])
 
 
-def test_generator_rejects_axes_which_are_not_a_3x3_matrix():
+def test_generator_rejects_axes_which_are_not_a_3x3_matrix() -> None:
     with pytest.raises(ValueError, match=r"axes must be a np.array \(3, 3\)"):
         pyrsc.ShapeGenerator(seed=0).cuboid([0.0, 0.0, 0.0], 1.0, axes=np.eye(2))
 
 
-def test_generator_rejects_axes_which_are_not_orthonormal():
+def test_generator_rejects_axes_which_are_not_orthonormal() -> None:
     axes = np.asarray([[1.0, 0.0, 0.0], [1.0, 1.0, 0.0], [0.0, 0.0, 1.0]])
 
     with pytest.raises(ValueError, match="axes must be orthonormal"):

@@ -1,10 +1,11 @@
 import numpy as np
 import pytest
+from numpy.typing import NDArray
 
 import pyransac3d as pyrsc
 
 
-def _signed_area(polygon):
+def _signed_area(polygon: NDArray[np.float64]) -> np.float64:
     """Area of a closed polygon, which is positive when its vertices are counter-clockwise."""
 
     x = polygon[:, 0]
@@ -13,7 +14,7 @@ def _signed_area(polygon):
     return 0.5 * np.sum(x[:-1] * y[1:] - x[1:] * y[:-1])
 
 
-def _rectangle(width, height, angle, center):
+def _rectangle(width: float, height: float, angle: float, center: NDArray[np.float64]) -> NDArray[np.float64]:
     """Corners of a rectangle, rotated by an angle in radians and moved to a center."""
 
     corners = np.asarray(
@@ -29,7 +30,7 @@ def _rectangle(width, height, angle, center):
     return corners.dot(rotation.T) + center
 
 
-def test_rotation_matrix_takes_the_first_vector_to_the_second():
+def test_rotation_matrix_takes_the_first_vector_to_the_second() -> None:
     u = np.asarray([1.0, 0.0, 0.0])
     v = np.asarray([0.0, 1.0, 1.0]) / np.sqrt(2)
 
@@ -42,7 +43,7 @@ def test_rotation_matrix_takes_the_first_vector_to_the_second():
     np.testing.assert_allclose(np.linalg.det(rotation), 1.0)
 
 
-def test_rotation_matrix_turns_around_the_axis_shared_by_both_vectors():
+def test_rotation_matrix_turns_around_the_axis_shared_by_both_vectors() -> None:
     u = np.asarray([1.0, 2.0, 3.0]) / np.linalg.norm([1.0, 2.0, 3.0])
     v = np.asarray([-2.0, 1.0, 0.5]) / np.linalg.norm([-2.0, 1.0, 0.5])
 
@@ -56,7 +57,7 @@ def test_rotation_matrix_turns_around_the_axis_shared_by_both_vectors():
     np.testing.assert_allclose(rotation.dot(axis), axis, atol=1e-12)
 
 
-def test_convex_hull_keeps_only_the_corners_of_the_cloud():
+def test_convex_hull_keeps_only_the_corners_of_the_cloud() -> None:
     # A square with a point in the middle of each edge and one inside, so only the 4 corners of
     # the square are real corners of the hull
     points = np.asarray(
@@ -85,7 +86,7 @@ def test_convex_hull_keeps_only_the_corners_of_the_cloud():
     assert _signed_area(hull) == pytest.approx(4.0)
 
 
-def test_convex_hull_ignores_repeated_points():
+def test_convex_hull_ignores_repeated_points() -> None:
     points = np.asarray([[0.0, 0.0], [2.0, 0.0], [0.0, 2.0], [2.0, 0.0], [0.0, 0.0]])
 
     hull = pyrsc.convex_hull_2d(points)
@@ -94,17 +95,17 @@ def test_convex_hull_ignores_repeated_points():
     assert _signed_area(hull) == pytest.approx(2.0)
 
 
-def test_convex_hull_rejects_points_which_are_not_2d():
+def test_convex_hull_rejects_points_which_are_not_2d() -> None:
     with pytest.raises(ValueError, match=r"np.array \(N,2\)"):
         pyrsc.convex_hull_2d(np.zeros((5, 3)))
 
 
-def test_convex_hull_rejects_a_cloud_without_enough_distinct_points():
+def test_convex_hull_rejects_a_cloud_without_enough_distinct_points() -> None:
     with pytest.raises(ValueError, match="at least 3 distinct points"):
         pyrsc.convex_hull_2d(np.asarray([[0.0, 0.0], [1.0, 1.0], [1.0, 1.0]]))
 
 
-def test_min_bounding_rect_of_an_axis_aligned_square():
+def test_min_bounding_rect_of_an_axis_aligned_square() -> None:
     hull = pyrsc.convex_hull_2d(np.asarray([[-1.0, -1.0], [1.0, -1.0], [1.0, 1.0], [-1.0, 1.0]]))
 
     angle, area, width, height, center, corners = pyrsc.min_bounding_rect(hull)
@@ -117,7 +118,7 @@ def test_min_bounding_rect_of_an_axis_aligned_square():
     np.testing.assert_allclose(np.unique(corners, axis=0), np.unique(hull[0:4], axis=0), atol=1e-12)
 
 
-def test_min_bounding_rect_follows_the_edges_of_a_rotated_rectangle():
+def test_min_bounding_rect_follows_the_edges_of_a_rotated_rectangle() -> None:
     angle = np.radians(30.0)
     center = np.asarray([2.0, -1.0])
     rectangle = _rectangle(4.0, 2.0, angle, center)
@@ -140,17 +141,17 @@ def test_min_bounding_rect_follows_the_edges_of_a_rotated_rectangle():
     np.testing.assert_allclose(np.amin(distance_to_corners, axis=1), np.zeros(4), atol=1e-12)
 
 
-def test_min_bounding_rect_rejects_hulls_which_are_not_2d():
+def test_min_bounding_rect_rejects_hulls_which_are_not_2d() -> None:
     with pytest.raises(ValueError, match=r"np.array \(N,2\)"):
         pyrsc.min_bounding_rect(np.zeros((5, 3)))
 
 
-def test_min_bounding_rect_rejects_a_hull_without_enough_points():
+def test_min_bounding_rect_rejects_a_hull_without_enough_points() -> None:
     with pytest.raises(ValueError, match="at least 3 hull points"):
         pyrsc.min_bounding_rect(np.asarray([[0.0, 0.0], [1.0, 1.0]]))
 
 
-def test_rodrigues_rot_takes_the_points_from_one_normal_to_the_other():
+def test_rodrigues_rot_takes_the_points_from_one_normal_to_the_other() -> None:
     # Points on the plane z = 0, whose normal is Z
     points = np.asarray([[1.0, 0.0, 0.0], [0.0, 2.0, 0.0], [-1.0, -1.0, 0.0]])
 
@@ -168,7 +169,7 @@ def test_rodrigues_rot_takes_the_points_from_one_normal_to_the_other():
     )
 
 
-def test_rodrigues_rot_agrees_with_the_rotation_matrix():
+def test_rodrigues_rot_agrees_with_the_rotation_matrix() -> None:
     points = np.asarray([[1.0, 2.0, 3.0], [-2.0, 0.5, 1.0]])
     n0 = np.asarray([0.0, 0.0, 1.0])
     n1 = np.asarray([1.0, 1.0, 1.0]) / np.sqrt(3)
@@ -178,7 +179,7 @@ def test_rodrigues_rot_agrees_with_the_rotation_matrix():
     np.testing.assert_allclose(rotated, points.dot(pyrsc.get_rotationMatrix_from_vectors(n0, n1).T), atol=1e-12)
 
 
-def test_rodrigues_rot_accepts_a_single_point_and_vectors_which_are_not_unitary():
+def test_rodrigues_rot_accepts_a_single_point_and_vectors_which_are_not_unitary() -> None:
     rotated = pyrsc.rodrigues_rot([1.0, 0.0, 0.0], [0.0, 0.0, 5.0], [0.0, 3.0, 0.0])
 
     # A single point comes back as a cloud with one point
@@ -186,7 +187,7 @@ def test_rodrigues_rot_accepts_a_single_point_and_vectors_which_are_not_unitary(
     np.testing.assert_allclose(rotated[0], [1.0, 0.0, 0.0], atol=1e-12)
 
 
-def test_rodrigues_rot_does_nothing_when_both_normals_are_the_same():
+def test_rodrigues_rot_does_nothing_when_both_normals_are_the_same() -> None:
     points = np.asarray([[1.0, 2.0, 3.0], [-2.0, 0.5, 1.0]])
 
     rotated = pyrsc.rodrigues_rot(points, [0.0, 0.0, 1.0], [0.0, 0.0, 1.0])

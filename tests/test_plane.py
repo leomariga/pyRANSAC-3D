@@ -5,7 +5,7 @@ import numpy as np
 import pyransac3d as pyrsc
 
 
-def test_plane_finds_the_generated_plane():
+def test_plane_finds_the_generated_plane() -> None:
     # Seeding both generators makes the cloud and the samples taken by RANSAC the same on every run
     random.seed(0)
     generator = pyrsc.ShapeGenerator(seed=0)
@@ -30,7 +30,7 @@ def test_plane_finds_the_generated_plane():
     assert len(inliers) >= 0.95 * n_points
 
 
-def test_plane_keeps_the_distances_of_the_best_candidate():
+def test_plane_keeps_the_distances_of_the_best_candidate() -> None:
     random.seed(0)
     generator = pyrsc.ShapeGenerator(seed=0)
 

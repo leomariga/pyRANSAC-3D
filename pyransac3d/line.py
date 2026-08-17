@@ -1,6 +1,9 @@
 import random
+from collections.abc import Callable
+from typing import Any
 
 import numpy as np
+from numpy.typing import NDArray
 
 
 class Line:
@@ -15,13 +18,23 @@ class Line:
     ---
     """
 
-    def __init__(self):
-        self.inliers = []
-        self.A = []
-        self.B = []
-        self.distances = []
+    def __init__(self) -> None:
+        self.inliers: NDArray[np.intp] | list[int] = []
+        self.A: NDArray[np.float64] | list[float] = []
+        self.B: NDArray[np.float64] | list[float] = []
+        self.distances: NDArray[np.float64] | list[float] = []
 
-    def fit(self, pts, thresh=0.2, maxIteration=1000, callback=None):
+    def fit(
+        self,
+        pts: NDArray[np.float64],
+        thresh: float = 0.2,
+        maxIteration: int = 1000,
+        callback: Callable[[dict[str, Any]], bool | None] | None = None,
+    ) -> tuple[
+        NDArray[np.float64] | list[float],
+        NDArray[np.float64] | list[float],
+        NDArray[np.intp] | list[int],
+    ]:
         """
         Find the best equation for the 3D line. The line in a 3d enviroment is defined as y = Ax+B, but A and B are vectors intead of scalars.
 

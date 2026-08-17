@@ -1,7 +1,8 @@
 import numpy as np
+from numpy.typing import ArrayLike, NDArray
 
 
-def get_rotationMatrix_from_vectors(u, v):
+def get_rotationMatrix_from_vectors(u: ArrayLike, v: ArrayLike) -> NDArray[np.float64]:
     """
     Create a rotation matrix that rotates the space from a 3D vector `u` to a 3D vector `v`
 
@@ -32,7 +33,7 @@ def get_rotationMatrix_from_vectors(u, v):
     return R
 
 
-def convex_hull_2d(points):
+def convex_hull_2d(points: ArrayLike) -> NDArray[np.float64]:
     """
     Find the convex hull of a set of 2D points using Andrew's monotone chain algorithm.
 
@@ -54,12 +55,12 @@ def convex_hull_2d(points):
     if pts.shape[0] < 3:
         raise ValueError("Convex hull needs at least 3 distinct points!")
 
-    def turn(o, a, b):
+    def turn(o: NDArray[np.float64], a: NDArray[np.float64], b: NDArray[np.float64]) -> np.float64:
         # Z component of the cross product (a-o) x (b-o). Positive means counter-clockwise
         return (a[0] - o[0]) * (b[1] - o[1]) - (a[1] - o[1]) * (b[0] - o[0])
 
-    def build_chain(ordered_pts):
-        chain = []
+    def build_chain(ordered_pts: NDArray[np.float64]) -> list[NDArray[np.float64]]:
+        chain: list[NDArray[np.float64]] = []
         for p in ordered_pts:
             # Drop the last vertex while the turn it makes is not counter-clockwise.
             # Using <= also discards collinear vertices, keeping only real corners
@@ -77,7 +78,9 @@ def convex_hull_2d(points):
     return np.vstack((hull, hull[0]))
 
 
-def min_bounding_rect(hull_points):
+def min_bounding_rect(
+    hull_points: ArrayLike,
+) -> tuple[np.float64, np.float64, np.float64, np.float64, NDArray[np.float64], NDArray[np.float64]]:
     """
     Find the minimum-area rectangle which encloses a 2D convex hull.
 
@@ -138,7 +141,7 @@ def min_bounding_rect(hull_points):
     return angles[best], areas[best], sizes[best, 0], sizes[best, 1], center, corners
 
 
-def rodrigues_rot(P, n0, n1):
+def rodrigues_rot(P: ArrayLike, n0: ArrayLike, n1: ArrayLike) -> NDArray[np.float64]:
     """
     Rotate a set of point between two normal vectors using Rodrigues' formula.
 

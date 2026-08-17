@@ -1,7 +1,9 @@
 import time
+from typing import Any
 
 import numpy as np
 import open3d as o3d
+from numpy.typing import ArrayLike, NDArray
 
 import pyransac3d as pyrsc
 
@@ -9,7 +11,7 @@ N_SEGMENTS = 40
 HEIGHT = 6.0
 
 
-def cylinder_points(center, axis, radius):
+def cylinder_points(center: ArrayLike, axis: ArrayLike, radius: float) -> NDArray[np.float64]:
     """Points which draw the 2 rings of a cylinder of the given radius around a center"""
     axis = np.asarray(axis) / np.linalg.norm(axis)
 
@@ -68,7 +70,7 @@ view_control = vis.get_view_control()
 cylinder = pyrsc.Cylinder()
 
 
-def plot_callback(state):
+def plot_callback(state: dict[str, Any]) -> bool:
     colors = original_colors.copy()
     colors[state["best_inliers"]] = [0.0, 1.0, 0.0]
     colors[state["inliers"]] = [1.0, 0.0, 0.0]

@@ -1,14 +1,16 @@
 import time
+from typing import Any
 
 import numpy as np
 import open3d as o3d
+from numpy.typing import ArrayLike, NDArray
 
 import pyransac3d as pyrsc
 
 N_SEGMENTS = 60
 
 
-def circle_points(center, axis, radius):
+def circle_points(center: ArrayLike, axis: ArrayLike, radius: float) -> NDArray[np.float64]:
     """Points which draw a circle of the given radius around a center, on the plane normal to axis"""
     axis = np.asarray(axis) / np.linalg.norm(axis)
 
@@ -56,7 +58,7 @@ view_control = vis.get_view_control()
 circle = pyrsc.Circle()
 
 
-def plot_callback(state):
+def plot_callback(state: dict[str, Any]) -> bool:
     colors = original_colors.copy()
     colors[state["best_inliers"]] = [0.0, 1.0, 0.0]
     colors[state["inliers"]] = [1.0, 0.0, 0.0]

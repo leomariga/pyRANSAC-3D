@@ -1,4 +1,5 @@
 from pathlib import Path
+from typing import Any
 
 import numpy as np
 import open3d as o3d
@@ -16,7 +17,7 @@ n_points = points.shape[0]
 target_inlier_ratio = 0.3
 
 
-def early_stop_callback(state):
+def early_stop_callback(state: dict[str, Any]) -> bool:
     inlier_ratio = len(state["best_inliers"]) / n_points
     if state["is_best"]:
         print(f"iteration {state['iteration']:>4} | best inliers: {len(state['best_inliers']):>6} ({inlier_ratio:.1%})")
