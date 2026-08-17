@@ -1,0 +1,1369 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Python library for fitting 3D geometric primitives to point clouds with RANSAC.">
+      
+      
+      
+        <link rel="canonical" href="https://leomariga.github.io/pyRANSAC-3D/getting-started/">
+      
+      
+        <link rel="prev" href="..">
+      
+      
+        <link rel="next" href="../api-documentation/plane/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="https://raw.githubusercontent.com/leomariga/pyRANSAC-3D/master/doc/icon_black.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
+    
+    
+      
+        <title>Getting Started - pyRANSAC-3D</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.ec1eaa64.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="brown" data-md-color-accent="brown">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#getting-started" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="pyRANSAC-3D" class="md-header__button md-logo" aria-label="pyRANSAC-3D" data-md-component="logo">
+      
+  <img src="https://raw.githubusercontent.com/leomariga/pyRANSAC-3D/master/doc/icon_white.png" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            pyRANSAC-3D
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Getting Started
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+    
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/leomariga/pyRANSAC-3D" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    leomariga/pyRANSAC-3D
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="pyRANSAC-3D" class="md-nav__button md-logo" aria-label="pyRANSAC-3D" data-md-component="logo">
+      
+  <img src="https://raw.githubusercontent.com/leomariga/pyRANSAC-3D/master/doc/icon_white.png" alt="logo">
+
+    </a>
+    pyRANSAC-3D
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/leomariga/pyRANSAC-3D" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    leomariga/pyRANSAC-3D
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Getting Started
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Getting Started
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#on-this-page" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        On This Page
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#install" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Install
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#the-basic-workflow" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The Basic Workflow
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#choose-a-shape" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Choose a Shape
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#first-fit-plane" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        First Fit: Plane
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#fit-a-sphere" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Fit a Sphere
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#fit-a-cuboid" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Fit a Cuboid
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#callbacks" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Callbacks
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Callbacks">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#early-stop-with-your-own-criteria" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Early Stop With Your Own Criteria
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#inspect-progress-or-build-visualizations" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Inspect Progress or Build Visualizations
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#visualize-with-open3d" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Visualize With Open3D
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#using-your-own-data" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Using Your Own Data
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#where-to-go-next" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Where To Go Next
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    API Documentation
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    API Documentation
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../api-documentation/plane/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Plane
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../api-documentation/cuboid/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Cuboid
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../api-documentation/cylinder/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Cylinder
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../api-documentation/sphere/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Sphere
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../api-documentation/line/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Line
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../api-documentation/circle/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Circle
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../api-documentation/point/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Point
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../api-documentation/shape-generator/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Shape Generator
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../api-documentation/auxiliary/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Auxiliary
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../contributing/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Contributing
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../license/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    License
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#on-this-page" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        On This Page
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#install" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Install
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#the-basic-workflow" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The Basic Workflow
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#choose-a-shape" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Choose a Shape
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#first-fit-plane" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        First Fit: Plane
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#fit-a-sphere" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Fit a Sphere
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#fit-a-cuboid" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Fit a Cuboid
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#callbacks" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Callbacks
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Callbacks">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#early-stop-with-your-own-criteria" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Early Stop With Your Own Criteria
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#inspect-progress-or-build-visualizations" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Inspect Progress or Build Visualizations
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#visualize-with-open3d" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Visualize With Open3D
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#using-your-own-data" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Using Your Own Data
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#where-to-go-next" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Where To Go Next
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<h1 id="getting-started">Getting Started<a class="headerlink" href="#getting-started" title="Permanent link">&para;</a></h1>
+<p>Welcome to <strong>pyRANSAC-3D</strong>.</p>
+<p>The library fits simple 3D primitives to point clouds with RANSAC. Start here if you want a first working example before reading the API reference.</p>
+<h2 id="on-this-page">On This Page<a class="headerlink" href="#on-this-page" title="Permanent link">&para;</a></h2>
+<ul>
+<li><a href="#install">Install</a></li>
+<li><a href="#the-basic-workflow">The Basic Workflow</a></li>
+<li><a href="#choose-a-shape">Choose a Shape</a></li>
+<li><a href="#first-fit-plane">First Fit: Plane</a></li>
+<li><a href="#fit-a-sphere">Fit a Sphere</a></li>
+<li><a href="#fit-a-cuboid">Fit a Cuboid</a></li>
+<li><a href="#callbacks">Callbacks</a></li>
+<li><a href="#visualize-with-open3d">Visualize With Open3D</a></li>
+<li><a href="#using-your-own-data">Using Your Own Data</a></li>
+<li><a href="#where-to-go-next">Where To Go Next</a></li>
+</ul>
+<h2 id="install">Install<a class="headerlink" href="#install" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code>pip<span class="w"> </span>install<span class="w"> </span>pyransac3d
+</code></pre></div>
+<h2 id="the-basic-workflow">The Basic Workflow<a class="headerlink" href="#the-basic-workflow" title="Permanent link">&para;</a></h2>
+<p>pyRANSAC-3D expects point clouds as NumPy-compatible arrays with shape <code>(N, 3)</code>, where each row is one point:</p>
+<div class="highlight"><pre><span></span><code><span class="p">[</span>
+    <span class="p">[</span><span class="n">x0</span><span class="p">,</span> <span class="n">y0</span><span class="p">,</span> <span class="n">z0</span><span class="p">],</span>
+    <span class="p">[</span><span class="n">x1</span><span class="p">,</span> <span class="n">y1</span><span class="p">,</span> <span class="n">z1</span><span class="p">],</span>
+    <span class="o">...</span>
+<span class="p">]</span>
+</code></pre></div>
+<p>Most shapes follow the same pattern:</p>
+<ol>
+<li>Load or create a point cloud.</li>
+<li>Create the shape fitter.</li>
+<li>Call <code>.fit(points, thresh=...)</code>.</li>
+<li>Use the fitted parameters and the inlier indexes.</li>
+</ol>
+<p><code>thresh</code> is the maximum distance a point can be from the fitted shape and still count as an inlier. Smaller values are stricter; larger values accept more noisy points.</p>
+<h2 id="choose-a-shape">Choose a Shape<a class="headerlink" href="#choose-a-shape" title="Permanent link">&para;</a></h2>
+<p>pyRANSAC-3D exposes one fitter class per primitive:</p>
+<table>
+<thead>
+<tr>
+<th>Shape</th>
+<th>Use it when you need</th>
+<th>Main result</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>Point</code></td>
+<td>A dense cluster around one coordinate</td>
+<td>Center and inliers</td>
+</tr>
+<tr>
+<td><code>Line</code></td>
+<td>A straight edge, rail, or scan line</td>
+<td>Direction, point on the line, and inliers</td>
+</tr>
+<tr>
+<td><code>Plane</code></td>
+<td>Floors, walls, tables, roofs, or flat surfaces</td>
+<td>Plane equation and inliers</td>
+</tr>
+<tr>
+<td><code>Circle</code></td>
+<td>Circular edges in 3D space</td>
+<td>Center, axis, radius, and inliers</td>
+</tr>
+<tr>
+<td><code>Sphere</code></td>
+<td>Ball-like objects</td>
+<td>Center, radius, and inliers</td>
+</tr>
+<tr>
+<td><code>Cylinder</code></td>
+<td>Pipes, trunks, poles, or columns</td>
+<td>Axis point, axis direction, radius, and inliers</td>
+</tr>
+<tr>
+<td><code>Cuboid</code></td>
+<td>Box-like objects</td>
+<td>Center, extents, axes, and inliers</td>
+</tr>
+</tbody>
+</table>
+<p>The exact return values are documented in each API page, but every fitter returns the indexes of the inlier points. Those indexes are useful for extracting the part of your point cloud that matched the fitted shape.</p>
+<h2 id="first-fit-plane">First Fit: Plane<a class="headerlink" href="#first-fit-plane" title="Permanent link">&para;</a></h2>
+<p>Planes are a good first example because many point clouds contain floors, walls, tables, or other flat surfaces.</p>
+<p><img alt="Plane fitting animation" src="https://raw.githubusercontent.com/leomariga/pyRANSAC-3D/master/doc/plano.gif" /></p>
+<div class="highlight"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">pyransac3d</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pyrsc</span>
+
+<span class="c1"># Replace this with your own NumPy array with shape (N, 3).</span>
+<span class="n">points</span> <span class="o">=</span> <span class="n">pyrsc</span><span class="o">.</span><span class="n">ShapeGenerator</span><span class="p">(</span><span class="n">seed</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">plane</span><span class="p">(</span>
+    <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span>
+    <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span>
+    <span class="n">size</span><span class="o">=</span><span class="mf">6.0</span><span class="p">,</span>
+    <span class="n">n_points</span><span class="o">=</span><span class="mi">500</span><span class="p">,</span>
+    <span class="n">noise</span><span class="o">=</span><span class="mf">0.02</span><span class="p">,</span>
+<span class="p">)</span>
+
+<span class="n">plane</span> <span class="o">=</span> <span class="n">pyrsc</span><span class="o">.</span><span class="n">Plane</span><span class="p">()</span>
+<span class="n">equation</span><span class="p">,</span> <span class="n">inliers</span> <span class="o">=</span> <span class="n">plane</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">points</span><span class="p">,</span> <span class="n">thresh</span><span class="o">=</span><span class="mf">0.05</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Plane equation (Ax + By + Cz + D): </span><span class="si">{</span><span class="n">equation</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Inliers: </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">inliers</span><span class="p">)</span><span class="si">}</span><span class="s2"> of </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">points</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</code></pre></div>
+<p>The plane result is returned as <code>[A, B, C, D]</code> for:</p>
+<div class="highlight"><pre><span></span><code>Ax + By + Cz + D = 0
+</code></pre></div>
+<h2 id="fit-a-sphere">Fit a Sphere<a class="headerlink" href="#fit-a-sphere" title="Permanent link">&para;</a></h2>
+<p>Use a sphere when you expect points around a ball-like object.</p>
+<p><img alt="Sphere fitting animation" src="https://raw.githubusercontent.com/leomariga/pyRANSAC-3D/master/doc/sphere.gif" /></p>
+<div class="highlight"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">pyransac3d</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pyrsc</span>
+
+<span class="n">points</span> <span class="o">=</span> <span class="n">pyrsc</span><span class="o">.</span><span class="n">ShapeGenerator</span><span class="p">(</span><span class="n">seed</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">sphere</span><span class="p">(</span>
+    <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span>
+    <span class="n">radius</span><span class="o">=</span><span class="mf">3.0</span><span class="p">,</span>
+    <span class="n">n_points</span><span class="o">=</span><span class="mi">500</span><span class="p">,</span>
+    <span class="n">noise</span><span class="o">=</span><span class="mf">0.02</span><span class="p">,</span>
+<span class="p">)</span>
+
+<span class="n">sphere</span> <span class="o">=</span> <span class="n">pyrsc</span><span class="o">.</span><span class="n">Sphere</span><span class="p">()</span>
+<span class="n">center</span><span class="p">,</span> <span class="n">radius</span><span class="p">,</span> <span class="n">inliers</span> <span class="o">=</span> <span class="n">sphere</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">points</span><span class="p">,</span> <span class="n">thresh</span><span class="o">=</span><span class="mf">0.1</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Center: </span><span class="si">{</span><span class="n">center</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Radius: </span><span class="si">{</span><span class="n">radius</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Inliers: </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">inliers</span><span class="p">)</span><span class="si">}</span><span class="s2"> of </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">points</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</code></pre></div>
+<h2 id="fit-a-cuboid">Fit a Cuboid<a class="headerlink" href="#fit-a-cuboid" title="Permanent link">&para;</a></h2>
+<p>Cuboids are useful for boxes, packages, furniture, and other objects with rectangular faces.</p>
+<p><img alt="Cuboid fitting animation" src="https://raw.githubusercontent.com/leomariga/pyRANSAC-3D/master/doc/cuboid.gif" /></p>
+<div class="highlight"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">pyransac3d</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pyrsc</span>
+
+<span class="n">points</span> <span class="o">=</span> <span class="n">pyrsc</span><span class="o">.</span><span class="n">ShapeGenerator</span><span class="p">(</span><span class="n">seed</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">cuboid</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span> <span class="p">[</span><span class="mi">4</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span> <span class="n">n_points</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span> <span class="n">noise</span><span class="o">=</span><span class="mf">0.01</span><span class="p">)</span>
+
+<span class="n">cuboid</span> <span class="o">=</span> <span class="n">pyrsc</span><span class="o">.</span><span class="n">Cuboid</span><span class="p">()</span>
+<span class="n">center</span><span class="p">,</span> <span class="n">extents</span><span class="p">,</span> <span class="n">axes</span><span class="p">,</span> <span class="n">inliers</span> <span class="o">=</span> <span class="n">cuboid</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">points</span><span class="p">,</span> <span class="n">thresh</span><span class="o">=</span><span class="mf">0.05</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Center: </span><span class="si">{</span><span class="n">center</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Extents: </span><span class="si">{</span><span class="n">extents</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Axes: </span><span class="si">{</span><span class="n">axes</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Inliers: </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">inliers</span><span class="p">)</span><span class="si">}</span><span class="s2"> of </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">points</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</code></pre></div>
+<h2 id="callbacks">Callbacks<a class="headerlink" href="#callbacks" title="Permanent link">&para;</a></h2>
+<p>Every fitter accepts an optional <code>callback</code>. The callback runs during RANSAC and receives a <code>state</code> dictionary with information about the current iteration and the best result found so far.</p>
+<p>Use a callback when you want to react while fitting is still running. For example, you can stop early with your own criteria, log intermediate values, inspect candidate parameters, or update a visualization.</p>
+<p>Common <code>state</code> values include:</p>
+<ul>
+<li><code>iteration</code>: current RANSAC iteration.</li>
+<li><code>sample_indices</code>: indexes of the points sampled for the current candidate.</li>
+<li><code>sample_points</code>: sampled points used to build the current candidate.</li>
+<li><code>model</code>: parameters of the current candidate.</li>
+<li><code>inliers</code>: inliers of the current candidate.</li>
+<li><code>best_model</code>: best candidate found so far.</li>
+<li><code>best_inliers</code>: inliers of the best candidate found so far.</li>
+<li><code>is_best</code>: <code>True</code> when the current candidate became the new best result.</li>
+</ul>
+<h3 id="early-stop-with-your-own-criteria">Early Stop With Your Own Criteria<a class="headerlink" href="#early-stop-with-your-own-criteria" title="Permanent link">&para;</a></h3>
+<p>If the callback returns <code>True</code>, the fit stops early and returns the best result found so far. This is useful when you already know what a good enough result looks like:</p>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Any</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">pyransac3d</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pyrsc</span>
+
+<span class="n">points</span> <span class="o">=</span> <span class="n">pyrsc</span><span class="o">.</span><span class="n">ShapeGenerator</span><span class="p">(</span><span class="n">seed</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">plane</span><span class="p">(</span>
+    <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span>
+    <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span>
+    <span class="n">size</span><span class="o">=</span><span class="mf">6.0</span><span class="p">,</span>
+    <span class="n">n_points</span><span class="o">=</span><span class="mi">500</span><span class="p">,</span>
+    <span class="n">noise</span><span class="o">=</span><span class="mf">0.02</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="n">n_points</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">points</span><span class="p">)</span>
+<span class="n">target_inlier_ratio</span> <span class="o">=</span> <span class="mf">0.8</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">stop_when_enough_points_fit</span><span class="p">(</span><span class="n">state</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+    <span class="n">inlier_ratio</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">state</span><span class="p">[</span><span class="s2">&quot;best_inliers&quot;</span><span class="p">])</span> <span class="o">/</span> <span class="n">n_points</span>
+    <span class="k">if</span> <span class="n">state</span><span class="p">[</span><span class="s2">&quot;is_best&quot;</span><span class="p">]:</span>
+        <span class="nb">print</span><span class="p">(</span>
+            <span class="sa">f</span><span class="s2">&quot;iteration </span><span class="si">{</span><span class="n">state</span><span class="p">[</span><span class="s1">&#39;iteration&#39;</span><span class="p">]</span><span class="si">:</span><span class="s2">&gt;4</span><span class="si">}</span><span class="s2"> | &quot;</span>
+            <span class="sa">f</span><span class="s2">&quot;best inliers: </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">state</span><span class="p">[</span><span class="s1">&#39;best_inliers&#39;</span><span class="p">])</span><span class="si">:</span><span class="s2">&gt;4</span><span class="si">}</span><span class="s2"> (</span><span class="si">{</span><span class="n">inlier_ratio</span><span class="si">:</span><span class="s2">.1%</span><span class="si">}</span><span class="s2">)&quot;</span>
+        <span class="p">)</span>
+    <span class="k">return</span> <span class="n">inlier_ratio</span> <span class="o">&gt;=</span> <span class="n">target_inlier_ratio</span>
+
+
+<span class="n">plane</span> <span class="o">=</span> <span class="n">pyrsc</span><span class="o">.</span><span class="n">Plane</span><span class="p">()</span>
+<span class="n">equation</span><span class="p">,</span> <span class="n">inliers</span> <span class="o">=</span> <span class="n">plane</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span>
+    <span class="n">points</span><span class="p">,</span>
+    <span class="n">thresh</span><span class="o">=</span><span class="mf">0.05</span><span class="p">,</span>
+    <span class="n">maxIteration</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span>
+    <span class="n">callback</span><span class="o">=</span><span class="n">stop_when_enough_points_fit</span><span class="p">,</span>
+<span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Stopped with </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">inliers</span><span class="p">)</span><span class="si">}</span><span class="s2"> inliers&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Plane equation: </span><span class="si">{</span><span class="n">equation</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</code></pre></div>
+<p>See the full runnable <a href="https://github.com/leomariga/pyRANSAC-3D/blob/master/examples/early_stop_callback.py">early stop callback example</a>.</p>
+<h3 id="inspect-progress-or-build-visualizations">Inspect Progress or Build Visualizations<a class="headerlink" href="#inspect-progress-or-build-visualizations" title="Permanent link">&para;</a></h3>
+<p>Callbacks can also be used without stopping the fit. Return <code>False</code> or <code>None</code> to keep RANSAC running, and use the <code>state</code> values to log progress, compare candidate parameters, or update a live plot.</p>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Any</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">pyransac3d</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pyrsc</span>
+
+<span class="n">points</span> <span class="o">=</span> <span class="n">pyrsc</span><span class="o">.</span><span class="n">ShapeGenerator</span><span class="p">(</span><span class="n">seed</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">plane</span><span class="p">(</span>
+    <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span>
+    <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span>
+    <span class="n">size</span><span class="o">=</span><span class="mf">6.0</span><span class="p">,</span>
+    <span class="n">n_points</span><span class="o">=</span><span class="mi">500</span><span class="p">,</span>
+    <span class="n">noise</span><span class="o">=</span><span class="mf">0.02</span><span class="p">,</span>
+<span class="p">)</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">print_progress</span><span class="p">(</span><span class="n">state</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">state</span><span class="p">[</span><span class="s2">&quot;is_best&quot;</span><span class="p">]:</span>
+        <span class="nb">print</span><span class="p">(</span>
+            <span class="sa">f</span><span class="s2">&quot;iteration </span><span class="si">{</span><span class="n">state</span><span class="p">[</span><span class="s1">&#39;iteration&#39;</span><span class="p">]</span><span class="si">:</span><span class="s2">&gt;4</span><span class="si">}</span><span class="s2"> | &quot;</span>
+            <span class="sa">f</span><span class="s2">&quot;best inliers: </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">state</span><span class="p">[</span><span class="s1">&#39;best_inliers&#39;</span><span class="p">])</span><span class="si">:</span><span class="s2">&gt;4</span><span class="si">}</span><span class="s2"> | &quot;</span>
+            <span class="sa">f</span><span class="s2">&quot;equation: </span><span class="si">{</span><span class="n">state</span><span class="p">[</span><span class="s1">&#39;best_model&#39;</span><span class="p">][</span><span class="s1">&#39;equation&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span>
+        <span class="p">)</span>
+    <span class="k">return</span> <span class="kc">False</span>
+
+
+<span class="n">plane</span> <span class="o">=</span> <span class="n">pyrsc</span><span class="o">.</span><span class="n">Plane</span><span class="p">()</span>
+<span class="n">equation</span><span class="p">,</span> <span class="n">inliers</span> <span class="o">=</span> <span class="n">plane</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">points</span><span class="p">,</span> <span class="n">thresh</span><span class="o">=</span><span class="mf">0.05</span><span class="p">,</span> <span class="n">maxIteration</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span> <span class="n">callback</span><span class="o">=</span><span class="n">print_progress</span><span class="p">)</span>
+</code></pre></div>
+<p>For a visual version of the same idea, see the <a href="https://github.com/leomariga/pyRANSAC-3D/blob/master/examples/plane_animation.py">plane animation example</a>, where the callback updates the Open3D point colors on every iteration.</p>
+<h2 id="visualize-with-open3d">Visualize With Open3D<a class="headerlink" href="#visualize-with-open3d" title="Permanent link">&para;</a></h2>
+<p>pyRANSAC-3D only needs NumPy to fit shapes, but Open3D is useful when you want to inspect the result visually.</p>
+<p>Install Open3D if you are running a visualization example:</p>
+<div class="highlight"><pre><span></span><code>pip<span class="w"> </span>install<span class="w"> </span>open3d
+</code></pre></div>
+<p>This example fits a plane, paints the inliers red, keeps the remaining points in their original color, and opens an Open3D window:</p>
+<div class="highlight"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">open3d</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">o3d</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">pyransac3d</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pyrsc</span>
+
+<span class="n">points</span> <span class="o">=</span> <span class="n">pyrsc</span><span class="o">.</span><span class="n">ShapeGenerator</span><span class="p">(</span><span class="n">seed</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">plane</span><span class="p">(</span>
+    <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span>
+    <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span>
+    <span class="n">size</span><span class="o">=</span><span class="mf">6.0</span><span class="p">,</span>
+    <span class="n">n_points</span><span class="o">=</span><span class="mi">500</span><span class="p">,</span>
+    <span class="n">noise</span><span class="o">=</span><span class="mf">0.02</span><span class="p">,</span>
+<span class="p">)</span>
+
+<span class="n">point_cloud</span> <span class="o">=</span> <span class="n">o3d</span><span class="o">.</span><span class="n">geometry</span><span class="o">.</span><span class="n">PointCloud</span><span class="p">()</span>
+<span class="n">point_cloud</span><span class="o">.</span><span class="n">points</span> <span class="o">=</span> <span class="n">o3d</span><span class="o">.</span><span class="n">utility</span><span class="o">.</span><span class="n">Vector3dVector</span><span class="p">(</span><span class="n">points</span><span class="p">)</span>
+
+<span class="n">plane</span> <span class="o">=</span> <span class="n">pyrsc</span><span class="o">.</span><span class="n">Plane</span><span class="p">()</span>
+<span class="n">equation</span><span class="p">,</span> <span class="n">inliers</span> <span class="o">=</span> <span class="n">plane</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">points</span><span class="p">,</span> <span class="n">thresh</span><span class="o">=</span><span class="mf">0.05</span><span class="p">)</span>
+
+<span class="n">inlier_cloud</span> <span class="o">=</span> <span class="n">point_cloud</span><span class="o">.</span><span class="n">select_by_index</span><span class="p">(</span><span class="n">inliers</span><span class="p">)</span>
+<span class="n">inlier_cloud</span><span class="o">.</span><span class="n">paint_uniform_color</span><span class="p">([</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">])</span>
+
+<span class="n">outlier_cloud</span> <span class="o">=</span> <span class="n">point_cloud</span><span class="o">.</span><span class="n">select_by_index</span><span class="p">(</span><span class="n">inliers</span><span class="p">,</span> <span class="n">invert</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">outlier_cloud</span><span class="o">.</span><span class="n">paint_uniform_color</span><span class="p">([</span><span class="mf">0.6</span><span class="p">,</span> <span class="mf">0.6</span><span class="p">,</span> <span class="mf">0.6</span><span class="p">])</span>
+
+<span class="n">o3d</span><span class="o">.</span><span class="n">visualization</span><span class="o">.</span><span class="n">draw_geometries</span><span class="p">([</span><span class="n">outlier_cloud</span><span class="p">,</span> <span class="n">inlier_cloud</span><span class="p">])</span>
+</code></pre></div>
+<p>The repository has richer Open3D examples that also draw fitted meshes, wireframes, bounding boxes, and live RANSAC animations.</p>
+<h2 id="using-your-own-data">Using Your Own Data<a class="headerlink" href="#using-your-own-data" title="Permanent link">&para;</a></h2>
+<p>If your points are already in memory, pass them directly:</p>
+<div class="highlight"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">pyransac3d</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pyrsc</span>
+
+<span class="n">points</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">my_points</span><span class="p">)</span>
+
+<span class="n">plane</span> <span class="o">=</span> <span class="n">pyrsc</span><span class="o">.</span><span class="n">Plane</span><span class="p">()</span>
+<span class="n">equation</span><span class="p">,</span> <span class="n">inliers</span> <span class="o">=</span> <span class="n">plane</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">points</span><span class="p">,</span> <span class="n">thresh</span><span class="o">=</span><span class="mf">0.05</span><span class="p">)</span>
+</code></pre></div>
+<p>For best results:</p>
+<ul>
+<li>Make sure the array has shape <code>(N, 3)</code>.</li>
+<li>Choose <code>thresh</code> based on your point cloud units and expected noise.</li>
+<li>Inspect <code>len(inliers)</code> to see how much of the cloud matched the fitted shape.</li>
+<li>Try a few thresholds if the fit is too strict or too permissive.</li>
+</ul>
+<h2 id="where-to-go-next">Where To Go Next<a class="headerlink" href="#where-to-go-next" title="Permanent link">&para;</a></h2>
+<ul>
+<li>Browse the <a href="https://github.com/leomariga/pyRANSAC-3D/tree/master/examples">examples folder</a> for runnable scripts for every shape.</li>
+<li>Start with the simple examples: <a href="https://github.com/leomariga/pyRANSAC-3D/blob/master/examples/point_simple.py">Point</a>, <a href="https://github.com/leomariga/pyRANSAC-3D/blob/master/examples/line_simple.py">Line</a>, <a href="https://github.com/leomariga/pyRANSAC-3D/blob/master/examples/plane_simple.py">Plane</a>, <a href="https://github.com/leomariga/pyRANSAC-3D/blob/master/examples/circle_simple.py">Circle</a>, <a href="https://github.com/leomariga/pyRANSAC-3D/blob/master/examples/sphere_simple.py">Sphere</a>, <a href="https://github.com/leomariga/pyRANSAC-3D/blob/master/examples/cylinder_simple.py">Cylinder</a>, and <a href="https://github.com/leomariga/pyRANSAC-3D/blob/master/examples/cuboid_simple.py">Cuboid</a>.</li>
+<li>Try the Open3D visual examples: <a href="https://github.com/leomariga/pyRANSAC-3D/blob/master/examples/point_visual.py">Point</a>, <a href="https://github.com/leomariga/pyRANSAC-3D/blob/master/examples/line_visual.py">Line</a>, <a href="https://github.com/leomariga/pyRANSAC-3D/blob/master/examples/plane_visual.py">Plane</a>, <a href="https://github.com/leomariga/pyRANSAC-3D/blob/master/examples/circle_visual.py">Circle</a>, <a href="https://github.com/leomariga/pyRANSAC-3D/blob/master/examples/sphere_visual.py">Sphere</a>, <a href="https://github.com/leomariga/pyRANSAC-3D/blob/master/examples/cylinder_visual.py">Cylinder</a>, and <a href="https://github.com/leomariga/pyRANSAC-3D/blob/master/examples/cuboid_visual.py">Cuboid</a>.</li>
+<li>Use the animation examples to see callbacks in action: <a href="https://github.com/leomariga/pyRANSAC-3D/blob/master/examples/point_animation.py">Point animation</a>, <a href="https://github.com/leomariga/pyRANSAC-3D/blob/master/examples/line_animation.py">Line animation</a>, <a href="https://github.com/leomariga/pyRANSAC-3D/blob/master/examples/plane_animation.py">Plane animation</a>, <a href="https://github.com/leomariga/pyRANSAC-3D/blob/master/examples/circle_animation.py">Circle animation</a>, <a href="https://github.com/leomariga/pyRANSAC-3D/blob/master/examples/sphere_animation.py">Sphere animation</a>, <a href="https://github.com/leomariga/pyRANSAC-3D/blob/master/examples/cylinder_animation.py">Cylinder animation</a>, and <a href="https://github.com/leomariga/pyRANSAC-3D/blob/master/examples/cuboid_animation.py">Cuboid animation</a>.</li>
+<li>Open the API pages for each fitter: <a href="../api-documentation/plane/">Plane</a>, <a href="../api-documentation/sphere/">Sphere</a>, <a href="../api-documentation/cylinder/">Cylinder</a>, <a href="../api-documentation/cuboid/">Cuboid</a>, <a href="../api-documentation/line/">Line</a>, <a href="../api-documentation/circle/">Circle</a>, and <a href="../api-documentation/point/">Point</a>.</li>
+<li>Use <a href="../api-documentation/shape-generator/">Shape Generator</a> to create synthetic point clouds while learning or testing.</li>
+</ul>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "..", "features": [], "search": "../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.d7400e89.min.js"></script>
+      
+    
+  </body>
+</html>

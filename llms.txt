@@ -1,0 +1,24 @@
+# pyRANSAC-3D
+
+> Python library for fitting 3D geometric primitives to point clouds with RANSAC.
+
+pyRANSAC-3D is a Python library for fitting planes, lines, circles, spheres, cylinders, cuboids, and point clusters to 3D point clouds with RANSAC.
+
+
+## API Reference
+
+- [Auxiliary](https://leomariga.github.io/pyRANSAC-3D/api-documentation/auxiliary/index.md)
+- [Circle](https://leomariga.github.io/pyRANSAC-3D/api-documentation/circle/index.md)
+- [Cuboid](https://leomariga.github.io/pyRANSAC-3D/api-documentation/cuboid/index.md)
+- [Cylinder](https://leomariga.github.io/pyRANSAC-3D/api-documentation/cylinder/index.md)
+- [Line](https://leomariga.github.io/pyRANSAC-3D/api-documentation/line/index.md)
+- [Plane](https://leomariga.github.io/pyRANSAC-3D/api-documentation/plane/index.md)
+- [Point](https://leomariga.github.io/pyRANSAC-3D/api-documentation/point/index.md)
+- [Shape Generator](https://leomariga.github.io/pyRANSAC-3D/api-documentation/shape-generator/index.md)
+- [Sphere](https://leomariga.github.io/pyRANSAC-3D/api-documentation/sphere/index.md)
+
+## Getting Started
+
+- [Home](https://leomariga.github.io/pyRANSAC-3D/index.md): Project overview, installation, supported shapes, and quick examples.
+- [Getting Started](https://leomariga.github.io/pyRANSAC-3D/getting-started/index.md): Detailed guide to fitting and visualizing shapes.
+

@@ -1,6 +1,4 @@
 
-
-
 <!doctype html>
 <html lang="en" class="no-js">
   <head>
@@ -8,10 +6,24 @@
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width,initial-scale=1">
       
+        <meta name="description" content="Python library for fitting 3D geometric primitives to point clouds with RANSAC.">
       
       
-      <link rel="shortcut icon" href="https://raw.githubusercontent.com/leomariga/pyRANSAC-3D/master/doc/icon_black.png">
-      <meta name="generator" content="mkdocs-1.1.2, mkdocs-material-5.2.2">
+      
+        <link rel="canonical" href="https://leomariga.github.io/pyRANSAC-3D/contributing/">
+      
+      
+        <link rel="prev" href="../api-documentation/auxiliary/">
+      
+      
+        <link rel="next" href="../license/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="https://raw.githubusercontent.com/leomariga/pyRANSAC-3D/master/doc/icon_black.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
     
     
       
@@ -19,28 +31,32 @@
       
     
     
-      <link rel="stylesheet" href="../assets/stylesheets/main.a2408e81.min.css">
+      <link rel="stylesheet" href="../assets/stylesheets/main.ec1eaa64.min.css">
       
-        <link rel="stylesheet" href="../assets/stylesheets/palette.a46bcfb3.min.css">
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.ab4e12ef.min.css">
       
+      
+
+
+    
+    
+      
+    
+    
       
         
         
-        <meta name="theme-color" content="#795548">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
       
     
     
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
     
       
-        <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
-        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700%7CRoboto+Mono&display=fallback">
-        <style>body,input{font-family:"Roboto",-apple-system,BlinkMacSystemFont,Helvetica,Arial,sans-serif}code,kbd,pre{font-family:"Roboto Mono",SFMono-Regular,Consolas,Menlo,monospace}</style>
-      
-    
-    
-    
-    
-      
+
     
     
   </head>
@@ -49,8 +65,11 @@
     
     
     
-    <body dir="ltr" data-md-color-scheme="" data-md-color-primary="brown" data-md-color-accent="brown">
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="brown" data-md-color-accent="brown">
   
+    
     <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
     <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
     <label class="md-overlay" for="__drawer"></label>
@@ -66,68 +85,90 @@
       
     </div>
     
-      <header class="md-header" data-md-component="header">
-  <nav class="md-header-nav md-grid" aria-label="Header">
-    <a href=".." title="pyRANSAC-3D" class="md-header-nav__button md-logo" aria-label="pyRANSAC-3D">
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="pyRANSAC-3D" class="md-header__button md-logo" aria-label="pyRANSAC-3D" data-md-component="logo">
       
   <img src="https://raw.githubusercontent.com/leomariga/pyRANSAC-3D/master/doc/icon_white.png" alt="logo">
 
     </a>
-    <label class="md-header-nav__button md-icon" for="__drawer">
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2z"/></svg>
-    </label>
-    <div class="md-header-nav__title" data-md-component="header-title">
+    <label class="md-header__button md-icon" for="__drawer">
       
-        <div class="md-header-nav__ellipsis">
-          <span class="md-header-nav__topic md-ellipsis">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
             pyRANSAC-3D
           </span>
-          <span class="md-header-nav__topic md-ellipsis">
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
             
               Contributing
             
           </span>
         </div>
-      
+      </div>
     </div>
     
-      <label class="md-header-nav__button md-icon" for="__search">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0116 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 019.5 16 6.5 6.5 0 013 9.5 6.5 6.5 0 019.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
-      </label>
       
-<div class="md-search" data-md-component="search" role="dialog">
+    
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
   <label class="md-search__overlay" for="__search"></label>
   <div class="md-search__inner" role="search">
     <form class="md-search__form" name="search">
-      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" data-md-state="active">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
       <label class="md-search__icon md-icon" for="__search">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0116 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 019.5 16 6.5 6.5 0 013 9.5 6.5 6.5 0 019.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
       </label>
-      <button type="reset" class="md-search__icon md-icon" aria-label="Clear" data-md-component="search-reset" tabindex="-1">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z"/></svg>
-      </button>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
     </form>
     <div class="md-search__output">
-      <div class="md-search__scrollwrap" data-md-scrollfix>
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
         <div class="md-search-result" data-md-component="search-result">
           <div class="md-search-result__meta">
             Initializing search
           </div>
-          <ol class="md-search-result__list"></ol>
+          <ol class="md-search-result__list" role="presentation"></ol>
         </div>
       </div>
     </div>
   </div>
 </div>
+      
     
     
-      <div class="md-header-nav__source">
-        
-<a href="https://github.com/leomariga/pyRANSAC-3D/" title="Go to repository" class="md-source">
+      <div class="md-header__source">
+        <a href="https://github.com/leomariga/pyRANSAC-3D" title="Go to repository" class="md-source" data-md-component="source">
   <div class="md-source__icon md-icon">
     
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M439.55 236.05L244 40.45a28.87 28.87 0 00-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 01-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 000 40.81l195.61 195.6a28.86 28.86 0 0040.8 0l194.69-194.69a28.86 28.86 0 000-40.81z"/></svg>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
   </div>
   <div class="md-source__repository">
     leomariga/pyRANSAC-3D
@@ -136,25 +177,31 @@
       </div>
     
   </nav>
+  
 </header>
     
     <div class="md-container" data-md-component="container">
       
+      
         
-      
-      
+          
         
       
       <main class="md-main" data-md-component="main">
         <div class="md-main__inner md-grid">
           
             
-              <div class="md-sidebar md-sidebar--primary" data-md-component="navigation">
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
                 <div class="md-sidebar__scrollwrap">
                   <div class="md-sidebar__inner">
-                    <nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
   <label class="md-nav__title" for="__drawer">
-    <a href=".." title="pyRANSAC-3D" class="md-nav__button md-logo" aria-label="pyRANSAC-3D">
+    <a href=".." title="pyRANSAC-3D" class="md-nav__button md-logo" aria-label="pyRANSAC-3D" data-md-component="logo">
       
   <img src="https://raw.githubusercontent.com/leomariga/pyRANSAC-3D/master/doc/icon_white.png" alt="logo">
 
@@ -163,11 +210,10 @@
   </label>
   
     <div class="md-nav__source">
-      
-<a href="https://github.com/leomariga/pyRANSAC-3D/" title="Go to repository" class="md-source">
+      <a href="https://github.com/leomariga/pyRANSAC-3D" title="Go to repository" class="md-source" data-md-component="source">
   <div class="md-source__icon md-icon">
     
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M439.55 236.05L244 40.45a28.87 28.87 0 00-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 01-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 000 40.81l195.61 195.6a28.86 28.86 0 0040.8 0l194.69-194.69a28.86 28.86 0 000-40.81z"/></svg>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
   </div>
   <div class="md-source__repository">
     leomariga/pyRANSAC-3D
@@ -179,248 +225,601 @@
     
       
       
-      
-
-
-  <li class="md-nav__item">
-    <a href=".." title="Home" class="md-nav__link">
-      Home
-    </a>
-  </li>
-
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
     
-      
-      
-      
-
-
-  <li class="md-nav__item md-nav__item--nested">
-    
-      <input class="md-nav__toggle md-toggle" data-md-toggle="nav-2" type="checkbox" id="nav-2">
-    
-    <label class="md-nav__link" for="nav-2">
-      API Documentation
-      <span class="md-nav__icon md-icon">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M8.59 16.58L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.42z"/></svg>
-      </span>
-    </label>
-    <nav class="md-nav" aria-label="API Documentation" data-md-level="1">
-      <label class="md-nav__title" for="nav-2">
-        <span class="md-nav__icon md-icon">
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
-        </span>
-        API Documentation
-      </label>
-      <ul class="md-nav__list" data-md-scrollfix>
-        
-        
-          
-          
-          
-
-
-  <li class="md-nav__item">
-    <a href="../api-documentation/plane/" title="Plane" class="md-nav__link">
-      Plane
-    </a>
-  </li>
-
-        
-          
-          
-          
-
-
-  <li class="md-nav__item">
-    <a href="../api-documentation/cuboid/" title="Cuboid" class="md-nav__link">
-      Cuboid
-    </a>
-  </li>
-
-        
-          
-          
-          
-
-
-  <li class="md-nav__item">
-    <a href="../api-documentation/cylinder/" title="Cylinder" class="md-nav__link">
-      Cylinder
-    </a>
-  </li>
-
-        
-          
-          
-          
-
-
-  <li class="md-nav__item">
-    <a href="../api-documentation/sphere/" title="Sphere" class="md-nav__link">
-      Sphere
-    </a>
-  </li>
-
-        
-          
-          
-          
-
-
-  <li class="md-nav__item">
-    <a href="../api-documentation/line/" title="Line" class="md-nav__link">
-      Line
-    </a>
-  </li>
-
-        
-          
-          
-          
-
-
-  <li class="md-nav__item">
-    <a href="../api-documentation/circle/" title="Circle" class="md-nav__link">
-      Circle
-    </a>
-  </li>
-
-        
-          
-          
-          
-
-
-  <li class="md-nav__item">
-    <a href="../api-documentation/point/" title="Point" class="md-nav__link">
-      Point
-    </a>
-  </li>
-
-        
-          
-          
-          
-
-
-  <li class="md-nav__item">
-    <a href="../api-documentation/auxiliary/" title="Auxiliary" class="md-nav__link">
-      Auxiliary
-    </a>
-  </li>
-
-        
-      </ul>
-    </nav>
-  </li>
-
-    
-      
-      
-      
-
+  
+    Home
   
 
+    
+  </span>
+  
+  
 
-  <li class="md-nav__item md-nav__item--active">
-    
-    <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
-    
-      
-    
-    
-      <label class="md-nav__link md-nav__link--active" for="__toc">
-        Contributing
-        <span class="md-nav__icon md-icon">
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 9h14V7H3v2m0 4h14v-2H3v2m0 4h14v-2H3v2m16 0h2v-2h-2v2m0-10v2h2V7h-2m0 6h2v-2h-2v2z"/></svg>
-        </span>
-      </label>
-    
-    <a href="./" title="Contributing" class="md-nav__link md-nav__link--active">
-      Contributing
-    </a>
+      </a>
+    </li>
+  
+
     
       
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../getting-started/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Getting Started
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    API Documentation
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    API Documentation
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../api-documentation/plane/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Plane
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../api-documentation/cuboid/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Cuboid
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../api-documentation/cylinder/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Cylinder
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../api-documentation/sphere/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Sphere
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../api-documentation/line/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Line
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../api-documentation/circle/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Circle
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../api-documentation/point/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Point
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../api-documentation/shape-generator/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Shape Generator
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../api-documentation/auxiliary/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Auxiliary
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Contributing
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Contributing
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
 <nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
   
   
     
   
   
     <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
-      </span>
+      <span class="md-nav__icon md-icon"></span>
       Table of contents
     </label>
-    <ul class="md-nav__list" data-md-scrollfix>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
   <a href="#we-develop-with-github" class="md-nav__link">
-    We Develop with Github
+    <span class="md-ellipsis">
+      
+        We Develop with Github
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#development-setup" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Development setup
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#tests-and-examples" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Tests and examples
+      
+    </span>
   </a>
   
 </li>
       
         <li class="md-nav__item">
   <a href="#we-use-github-flow-so-all-code-changes-happen-through-pull-requests" class="md-nav__link">
-    We Use Github Flow, So All Code Changes Happen Through Pull Requests
+    <span class="md-ellipsis">
+      
+        We Use Github Flow, So All Code Changes Happen Through Pull Requests
+      
+    </span>
   </a>
   
 </li>
       
         <li class="md-nav__item">
   <a href="#any-contributions-you-make-will-be-under-the-apache-20-software-license" class="md-nav__link">
-    Any contributions you make will be under the Apache 2.0 Software License
+    <span class="md-ellipsis">
+      
+        Any contributions you make will be under the Apache 2.0 Software License
+      
+    </span>
   </a>
   
 </li>
       
         <li class="md-nav__item">
   <a href="#report-bugs-using-githubs-issues" class="md-nav__link">
-    Report bugs using Github's issues
+    <span class="md-ellipsis">
+      
+        Report bugs using Github's issues
+      
+    </span>
   </a>
   
 </li>
       
         <li class="md-nav__item">
   <a href="#write-bug-reports-with-detail-background-and-sample-code" class="md-nav__link">
-    Write bug reports with detail, background, and sample code
+    <span class="md-ellipsis">
+      
+        Write bug reports with detail, background, and sample code
+      
+    </span>
   </a>
   
 </li>
       
         <li class="md-nav__item">
   <a href="#use-a-consistent-coding-style" class="md-nav__link">
-    Use a Consistent Coding Style
+    <span class="md-ellipsis">
+      
+        Use a Consistent Coding Style
+      
+    </span>
   </a>
   
 </li>
       
         <li class="md-nav__item">
   <a href="#license" class="md-nav__link">
-    License
+    <span class="md-ellipsis">
+      
+        License
+      
+    </span>
   </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#maintainer-notes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Maintainer Notes
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Maintainer Notes">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#publishing-to-pypi" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Publishing to PyPI
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#generating-and-publishing-docs" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Generating and publishing docs
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
     </ul>
   
 </nav>
-    
-  </li>
+      
+    </li>
+  
 
     
       
       
-      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../license/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    License
+  
 
+    
+  </span>
+  
+  
 
-  <li class="md-nav__item">
-    <a href="../license/" title="License" class="md-nav__link">
-      License
-    </a>
-  </li>
+      </a>
+    </li>
+  
 
     
   </ul>
@@ -430,70 +829,160 @@
               </div>
             
             
-              <div class="md-sidebar md-sidebar--secondary" data-md-component="toc">
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
                 <div class="md-sidebar__scrollwrap">
                   <div class="md-sidebar__inner">
                     
+
 <nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
   
   
     
   
   
     <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
-      </span>
+      <span class="md-nav__icon md-icon"></span>
       Table of contents
     </label>
-    <ul class="md-nav__list" data-md-scrollfix>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
   <a href="#we-develop-with-github" class="md-nav__link">
-    We Develop with Github
+    <span class="md-ellipsis">
+      
+        We Develop with Github
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#development-setup" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Development setup
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#tests-and-examples" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Tests and examples
+      
+    </span>
   </a>
   
 </li>
       
         <li class="md-nav__item">
   <a href="#we-use-github-flow-so-all-code-changes-happen-through-pull-requests" class="md-nav__link">
-    We Use Github Flow, So All Code Changes Happen Through Pull Requests
+    <span class="md-ellipsis">
+      
+        We Use Github Flow, So All Code Changes Happen Through Pull Requests
+      
+    </span>
   </a>
   
 </li>
       
         <li class="md-nav__item">
   <a href="#any-contributions-you-make-will-be-under-the-apache-20-software-license" class="md-nav__link">
-    Any contributions you make will be under the Apache 2.0 Software License
+    <span class="md-ellipsis">
+      
+        Any contributions you make will be under the Apache 2.0 Software License
+      
+    </span>
   </a>
   
 </li>
       
         <li class="md-nav__item">
   <a href="#report-bugs-using-githubs-issues" class="md-nav__link">
-    Report bugs using Github's issues
+    <span class="md-ellipsis">
+      
+        Report bugs using Github's issues
+      
+    </span>
   </a>
   
 </li>
       
         <li class="md-nav__item">
   <a href="#write-bug-reports-with-detail-background-and-sample-code" class="md-nav__link">
-    Write bug reports with detail, background, and sample code
+    <span class="md-ellipsis">
+      
+        Write bug reports with detail, background, and sample code
+      
+    </span>
   </a>
   
 </li>
       
         <li class="md-nav__item">
   <a href="#use-a-consistent-coding-style" class="md-nav__link">
-    Use a Consistent Coding Style
+    <span class="md-ellipsis">
+      
+        Use a Consistent Coding Style
+      
+    </span>
   </a>
   
 </li>
       
         <li class="md-nav__item">
   <a href="#license" class="md-nav__link">
-    License
+    <span class="md-ellipsis">
+      
+        License
+      
+    </span>
   </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#maintainer-notes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Maintainer Notes
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Maintainer Notes">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#publishing-to-pypi" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Publishing to PyPI
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#generating-and-publishing-docs" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Generating and publishing docs
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -505,19 +994,19 @@
               </div>
             
           
-          <div class="md-content">
-            <article class="md-content__inner md-typeset">
+          
+            <div class="md-content" data-md-component="content">
               
-                
-                  <a href="https://github.com/leomariga/pyRANSAC-3D/edit/master/docs/contributing.md" title="Edit this page" class="md-content__button md-icon">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25z"/></svg>
-                  </a>
-                
+              <article class="md-content__inner md-typeset">
                 
                   
-                
-                
-                <h1 id="contributing-to-pyransac_3d">Contributing to pyRANSAC_3D<a class="headerlink" href="#contributing-to-pyransac_3d" title="Permanent link">&para;</a></h1>
+
+
+  
+  
+
+
+<h1 id="contributing-to-pyransac_3d">Contributing to pyRANSAC_3D<a class="headerlink" href="#contributing-to-pyransac_3d" title="Permanent link">&para;</a></h1>
 <p>We love your input! We want to make contributing to this project as easy and transparent as possible, whether it's:</p>
 <ul>
 <li>Reporting a bug</li>
@@ -528,16 +1017,61 @@
 </ul>
 <h2 id="we-develop-with-github">We Develop with Github<a class="headerlink" href="#we-develop-with-github" title="Permanent link">&para;</a></h2>
 <p>We use github to host code, to track issues and feature requests, as well as accept pull requests.</p>
+<h2 id="development-setup">Development setup<a class="headerlink" href="#development-setup" title="Permanent link">&para;</a></h2>
+<p>This project uses <a href="https://docs.astral.sh/uv/">uv</a> to manage dependencies and the dev environment.</p>
+<ol>
+<li><a href="https://docs.astral.sh/uv/getting-started/installation/">Install uv</a> if you don't have it yet.</li>
+<li>Clone the repo and sync the environment (this installs the runtime dependencies plus the <code>dev</code> dependency group defined in <code>pyproject.toml</code>):
+   <div class="highlight"><pre><span></span><code>git<span class="w"> </span>clone<span class="w"> </span>https://github.com/leomariga/pyRANSAC-3D
+<span class="nb">cd</span><span class="w"> </span>pyRANSAC-3D
+uv<span class="w"> </span>sync
+</code></pre></div></li>
+<li>Run project commands with <code>uv run</code>, e.g.:
+   <div class="highlight"><pre><span></span><code>uv<span class="w"> </span>run<span class="w"> </span>invoke<span class="w"> </span>--list
+</code></pre></div></li>
+</ol>
+<h2 id="tests-and-examples">Tests and examples<a class="headerlink" href="#tests-and-examples" title="Permanent link">&para;</a></h2>
+<p>The <code>tests</code> folder has the automated tests, which are run with pytest:
+<div class="highlight"><pre><span></span><code>uv<span class="w"> </span>run<span class="w"> </span>invoke<span class="w"> </span><span class="nb">test</span>
+</code></pre></div>
+They only depend on NumPy: the point clouds are built by <code>pyransac3d.ShapeGenerator</code> from the parameters of each shape, so every test checks the fitted shape against the shape it generated, and the whole suite runs in a few seconds without opening any window.</p>
+<p>The <code>examples</code> folder has the scripts which show how to use the library, one file per shape and per kind of example, so the name says what to expect from it:</p>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>What it does</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>{shape}_simple.py</code></td>
+<td>The shortest way to call the fitter. Only NumPy, no window, it just prints the parameters it found</td>
+</tr>
+<tr>
+<td><code>{shape}_visual.py</code></td>
+<td>Fits a shape and plots the result with Open3D, which opens a window</td>
+</tr>
+<tr>
+<td><code>{shape}_animation.py</code></td>
+<td>Plots every candidate with Open3D while RANSAC is running, using the <code>callback</code> of the fitter</td>
+</tr>
+</tbody>
+</table>
+<p>Run them one at a time, e.g.:
+<div class="highlight"><pre><span></span><code>uv<span class="w"> </span>run<span class="w"> </span>python<span class="w"> </span>examples/plane_simple.py
+</code></pre></div>
+There is also <code>early_stop_callback.py</code>, which uses the same <code>callback</code> to stop the fitting as soon as the result is good enough, instead of plotting it.</p>
 <h2 id="we-use-github-flow-so-all-code-changes-happen-through-pull-requests">We Use <a href="https://guides.github.com/introduction/flow/index.html">Github Flow</a>, So All Code Changes Happen Through Pull Requests<a class="headerlink" href="#we-use-github-flow-so-all-code-changes-happen-through-pull-requests" title="Permanent link">&para;</a></h2>
 <p>Pull requests are the best way to propose changes to the codebase (we use <a href="https://guides.github.com/introduction/flow/index.html">Github Flow</a>). We actively welcome your pull requests:</p>
 <ol>
 <li>Fork the repo and create a new branch from <code>master</code>.</li>
 <li>If you've added code that should be tested, add tests.</li>
 <li>Update the documentation.</li>
-<li>Ensure the test suite passes.</li>
+<li>Ensure the test suite passes with <code>uv run invoke test</code>.</li>
 <li>Make sure your code lints.</li>
 <li>Issue that pull request!</li>
-<li>Clean unused files before commiting using <code>invoke clean</code></li>
+<li>Clean unused files before commiting using <code>uv run invoke clean</code></li>
 </ol>
 <h2 id="any-contributions-you-make-will-be-under-the-apache-20-software-license">Any contributions you make will be under the Apache 2.0 Software License<a class="headerlink" href="#any-contributions-you-make-will-be-under-the-apache-20-software-license" title="Permanent link">&para;</a></h2>
 <p>In short, when you submit code changes, your submissions are understood to be under the same <a href="https://www.apache.org/licenses/LICENSE-2.0">Apache License 2.0</a> that covers the project. Feel free to contact the maintainers if that's a concern.</p>
@@ -558,89 +1092,100 @@
 <h2 id="use-a-consistent-coding-style">Use a Consistent Coding Style<a class="headerlink" href="#use-a-consistent-coding-style" title="Permanent link">&para;</a></h2>
 <ul>
 <li>4 spaces for indentation rather than tabs</li>
-<li>We have many interesting commands to help create a better code, try <code>invoke --list</code></li>
-<li>Use <code>invoke lint</code> and <code>invoke format</code> before commit</li>
+<li>We have many interesting commands to help create a better code, try <code>uv run invoke --list</code></li>
+<li>Use <code>uv run invoke lint</code> and <code>uv run invoke format</code> before commit</li>
 </ul>
 <h2 id="license">License<a class="headerlink" href="#license" title="Permanent link">&para;</a></h2>
 <p>By contributing, you agree that your contributions will be licensed under its Apache License 2.0.</p>
-                
-              
-              
-                
+<h2 id="maintainer-notes">Maintainer Notes<a class="headerlink" href="#maintainer-notes" title="Permanent link">&para;</a></h2>
+<p>These steps are infrequent, so they're documented here as a reminder.</p>
+<h3 id="publishing-to-pypi">Publishing to PyPI<a class="headerlink" href="#publishing-to-pypi" title="Permanent link">&para;</a></h3>
+<ol>
+<li>Bump the version in <code>pyproject.toml</code> (<code>[project] version</code>) and <code>CITATION.cff</code> (<code>version</code>) — keep them in sync.</li>
+<li>
+<p>Build the package:
+   <div class="highlight"><pre><span></span><code>uv<span class="w"> </span>build
+</code></pre></div></p>
+</li>
+<li>
+<p>Optional: test the release on <a href="https://test.pypi.org">TestPyPI</a> first with <code>uv publish --publish-url https://test.pypi.org/legacy/ --token &lt;test-token&gt;</code> before publishing for real.</p>
+</li>
+<li>
+<p>Publish (requires a PyPI API token):
+   <div class="highlight"><pre><span></span><code>uv<span class="w"> </span>publish<span class="w"> </span>--token<span class="w"> </span>pypi-xxxx
+</code></pre></div></p>
+</li>
+<li>Verify: check <a href="https://pypi.org/project/pyransac3d/">pypi.org/project/pyransac3d</a> and test-install ephemerally with <code>uvx</code> (run from outside the repo, so it doesn't pick up the local <code>pyransac3d/</code> source folder):
+   <div class="highlight"><pre><span></span><code>uvx<span class="w"> </span>--from<span class="w"> </span><span class="nv">pyransac3d</span><span class="o">==</span>&lt;version&gt;<span class="w"> </span>python<span class="w"> </span>-c<span class="w"> </span><span class="s2">&quot;import pyransac3d as pyrsc; print(pyrsc.Plane)&quot;</span>
+</code></pre></div></li>
+</ol>
+<h3 id="generating-and-publishing-docs">Generating and publishing docs<a class="headerlink" href="#generating-and-publishing-docs" title="Permanent link">&para;</a></h3>
+<p>Docs are generated from source docstrings via <code>pydoc-markdown</code> (config: <code>pydoc-markdown.yml</code>) using the <code>mkdocs</code> renderer, then deployed to the <code>gh-pages</code> branch (served by GitHub Pages).</p>
+<ol>
+<li>Render the markdown pages and the <code>mkdocs.yml</code> into <code>build/docs</code>:
+   <div class="highlight"><pre><span></span><code>uv<span class="w"> </span>run<span class="w"> </span>pydoc-markdown
+</code></pre></div>
+   To preview the site locally before deploying, add <code>--build --site-dir _site</code> (the <code>--site-dir</code> is required, <code>--build</code> alone fails) or run <code>cd build/docs &amp;&amp; uv run mkdocs serve</code>.</li>
+<li>Deploy to <code>gh-pages</code>:
+   <div class="highlight"><pre><span></span><code><span class="nb">cd</span><span class="w"> </span>build/docs
+uv<span class="w"> </span>run<span class="w"> </span>mkdocs<span class="w"> </span>gh-deploy<span class="w"> </span>--force
+</code></pre></div>
+   <code>--force</code> overwrites <code>gh-pages</code> with the new build; that branch only ever holds generated site output, so this is expected/safe.</li>
+<li>Verify at <a href="https://leomariga.github.io/pyRANSAC-3D/">leomariga.github.io/pyRANSAC-3D</a> (allow a minute or two for GitHub Pages to update).</li>
+</ol>
 
 
-              
-            </article>
-          </div>
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
         </div>
+        
       </main>
       
-        
-<footer class="md-footer">
-  
-    <div class="md-footer-nav">
-      <nav class="md-footer-nav__inner md-grid" aria-label="Footer">
-        
-          <a href="../api-documentation/auxiliary/" title="Auxiliary" class="md-footer-nav__link md-footer-nav__link--prev" rel="prev">
-            <div class="md-footer-nav__button md-icon">
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
-            </div>
-            <div class="md-footer-nav__title">
-              <div class="md-ellipsis">
-                <span class="md-footer-nav__direction">
-                  Previous
-                </span>
-                Auxiliary
-              </div>
-            </div>
-          </a>
-        
-        
-          <a href="../license/" title="License" class="md-footer-nav__link md-footer-nav__link--next" rel="next">
-            <div class="md-footer-nav__title">
-              <div class="md-ellipsis">
-                <span class="md-footer-nav__direction">
-                  Next
-                </span>
-                License
-              </div>
-            </div>
-            <div class="md-footer-nav__button md-icon">
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4z"/></svg>
-            </div>
-          </a>
-        
-      </nav>
-    </div>
+        <footer class="md-footer">
   
   <div class="md-footer-meta md-typeset">
     <div class="md-footer-meta__inner md-grid">
-      <div class="md-footer-copyright">
-        
-        Made with
-        <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
-          Material for MkDocs
-        </a>
-      </div>
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
       
     </div>
   </div>
 </footer>
       
     </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
     
-      <script src="../assets/javascripts/vendor.d710d30a.min.js"></script>
-      <script src="../assets/javascripts/bundle.5f27aba8.min.js"></script><script id="__lang" type="application/json">{"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents"}</script>
+    
+    
       
-      <script>
-        app = initialize({
-          base: "..",
-          features: [],
-          search: Object.assign({
-            worker: "../assets/javascripts/worker/search.27c6a5e6.min.js"
-          }, typeof search !== "undefined" && search)
-        })
-      </script>
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "..", "features": [], "search": "../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.d7400e89.min.js"></script>
       
     
   </body>
