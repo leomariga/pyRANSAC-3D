@@ -2127,6 +2127,9 @@ dev = [
     { name = "pylint" },
     { name = "pytest" },
 ]
+test = [
+    { name = "pytest" },
+]
 
 [package.metadata]
 requires-dist = [{ name = "numpy" }]
@@ -2144,6 +2147,7 @@ dev = [
     { name = "pylint" },
     { name = "pytest", specifier = ">=8.4.2" },
 ]
+test = [{ name = "pytest", specifier = ">=8.4.2" }]
 
 [[package]]
 name = "pytest"

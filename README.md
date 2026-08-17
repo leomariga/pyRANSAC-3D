@@ -4,6 +4,7 @@
 </div>
 
 -----------------
+[![Tests](https://github.com/leomariga/pyRANSAC-3D/actions/workflows/tests.yml/badge.svg?branch=master)](https://github.com/leomariga/pyRANSAC-3D/actions/workflows/tests.yml)
 [![DOI](https://zenodo.org/badge/287829485.svg)](https://zenodo.org/badge/latestdoi/287829485)
 [![PyPI Latest Release](https://img.shields.io/pypi/v/pyransac3d.svg)](https://pypi.org/project/pyransac3d/)
 [![License](https://img.shields.io/pypi/l/pyransac3d.svg)](https://github.com/leomariga/pyransac3d/blob/master/LICENSE)

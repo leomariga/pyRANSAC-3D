@@ -47,6 +47,9 @@ Documentation = "https://leomariga.github.io/pyRANSAC-3D/"
 Source = "https://github.com/leomariga/pyRANSAC-3D"
 
 [dependency-groups]
+test = [
+    "pytest>=8.4.2",
+]
 dev = [
     "open3d",
     "invoke",
@@ -57,7 +60,7 @@ dev = [
     "pydoc-markdown>=4.8.2",
     "mkdocs>=1.6.1",
     "mkdocs-material>=9.7.7",
-    "pytest>=8.4.2",
+    { include-group = "test" },
 ]
 
 [tool.setuptools.packages.find]

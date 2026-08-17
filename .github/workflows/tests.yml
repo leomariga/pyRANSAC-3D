@@ -1,0 +1,44 @@
+name: Tests
+
+on:
+  push:
+    branches: [master]
+  pull_request:
+
+# A new commit on a branch/PR cancels the run still going for the previous one
+concurrency:
+  group: tests-${{ github.workflow }}-${{ github.head_ref || github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: ["3.10", "3.11", "3.12", "3.13"]
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@v6
+        with:
+          python-version: ${{ matrix.python-version }}
+          enable-cache: true
+
+      - name: Install dependencies
+        run: uv sync --locked --no-default-groups --group test
+
+      - name: Run tests
+        run: uv run --no-sync pytest --verbose
+
+  # Single check to require in the branch protection rule, so the rule doesn't
+  # have to be updated whenever the python version matrix changes
+  tests-passed:
+    if: always()
+    needs: test
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check the test matrix result
+        run: '[ "${{ needs.test.result }}" = "success" ]'
