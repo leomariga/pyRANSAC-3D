@@ -1,3 +1,4 @@
+# pyRANSAC-3D: RANSAC shape fitting for Python point clouds
 
 <div align="center">
   <img src="https://raw.githubusercontent.com/leomariga/pyRANSAC-3D/master/doc/logo.png"><br>
@@ -11,13 +12,15 @@
 
 
 ## What is pyRANSAC-3D?
-**_pyRANSAC-3D_** is an open source implementation of Random sample consensus (RANSAC) method. It fits primitive shapes such as planes, cuboids and cylinder in a point cloud to many aplications: 3D slam, 3D reconstruction, object tracking and many others. 
+**pyRANSAC-3D** is an open source Python library for detecting and fitting 3D geometric primitives in point clouds using the Random Sample Consensus (RANSAC) algorithm. It works with NumPy-compatible arrays and supports planes, lines, circles, spheres, cylinders, cuboids, and point clusters.
+
+Use pyRANSAC-3D for point-cloud segmentation and shape detection in applications such as LiDAR processing, 3D SLAM, 3D reconstruction, computer vision, and object tracking.
 
 <div align="center">
   <img src="https://raw.githubusercontent.com/leomariga/pyRANSAC-3D/master/doc/plano.gif"><br>
 </div>
 
-#### Features:
+### Features
  - [Plane](https://leomariga.github.io/pyRANSAC-3D/api-documentation/plane/)
  - [Cylinder](https://leomariga.github.io/pyRANSAC-3D/api-documentation/cylinder/)
  - [Cuboid](https://leomariga.github.io/pyRANSAC-3D/api-documentation/cuboid/)
@@ -26,49 +29,48 @@
  - [Circle](https://leomariga.github.io/pyRANSAC-3D/api-documentation/circle/)
  - [Point](https://leomariga.github.io/pyRANSAC-3D/api-documentation/point/)
 
-
 ## Installation
-Requirements: Numpy
+Requirement: NumPy
 
-Install with [Pypi](https://pypi.org/project/pyransac3d/):
+Install from [PyPI](https://pypi.org/project/pyransac3d/):
 
 ```sh
-pip3 install pyransac3d
+pip install pyransac3d
 ```
 
-## Take a look: 
+For a complete introduction, shape-selection guide, and runnable examples, see the [Getting Started guide](https://leomariga.github.io/pyRANSAC-3D/getting-started/).
+
+## Quick start
 
 ### Example 1 - Planar RANSAC
 
-``` python
+```python
 import pyransac3d as pyrsc
 
-points = load_points(.) # Load your point cloud as a numpy array (N, 3)
+points = load_points(.) # Load your point cloud as a NumPy array with shape (N, 3)
 
 plane1 = pyrsc.Plane()
 best_eq, best_inliers = plane1.fit(points, 0.01)
-
 ```
 
-Results in the plane equation Ax+By+Cz+D:
+The result is the plane equation `Ax + By + Cz + D = 0`:
 `[0.720, -0.253, 0.646, 1.100]`
 
 ### Example 2 - Spherical RANSAC
 
-Loading a noisy sphere's point cloud with r = 5 centered in 0 we can use the following code:
+To fit a noisy sphere with `r = 5` centered at the origin, use:
 
-``` python
+```python
 import pyransac3d as pyrsc
 
-points = load_points(.) # Load your point cloud as a numpy array (N, 3)
+points = load_points(.) # Load your point cloud as a NumPy array with shape (N, 3)
 
 sph = pyrsc.Sphere()
 center, radius, inliers = sph.fit(points, thresh=0.4)
-
 ```
 
 Results:
-``` python
+```text
 center: [0.010462385575072288, -0.2855090643954039, 0.02867848979091283]
 radius: 5.085218633039647
 ```
@@ -79,19 +81,29 @@ radius: 5.085218633039647
 
 Runnable examples of every shape are in the [examples folder](https://github.com/leomariga/pyRANSAC-3D/tree/master/examples).
 
+## When should I use pyRANSAC-3D?
 
-## Documentation & other links
- - The [documentation is this Ṕage](https://leomariga.github.io/pyRANSAC-3D/).
- - Source code in the [Github repository](https://github.com/leomariga/pyRANSAC-3D).
- - [Pypi pakage installer](https://pypi.org/project/pyransac3d/)
- - You can find the animations you see in the documentation on branch [Animations](https://github.com/leomariga/pyRANSAC-3D/tree/Animations). It needs [Open3D](https://github.com/intel-isl/Open3D) library to run. The Animation branch is not regularly maintained, it only exists to create some cool visualizations ;D 
+Use pyRANSAC-3D when you need to:
+
+- Fit a plane to a 3D point cloud in Python, such as a floor, wall, roof, or tabletop.
+- Detect cylinders in LiDAR or depth-sensor data, such as pipes, poles, trunks, or columns.
+- Segment geometric shapes from noisy point clouds with RANSAC.
+- Fit spheres, cuboids, circles, lines, or point clusters from NumPy-compatible `(N, 3)` arrays.
+- Combine lightweight NumPy-based shape fitting with optional [Open3D](https://www.open3d.org/) visualization.
+
+
+## Documentation and other links
+ - Read the [documentation](https://leomariga.github.io/pyRANSAC-3D/).
+ - Browse the source code in the [GitHub repository](https://github.com/leomariga/pyRANSAC-3D).
+ - Install the [PyPI package](https://pypi.org/project/pyransac3d/).
+ - Explore the [animation examples](https://github.com/leomariga/pyRANSAC-3D/tree/master/examples#animation) to watch each RANSAC fitter update through its callback.
 
 
 ## License
 [Apache 2.0](https://github.com/leomariga/pyRANSAC-3D/blob/master/LICENSE)
 
 ## Citation
-Did this repository was useful for your work? =)
+Was this repository useful for your work? Please cite it:
 
 ```
 @software{Mariga_pyRANSAC-3D_2022,
@@ -117,6 +129,6 @@ See [CONTRIBUTING](https://github.com/leomariga/pyRANSAC-3D/blob/master/CONTRIBU
 Developed with :heart: by the internet
 
 
-Mainteiner: [Leonardo Mariga](https://github.com/leomariga) 
+Maintainer: [Leonardo Mariga](https://github.com/leomariga)
 
-Did you like it? Remember to click on :star2: button.
+Did you like it? Remember to click the :star2: button.
