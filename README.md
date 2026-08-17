@@ -1,7 +1,9 @@
-# pyRANSAC-3D: RANSAC shape fitting for Python point clouds
-
 <div align="center">
-  <img src="https://raw.githubusercontent.com/leomariga/pyRANSAC-3D/master/doc/logo.png"><br>
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/leomariga/pyRANSAC-3D/master/doc/logo_white.png">
+    <source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/leomariga/pyRANSAC-3D/master/doc/logo_black.png">
+    <img alt="pyRANSAC-3D logo" src="https://raw.githubusercontent.com/leomariga/pyRANSAC-3D/master/doc/logo_black.png" width="400">
+  </picture>
 </div>
 
 -----------------
@@ -12,9 +14,7 @@
 
 
 ## What is pyRANSAC-3D?
-**pyRANSAC-3D** is an open source Python library for detecting and fitting 3D geometric primitives in point clouds using the Random Sample Consensus (RANSAC) algorithm. It works with NumPy-compatible arrays and supports planes, lines, circles, spheres, cylinders, cuboids, and point clusters.
-
-Use pyRANSAC-3D for point-cloud segmentation and shape detection in applications such as LiDAR processing, 3D SLAM, 3D reconstruction, computer vision, and object tracking.
+**_pyRANSAC-3D_** is an open source Python implementation of the Random Sample Consensus (RANSAC) method. It fits primitive shapes such as planes, cuboids, and cylinders to point clouds for applications including 3D SLAM, 3D reconstruction, object tracking, and more.
 
 <div align="center">
   <img src="https://raw.githubusercontent.com/leomariga/pyRANSAC-3D/master/doc/plano.gif"><br>
