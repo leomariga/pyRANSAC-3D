@@ -2,7 +2,7 @@
   <picture>
     <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/leomariga/pyRANSAC-3D/master/doc/logo_white.png">
     <source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/leomariga/pyRANSAC-3D/master/doc/logo_black.png">
-    <img alt="pyRANSAC-3D logo" src="https://raw.githubusercontent.com/leomariga/pyRANSAC-3D/master/doc/logo_black.png" width="400">
+    <img alt="pyRANSAC-3D logo" src="https://raw.githubusercontent.com/leomariga/pyRANSAC-3D/master/doc/logo_black.png" width="500">
   </picture>
 </div>
 
