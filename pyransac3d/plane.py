@@ -97,10 +97,9 @@ class Plane:
 
             # Distance from a point to a plane
             # https://mathworld.wolfram.com/Point-PlaneDistance.html
+            # vecC is already unitary, so no division by its norm is needed
             pt_id_inliers = []  # list of inliers ids
-            dist_pt = (
-                plane_eq[0] * pts[:, 0] + plane_eq[1] * pts[:, 1] + plane_eq[2] * pts[:, 2] + plane_eq[3]
-            ) / np.sqrt(plane_eq[0] ** 2 + plane_eq[1] ** 2 + plane_eq[2] ** 2)
+            dist_pt = pts.dot(vecC) + k
 
             # Select indexes where distance is biggers than the threshold
             pt_id_inliers = np.where(np.abs(dist_pt) <= thresh)[0]
