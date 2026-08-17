@@ -34,11 +34,22 @@ mesh = o3d.geometry.TriangleMesh.create_coordinate_frame(origin=[0, 0, 0], size=
 cen = o3d.geometry.TriangleMesh.create_coordinate_frame(origin=center, size=0.5)
 mesh_rot = copy.deepcopy(mesh).rotate(R, center=[0, 0, 0])
 
-mesh_cylinder = o3d.geometry.TriangleMesh.create_cylinder(radius=radius, height=0.5)
+# The fit describes a cylinder of infinite height, so we measure how far the inliers spread along
+# the axis to draw only the piece of it which matches the cloud
+axis = np.asarray(normal, dtype=float)
+axis = axis / np.linalg.norm(axis)
+projections = (points[inliers] - center) @ axis
+height = projections.max() - projections.min()
+
+# The center returned by the fit is any point of the axis, while the mesh is built around its own
+# middle, so it has to be moved to the middle of the inliers instead
+mesh_center = center + axis * (projections.max() + projections.min()) / 2
+
+mesh_cylinder = o3d.geometry.TriangleMesh.create_cylinder(radius=radius, height=height)
 mesh_cylinder.compute_vertex_normals()
 mesh_cylinder.paint_uniform_color([0.1, 0.9, 0.1])
 mesh_cylinder = mesh_cylinder.rotate(R, center=[0, 0, 0])
-mesh_cylinder = mesh_cylinder.translate((center[0], center[1], center[2]))
+mesh_cylinder = mesh_cylinder.translate((mesh_center[0], mesh_center[1], mesh_center[2]))
 o3d.visualization.draw_geometries([mesh_cylinder])
 
 o3d.visualization.draw_geometries([plane, not_plane, mesh, mesh_rot, mesh_cylinder])
