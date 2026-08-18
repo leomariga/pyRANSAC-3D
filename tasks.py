@@ -90,6 +90,7 @@ def clean_python(c):
     _delete_pattern("__pycache__")
     _delete_pattern("*.pyc")
     _delete_pattern("*.pyo")
+    _delete_pattern(".pytest_cache")
     _delete_pattern("*~")
 
 
