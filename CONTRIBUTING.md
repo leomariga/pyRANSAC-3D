@@ -107,6 +107,19 @@ These steps are infrequent, so they're documented here as a reminder.
 
 
 
+### Docstring conventions
+Each piece of information is documented in exactly one place, following the same convention as [numpydoc](https://numpydoc.readthedocs.io/en/latest/format.html#documenting-classes), the [Google style guide](https://google.github.io/styleguide/pyguide.html#384-classes) and [scikit-learn](https://scikit-learn.org/stable/developers/develop.html#estimated-attributes):
+
+- Everything a `fit(.)` stores on the object is documented in an `Attributes:` section of the **class** docstring, one line per attribute, and referred to by its plain name (`center`, not `self.center`).
+- The `fit(.)` docstring only has its summary, `:param:` for every argument and `:returns:` for what it actually returns. It never repeats the attributes.
+- What a `fit(.)` returns is defined by a `NamedTuple` in `pyransac3d/fit_results.py`, with a docstring under each field, so the `:returns:` line only has to name the type and its fields. Being a tuple keeps unpacking working, which is how the library has always been used.
+- The `state` dictionary given to a `callback` is documented once, in the `FitState` TypedDict of `pyransac3d/fit_state.py`, with a docstring under each key.
+
+Two caveats of the docs renderer are worth knowing when writing a docstring:
+
+- A docstring which uses `Attributes:` (or any other Google section) has the indentation of every line stripped, so it cannot contain indented markdown like the body of an `!!! note` admonition. Use the `!!! note "The text goes in the title"` form instead.
+- The `---` at the end of every docstring is the horizontal rule which separates the entries of a page, so keep it as the last line.
+
 ### Generating and publishing docs
 Docs are generated from source docstrings via `pydoc-markdown` (config: `pydoc-markdown.yml`) using the `mkdocs` renderer, then deployed to the `gh-pages` branch (served by GitHub Pages).
 

@@ -6,6 +6,9 @@ processors:
   - type: crossref
 renderer:
   type: mkdocs
+  markdown:
+    # Show the type of each field of the FitState and of the results of fit(.)
+    render_typehint_in_data_header: true
   pages:
     - title: Home
       name: index
@@ -35,6 +38,12 @@ renderer:
       - title: Point
         contents:
         - pyransac3d.point.*
+      - title: Fit Results
+        contents:
+        - pyransac3d.fit_results.*
+      - title: Fit State
+        contents:
+        - pyransac3d.fit_state.*
       - title: Shape Generator
         contents:
         - pyransac3d.shape_generator.*

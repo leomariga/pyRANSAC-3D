@@ -36,7 +36,7 @@ pyRANSAC-3D exposes one fitter class per primitive:
 | `Cylinder` | Pipes, trunks, poles, or columns | Axis point, axis direction, radius, and inliers |
 | `Cuboid` | Box-like objects | Center, extents, axes, and inliers |
 
-The exact return values are documented in each API page, but every fitter returns the indexes of the inlier points. Those indexes are useful for extracting the part of your point cloud that matched the fitted shape.
+The exact return values of each fitter are documented in [Fit Results](api-documentation/fit-results.md), but every one of them returns the indexes of the inlier points. Those indexes are useful for extracting the part of your point cloud that matched the fitted shape.
 
 pyRANSAC-3D expects point clouds as NumPy-compatible arrays with shape `(N, 3)`
 
@@ -121,7 +121,7 @@ Every fitter accepts an optional `callback`. The callback runs during RANSAC and
 
 Use a callback when you want to react while fitting is still running: stop early with your own criteria, log intermediate values, inspect candidate parameters, or update a visualization.
 
-The full `state` dictionary is documented on each fitter: [Plane](api-documentation/plane.md), [Sphere](api-documentation/sphere.md), [Cylinder](api-documentation/cylinder.md), [Cuboid](api-documentation/cuboid.md), [Line](api-documentation/line.md), [Circle](api-documentation/circle.md), and [Point](api-documentation/point.md).
+Every key of the `state` dictionary is documented in [Fit State](api-documentation/fit-state.md).
 
 ### Early Stop With Your Own Criteria
 

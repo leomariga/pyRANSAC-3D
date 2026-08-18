@@ -1,9 +1,11 @@
 import random
 from collections.abc import Callable
-from typing import Any
 
 import numpy as np
 from numpy.typing import NDArray
+
+from .fit_results import LineResult
+from .fit_state import FitState
 
 
 class Line:
@@ -14,6 +16,13 @@ class Line:
     This method uses 2 points from 3D space and computes a line. The selected candidate will be the line with more inliers inside the radius theshold.
 
     ![3D line](https://raw.githubusercontent.com/leomariga/pyRANSAC-3D/master/doc/line.gif "3D line")
+
+    Attributes:
+        A: 3D slope of the line, which is a unit vector along its direction, `np.array (3,)`.
+        B: Axis interception, which is a point the line passes through, `np.array (3,)`.
+        inliers: Index of the points of `pts` which fit the line.
+        distances: Distance from each point of `pts` to the line, `np.array (N,)`, in the same order
+            of `pts`.
 
     ---
     """
@@ -29,42 +38,21 @@ class Line:
         pts: NDArray[np.float64],
         thresh: float = 0.2,
         maxIteration: int = 1000,
-        callback: Callable[[dict[str, Any]], bool | None] | None = None,
-    ) -> tuple[
-        NDArray[np.float64] | list[float],
-        NDArray[np.float64] | list[float],
-        NDArray[np.intp] | list[int],
-    ]:
+        callback: Callable[[FitState], bool | None] | None = None,
+    ) -> LineResult:
         """
         Find the best equation for the 3D line. The line in a 3d enviroment is defined as y = Ax+B, but A and B are vectors intead of scalars.
 
         :param pts: 3D point cloud as a `np.array (N,3)`.
         :param thresh: Threshold distance from the line which is considered inlier.
         :param maxIteration: Number of maximum iteration which RANSAC will loop over.
-        :param callback: Optional callable invoked after every iteration with a state
-            `dict`. If it returns a truthy value, fitting stops early.
-        :returns:
-        - `A`: 3D slope of the line (angle) `np.array (1, 3)`
-        - `B`: Axis interception as `np.array (1, 3)`
-        - `inliers`: Inlier's index from the original point cloud. `np.array (1, M)`
+        :param callback: Optional callable which receives a `FitState` after every iteration.
+            Return a truthy value from it to stop the fit early.
+        :returns: `LineResult` with the slope `A` and the interception `B` of the line, and its
+            `inliers`.
 
-        The distances used to select the inliers are not returned, but they are kept in the object
-        and can be read from `self.distances` as a `np.array (N,)`, in the same order of `pts`.
-
-        The optional `callback` is invoked after every iteration with a state `dict`.
-        Useful to plot the fitting progress, inspect intermediate results, or implement
-        a custom early-stopping criterion. If it returns a truthy value, fitting stops
-        early and the current best result is returned. Treat the arrays in the state
-        `dict` as read-only. State keys:
-
-        - `iteration`: current iteration index (0-based)
-        - `sample_indices`: indices of the points sampled this iteration
-        - `sample_points`: the sampled points, `np.array (2, 3)`
-        - `model`: `dict` with this iteration's candidate `A` and `B`
-        - `inliers`: inlier indices found for this iteration's candidate
-        - `best_model`: `dict` with the best `A` and `B` found so far
-        - `best_inliers`: best inlier indices found so far
-        - `is_best`: `True` if this iteration became the new best candidate
+        Everything else measured while fitting is kept on the object, described in the attributes
+        of this class.
 
         ---
         """
@@ -121,4 +109,4 @@ class Line:
                 if stop:
                     break
 
-        return self.A, self.B, self.inliers
+        return LineResult(self.A, self.B, self.inliers)
