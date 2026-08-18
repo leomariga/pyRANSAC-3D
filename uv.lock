@@ -2194,7 +2194,7 @@ wheels = [
 
 [[package]]
 name = "pyransac3d"
-version = "0.6.1"
+version = "0.7.0"
 source = { editable = "." }
 dependencies = [
     { name = "numpy", version = "2.2.6", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version < '3.11'" },
