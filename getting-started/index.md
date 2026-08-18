@@ -9,7 +9,6 @@ The library fits simple 3D primitives to point clouds with RANSAC. Start here if
 - [Install](#install)
 - [Choose a Shape](#choose-a-shape)
 - [First Fit: Plane](#first-fit-plane)
-- [Reading the Result](#reading-the-result)
 - [Fit a Sphere](#fit-a-sphere)
 - [Fit a Cuboid](#fit-a-cuboid)
 - [Callbacks](#callbacks)
@@ -68,32 +67,6 @@ The plane result is returned as `[A, B, C, D]` for:
 
 ```
 Ax + By + Cz + D = 0
-```
-
-## Reading the Result
-
-Every `fit` returns a named tuple, one type per shape, so you can either unpack it as above or keep it and read each value by name. Reading by name is clearer for shapes with several parameters, where the order is easy to forget:
-
-```
-import pyransac3d as pyrsc
-
-points = pyrsc.ShapeGenerator(seed=0).cylinder([1, 2, 3], [0, 0, 1], radius=2.0, height=6.0, n_points=800, noise=0.02)
-
-result = pyrsc.Cylinder().fit(points, thresh=0.15)
-
-print(f"Center: {result.center}")
-print(f"Axis: {result.axis}")
-print(f"Radius: {result.radius}")
-print(f"Inliers: {len(result.inliers)} of {len(points)}")
-```
-
-The values a fit measures but does not return, such as the distance from every point to the fitted shape, are kept on the fitter object instead. They are listed in the attributes of each shape in the API pages:
-
-```
-cylinder = pyrsc.Cylinder()
-cylinder.fit(points, thresh=0.15)
-
-print(f"Distance of the first point to the cylinder hull: {cylinder.distances[0]}")
 ```
 
 ## Fit a Sphere
