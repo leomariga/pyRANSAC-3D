@@ -103,7 +103,7 @@ Use pyRANSAC-3D when you need to:
 Was this repository useful for your work? Please cite it:
 
 ```
-@software{Mariga_pyRANSAC-3D_2022,
+@software{Mariga_pyRANSAC-3D,
   author = {Mariga, Leonardo},
   doi = {10.5281/zenodo.7212567},
   month = {8},
