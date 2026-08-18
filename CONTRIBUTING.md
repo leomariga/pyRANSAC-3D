@@ -87,6 +87,23 @@ By contributing, you agree that your contributions will be licensed under its Ap
 ## Maintainer Notes
 These steps are infrequent, so they're documented here as a reminder.
 
+### Release checklist
+1. Pre-release: `uv run invoke test` and `uv run invoke lint`.
+2. Bump versions in `pyproject.toml`, `CITATION.cff`, and the README citation block, then `uv lock`.
+3. Commit and push to `master`.
+4. GitHub Release — tag `v<version>` (triggers the Zenodo archive).
+5. Build: `uv build`.
+6. Optional: publish to [TestPyPI](https://test.pypi.org) with `uv publish --publish-url https://test.pypi.org/legacy/ --token <test-token>`.
+7. PyPI: `uv publish --token pypi-xxxx`.
+8. Verify the install from outside the repo:
+   ```sh
+   uvx --from pyransac3d==<version> python -c "import pyransac3d as pyrsc; print(pyrsc.Plane)"
+   ```
+9. Docs: `uv run pydoc-markdown` then `uv run mkdocs gh-deploy --force -f build/docs/mkdocs.yml`.
+10. Verify [PyPI](https://pypi.org/project/pyransac3d/), [Zenodo](https://zenodo.org/doi/10.5281/zenodo.7212567), and [leomariga.github.io/pyRANSAC-3D](https://leomariga.github.io/pyRANSAC-3D/).
+
+Details for the PyPI and docs steps are below.
+
 ### Publishing to PyPI
 1. Bump the version in `pyproject.toml` (`[project] version`) and `CITATION.cff` (`version`) — keep them in sync.
 2. Build the package:
