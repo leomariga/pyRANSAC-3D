@@ -13,7 +13,7 @@
         <link rel="canonical" href="https://leomariga.github.io/pyRANSAC-3D/api-documentation/fit-state/">
       
       
-        <link rel="prev" href="../point/">
+        <link rel="prev" href="../fit-results/">
       
       
         <link rel="next" href="../shape-generator/">
@@ -526,6 +526,34 @@
                 
   
   
+  
+  
+    <li class="md-nav__item">
+      <a href="../fit-results/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Fit Results
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
     
   
   
@@ -601,10 +629,10 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#iteration" class="md-nav__link">
+  <a href="#iteration-int" class="md-nav__link">
     <span class="md-ellipsis">
       
-        iteration
+        iteration: int
       
     </span>
   </a>
@@ -612,10 +640,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#sample_indices" class="md-nav__link">
+  <a href="#sample_indices-listint" class="md-nav__link">
     <span class="md-ellipsis">
       
-        sample_indices
+        sample_indices: list[int]
       
     </span>
   </a>
@@ -623,10 +651,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#sample_points" class="md-nav__link">
+  <a href="#sample_points-ndarraynpfloat64" class="md-nav__link">
     <span class="md-ellipsis">
       
-        sample_points
+        sample_points: NDArray[np.float64]
       
     </span>
   </a>
@@ -634,10 +662,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#model" class="md-nav__link">
+  <a href="#model-dictstr-any" class="md-nav__link">
     <span class="md-ellipsis">
       
-        model
+        model: dict[str, Any]
       
     </span>
   </a>
@@ -645,10 +673,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#inliers" class="md-nav__link">
+  <a href="#inliers-ndarraynpintp" class="md-nav__link">
     <span class="md-ellipsis">
       
-        inliers
+        inliers: NDArray[np.intp]
       
     </span>
   </a>
@@ -656,10 +684,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#best_model" class="md-nav__link">
+  <a href="#best_model-dictstr-any" class="md-nav__link">
     <span class="md-ellipsis">
       
-        best_model
+        best_model: dict[str, Any]
       
     </span>
   </a>
@@ -667,10 +695,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#best_inliers" class="md-nav__link">
+  <a href="#best_inliers-ndarraynpintp-listint" class="md-nav__link">
     <span class="md-ellipsis">
       
-        best_inliers
+        best_inliers: NDArray[np.intp] | list[int]
       
     </span>
   </a>
@@ -678,10 +706,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#is_best" class="md-nav__link">
+  <a href="#is_best-bool" class="md-nav__link">
     <span class="md-ellipsis">
       
-        is_best
+        is_best: bool
       
     </span>
   </a>
@@ -858,10 +886,10 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#iteration" class="md-nav__link">
+  <a href="#iteration-int" class="md-nav__link">
     <span class="md-ellipsis">
       
-        iteration
+        iteration: int
       
     </span>
   </a>
@@ -869,10 +897,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#sample_indices" class="md-nav__link">
+  <a href="#sample_indices-listint" class="md-nav__link">
     <span class="md-ellipsis">
       
-        sample_indices
+        sample_indices: list[int]
       
     </span>
   </a>
@@ -880,10 +908,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#sample_points" class="md-nav__link">
+  <a href="#sample_points-ndarraynpfloat64" class="md-nav__link">
     <span class="md-ellipsis">
       
-        sample_points
+        sample_points: NDArray[np.float64]
       
     </span>
   </a>
@@ -891,10 +919,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#model" class="md-nav__link">
+  <a href="#model-dictstr-any" class="md-nav__link">
     <span class="md-ellipsis">
       
-        model
+        model: dict[str, Any]
       
     </span>
   </a>
@@ -902,10 +930,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#inliers" class="md-nav__link">
+  <a href="#inliers-ndarraynpintp" class="md-nav__link">
     <span class="md-ellipsis">
       
-        inliers
+        inliers: NDArray[np.intp]
       
     </span>
   </a>
@@ -913,10 +941,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#best_model" class="md-nav__link">
+  <a href="#best_model-dictstr-any" class="md-nav__link">
     <span class="md-ellipsis">
       
-        best_model
+        best_model: dict[str, Any]
       
     </span>
   </a>
@@ -924,10 +952,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#best_inliers" class="md-nav__link">
+  <a href="#best_inliers-ndarraynpintp-listint" class="md-nav__link">
     <span class="md-ellipsis">
       
-        best_inliers
+        best_inliers: NDArray[np.intp] | list[int]
       
     </span>
   </a>
@@ -935,10 +963,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#is_best" class="md-nav__link">
+  <a href="#is_best-bool" class="md-nav__link">
     <span class="md-ellipsis">
       
-        is_best
+        is_best: bool
       
     </span>
   </a>
@@ -984,29 +1012,29 @@ degenerate points, like 3 collinear points for a plane, are skipped and never re
 <p>Treat every array as read-only, because they are the same objects used by the fit.</p>
 <hr />
 <p><a id="pyransac3d.fit_state.FitState.iteration"></a></p>
-<h4 id="iteration">iteration<a class="headerlink" href="#iteration" title="Permanent link">&para;</a></h4>
+<h4 id="iteration-int">iteration: <code>int</code><a class="headerlink" href="#iteration-int" title="Permanent link">&para;</a></h4>
 <p>Index of the current iteration, starting on 0.</p>
 <p><a id="pyransac3d.fit_state.FitState.sample_indices"></a></p>
-<h4 id="sample_indices">sample_indices<a class="headerlink" href="#sample_indices" title="Permanent link">&para;</a></h4>
+<h4 id="sample_indices-listint">sample_indices: <code>list[int]</code><a class="headerlink" href="#sample_indices-listint" title="Permanent link">&para;</a></h4>
 <p>Index, in <code>pts</code>, of the points sampled on this iteration.</p>
 <p><a id="pyransac3d.fit_state.FitState.sample_points"></a></p>
-<h4 id="sample_points">sample_points<a class="headerlink" href="#sample_points" title="Permanent link">&para;</a></h4>
+<h4 id="sample_points-ndarraynpfloat64">sample_points: <code>NDArray[np.float64]</code><a class="headerlink" href="#sample_points-ndarraynpfloat64" title="Permanent link">&para;</a></h4>
 <p>The points sampled on this iteration, <code>np.array (S, 3)</code>, where <code>S</code> is how many points the shape needs.</p>
 <p><a id="pyransac3d.fit_state.FitState.model"></a></p>
-<h4 id="model">model<a class="headerlink" href="#model" title="Permanent link">&para;</a></h4>
+<h4 id="model-dictstr-any">model: <code>dict[str, Any]</code><a class="headerlink" href="#model-dictstr-any" title="Permanent link">&para;</a></h4>
 <p>Candidate shape of this iteration, keyed by the attributes of the shape being fitted, like <code>center</code> and
 <code>radius</code> for a <code>Sphere</code>.</p>
 <p><a id="pyransac3d.fit_state.FitState.inliers"></a></p>
-<h4 id="inliers">inliers<a class="headerlink" href="#inliers" title="Permanent link">&para;</a></h4>
+<h4 id="inliers-ndarraynpintp">inliers: <code>NDArray[np.intp]</code><a class="headerlink" href="#inliers-ndarraynpintp" title="Permanent link">&para;</a></h4>
 <p>Index of the points of <code>pts</code> which fit the candidate of this iteration.</p>
 <p><a id="pyransac3d.fit_state.FitState.best_model"></a></p>
-<h4 id="best_model">best_model<a class="headerlink" href="#best_model" title="Permanent link">&para;</a></h4>
+<h4 id="best_model-dictstr-any">best_model: <code>dict[str, Any]</code><a class="headerlink" href="#best_model-dictstr-any" title="Permanent link">&para;</a></h4>
 <p>Best candidate found so far, with the same keys of <code>model</code>.</p>
 <p><a id="pyransac3d.fit_state.FitState.best_inliers"></a></p>
-<h4 id="best_inliers">best_inliers<a class="headerlink" href="#best_inliers" title="Permanent link">&para;</a></h4>
+<h4 id="best_inliers-ndarraynpintp-listint">best_inliers: <code>NDArray[np.intp] | list[int]</code><a class="headerlink" href="#best_inliers-ndarraynpintp-listint" title="Permanent link">&para;</a></h4>
 <p>Index of the points of <code>pts</code> which fit <code>best_model</code>.</p>
 <p><a id="pyransac3d.fit_state.FitState.is_best"></a></p>
-<h4 id="is_best">is_best<a class="headerlink" href="#is_best" title="Permanent link">&para;</a></h4>
+<h4 id="is_best-bool">is_best: <code>bool</code><a class="headerlink" href="#is_best-bool" title="Permanent link">&para;</a></h4>
 <p><code>True</code> when the candidate of this iteration became the new <code>best_model</code>.</p>
 
 

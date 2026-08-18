@@ -22,16 +22,11 @@ ______________________________________________________________________
 #### fit
 
 ```
-def fit(
-    pts: NDArray[np.float64],
-    thresh: float = 0.2,
-    maxIteration: int = 1000,
-    callback: Callable[[FitState], bool | None] | None = None
-) -> tuple[
-        NDArray[np.float64] | list[float],
-        NDArray[np.float64] | list[float],
-        NDArray[np.intp] | list[int],
-]
+def fit(pts: NDArray[np.float64],
+        thresh: float = 0.2,
+        maxIteration: int = 1000,
+        callback: Callable[[FitState], bool | None] | None = None
+        ) -> LineResult
 ```
 
 Find the best equation for the 3D line. The line in a 3d enviroment is defined as y = Ax+B, but A and B are vectors intead of scalars.
@@ -45,9 +40,7 @@ Find the best equation for the 3D line. The line in a 3d enviroment is defined a
 
 **Returns**:
 
-- `A`: 3D slope of the line (angle) `np.array (3,)`
-- `B`: Axis interception as `np.array (3,)`
-- `inliers`: Inlier's index from the original point cloud
+`LineResult` with the slope `A` and the interception `B` of the line, and its `inliers`.
 
 Everything else measured while fitting is kept on the object, described in the attributes of this class.
 

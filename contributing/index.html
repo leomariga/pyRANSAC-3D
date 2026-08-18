@@ -527,6 +527,34 @@
   
   
     <li class="md-nav__item">
+      <a href="../api-documentation/fit-results/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Fit Results
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../api-documentation/fit-state/" class="md-nav__link">
         
   
@@ -1174,6 +1202,7 @@ There is also <code>early_stop_callback.py</code>, which uses the same <code>cal
 <ul>
 <li>Everything a <code>fit(.)</code> stores on the object is documented in an <code>Attributes:</code> section of the <strong>class</strong> docstring, one line per attribute, and referred to by its plain name (<code>center</code>, not <code>self.center</code>).</li>
 <li>The <code>fit(.)</code> docstring only has its summary, <code>:param:</code> for every argument and <code>:returns:</code> for what it actually returns. It never repeats the attributes.</li>
+<li>What a <code>fit(.)</code> returns is defined by a <code>NamedTuple</code> in <code>pyransac3d/fit_results.py</code>, with a docstring under each field, so the <code>:returns:</code> line only has to name the type and its fields. Being a tuple keeps unpacking working, which is how the library has always been used.</li>
 <li>The <code>state</code> dictionary given to a <code>callback</code> is documented once, in the <code>FitState</code> TypedDict of <code>pyransac3d/fit_state.py</code>, with a docstring under each key.</li>
 </ul>
 <p>Two caveats of the docs renderer are worth knowing when writing a docstring:</p>

@@ -1,0 +1,1692 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Python library for fitting 3D geometric primitives to point clouds with RANSAC.">
+      
+      
+      
+        <link rel="canonical" href="https://leomariga.github.io/pyRANSAC-3D/api-documentation/fit-results/">
+      
+      
+        <link rel="prev" href="../point/">
+      
+      
+        <link rel="next" href="../fit-state/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="https://raw.githubusercontent.com/leomariga/pyRANSAC-3D/master/doc/icon_black.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
+    
+    
+      
+        <title>Fit Results - pyRANSAC-3D</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.ec1eaa64.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="brown" data-md-color-accent="brown">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#pyransac3dfit_results" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="pyRANSAC-3D" class="md-header__button md-logo" aria-label="pyRANSAC-3D" data-md-component="logo">
+      
+  <img src="https://raw.githubusercontent.com/leomariga/pyRANSAC-3D/master/doc/icon_white.png" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            pyRANSAC-3D
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Fit Results
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+    
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/leomariga/pyRANSAC-3D" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    leomariga/pyRANSAC-3D
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="pyRANSAC-3D" class="md-nav__button md-logo" aria-label="pyRANSAC-3D" data-md-component="logo">
+      
+  <img src="https://raw.githubusercontent.com/leomariga/pyRANSAC-3D/master/doc/icon_white.png" alt="logo">
+
+    </a>
+    pyRANSAC-3D
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/leomariga/pyRANSAC-3D" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    leomariga/pyRANSAC-3D
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../getting-started/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Getting Started
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    API Documentation
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    API Documentation
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../plane/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Plane
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../cuboid/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Cuboid
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../cylinder/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Cylinder
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../sphere/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Sphere
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../line/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Line
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../circle/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Circle
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../point/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Point
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Fit Results
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Fit Results
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#planeresult-objects" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        PlaneResult Objects
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="PlaneResult Objects">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#equation-listfloat" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        equation: list[float]
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#inliers-ndarraynpintp-listint" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        inliers: NDArray[np.intp] | list[int]
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#cuboidresult-objects" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        CuboidResult Objects
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="CuboidResult Objects">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#center-ndarraynpfloat64-listfloat" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        center: NDArray[np.float64] | list[float]
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#extents-ndarraynpfloat64-listfloat" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        extents: NDArray[np.float64] | list[float]
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#axes-ndarraynpfloat64-listfloat" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        axes: NDArray[np.float64] | list[float]
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#inliers-ndarraynpintp-listint_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        inliers: NDArray[np.intp] | list[int]
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#cylinderresult-objects" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        CylinderResult Objects
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="CylinderResult Objects">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#center-ndarraynpfloat64-listfloat_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        center: NDArray[np.float64] | list[float]
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#axis-ndarraynpfloat64-listfloat" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        axis: NDArray[np.float64] | list[float]
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#radius-float" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        radius: float
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#inliers-ndarraynpintp-listint_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        inliers: NDArray[np.intp] | list[int]
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sphereresult-objects" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        SphereResult Objects
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="SphereResult Objects">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#center-listfloat" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        center: list[float]
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#radius-float_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        radius: float
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#inliers-ndarraynpintp-listint_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        inliers: NDArray[np.intp] | list[int]
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#lineresult-objects" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        LineResult Objects
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="LineResult Objects">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#a-ndarraynpfloat64-listfloat" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        A: NDArray[np.float64] | list[float]
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#b-ndarraynpfloat64-listfloat" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        B: NDArray[np.float64] | list[float]
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#inliers-ndarraynpintp-listint_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        inliers: NDArray[np.intp] | list[int]
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#circleresult-objects" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        CircleResult Objects
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="CircleResult Objects">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#center-ndarraynpfloat64-listfloat_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        center: NDArray[np.float64] | list[float]
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#axis-ndarraynpfloat64-listfloat_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        axis: NDArray[np.float64] | list[float]
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#radius-float_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        radius: float
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#inliers-ndarraynpintp-listint_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        inliers: NDArray[np.intp] | list[int]
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#pointresult-objects" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        PointResult Objects
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="PointResult Objects">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#center-ndarraynpfloat64-listfloat_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        center: NDArray[np.float64] | list[float]
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#inliers-ndarraynpintp-listint_6" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        inliers: NDArray[np.intp] | list[int]
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../fit-state/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Fit State
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../shape-generator/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Shape Generator
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../auxiliary/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Auxiliary
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../contributing/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Contributing
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../license/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    License
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#planeresult-objects" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        PlaneResult Objects
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="PlaneResult Objects">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#equation-listfloat" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        equation: list[float]
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#inliers-ndarraynpintp-listint" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        inliers: NDArray[np.intp] | list[int]
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#cuboidresult-objects" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        CuboidResult Objects
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="CuboidResult Objects">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#center-ndarraynpfloat64-listfloat" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        center: NDArray[np.float64] | list[float]
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#extents-ndarraynpfloat64-listfloat" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        extents: NDArray[np.float64] | list[float]
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#axes-ndarraynpfloat64-listfloat" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        axes: NDArray[np.float64] | list[float]
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#inliers-ndarraynpintp-listint_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        inliers: NDArray[np.intp] | list[int]
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#cylinderresult-objects" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        CylinderResult Objects
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="CylinderResult Objects">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#center-ndarraynpfloat64-listfloat_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        center: NDArray[np.float64] | list[float]
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#axis-ndarraynpfloat64-listfloat" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        axis: NDArray[np.float64] | list[float]
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#radius-float" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        radius: float
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#inliers-ndarraynpintp-listint_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        inliers: NDArray[np.intp] | list[int]
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sphereresult-objects" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        SphereResult Objects
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="SphereResult Objects">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#center-listfloat" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        center: list[float]
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#radius-float_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        radius: float
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#inliers-ndarraynpintp-listint_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        inliers: NDArray[np.intp] | list[int]
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#lineresult-objects" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        LineResult Objects
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="LineResult Objects">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#a-ndarraynpfloat64-listfloat" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        A: NDArray[np.float64] | list[float]
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#b-ndarraynpfloat64-listfloat" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        B: NDArray[np.float64] | list[float]
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#inliers-ndarraynpintp-listint_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        inliers: NDArray[np.intp] | list[int]
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#circleresult-objects" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        CircleResult Objects
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="CircleResult Objects">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#center-ndarraynpfloat64-listfloat_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        center: NDArray[np.float64] | list[float]
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#axis-ndarraynpfloat64-listfloat_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        axis: NDArray[np.float64] | list[float]
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#radius-float_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        radius: float
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#inliers-ndarraynpintp-listint_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        inliers: NDArray[np.intp] | list[int]
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#pointresult-objects" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        PointResult Objects
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="PointResult Objects">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#center-ndarraynpfloat64-listfloat_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        center: NDArray[np.float64] | list[float]
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#inliers-ndarraynpintp-listint_6" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        inliers: NDArray[np.intp] | list[int]
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<p><a id="pyransac3d.fit_results"></a></p>
+<h1 id="pyransac3dfit_results">pyransac3d.fit_results<a class="headerlink" href="#pyransac3dfit_results" title="Permanent link">&para;</a></h1>
+<p>Result of <code>fit(.)</code>, one type per shape.</p>
+<p>Every result is a <code>NamedTuple</code>, so it is still the plain tuple it has always been and can be
+unpacked or indexed, but its values can also be read by name, which is clearer when a shape has
+several parameters:</p>
+<div class="highlight"><pre><span></span><code><span class="n">center</span><span class="p">,</span> <span class="n">radius</span><span class="p">,</span> <span class="n">inliers</span> <span class="o">=</span> <span class="n">pyrsc</span><span class="o">.</span><span class="n">Sphere</span><span class="p">()</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">points</span><span class="p">)</span>
+
+<span class="n">result</span> <span class="o">=</span> <span class="n">pyrsc</span><span class="o">.</span><span class="n">Sphere</span><span class="p">()</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">points</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">result</span><span class="o">.</span><span class="n">center</span><span class="p">,</span> <span class="n">result</span><span class="o">.</span><span class="n">radius</span><span class="p">)</span>
+</code></pre></div>
+<p>A result only carries the parameters which define the fitted shape. Everything else measured while
+fitting is kept on the shape object, described in the attributes of each class.</p>
+<hr />
+<p><a id="pyransac3d.fit_results.PlaneResult"></a></p>
+<h2 id="planeresult-objects">PlaneResult Objects<a class="headerlink" href="#planeresult-objects" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code><span class="k">class</span><span class="w"> </span><span class="nc">PlaneResult</span><span class="p">(</span><span class="n">NamedTuple</span><span class="p">)</span>
+</code></pre></div>
+<p>Result of <code>Plane.fit(.)</code>.</p>
+<hr />
+<p><a id="pyransac3d.fit_results.PlaneResult.equation"></a></p>
+<h4 id="equation-listfloat">equation: <code>list[float]</code><a class="headerlink" href="#equation-listfloat" title="Permanent link">&para;</a></h4>
+<p>Parameters of the plane using Ax+By+Cz+D, <code>np.array (4,)</code>.</p>
+<p><a id="pyransac3d.fit_results.PlaneResult.inliers"></a></p>
+<h4 id="inliers-ndarraynpintp-listint">inliers: <code>NDArray[np.intp] | list[int]</code><a class="headerlink" href="#inliers-ndarraynpintp-listint" title="Permanent link">&para;</a></h4>
+<p>Index of the points of <code>pts</code> which fit the plane.</p>
+<p><a id="pyransac3d.fit_results.CuboidResult"></a></p>
+<h2 id="cuboidresult-objects">CuboidResult Objects<a class="headerlink" href="#cuboidresult-objects" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code><span class="k">class</span><span class="w"> </span><span class="nc">CuboidResult</span><span class="p">(</span><span class="n">NamedTuple</span><span class="p">)</span>
+</code></pre></div>
+<p>Result of <code>Cuboid.fit(.)</code>.</p>
+<hr />
+<p><a id="pyransac3d.fit_results.CuboidResult.center"></a></p>
+<h4 id="center-ndarraynpfloat64-listfloat">center: <code>NDArray[np.float64] | list[float]</code><a class="headerlink" href="#center-ndarraynpfloat64-listfloat" title="Permanent link">&para;</a></h4>
+<p>Center of the cuboid, <code>np.array (3,)</code>.</p>
+<p><a id="pyransac3d.fit_results.CuboidResult.extents"></a></p>
+<h4 id="extents-ndarraynpfloat64-listfloat">extents: <code>NDArray[np.float64] | list[float]</code><a class="headerlink" href="#extents-ndarraynpfloat64-listfloat" title="Permanent link">&para;</a></h4>
+<p>Size of the cuboid along each one of its axes, <code>np.array (3,)</code>.</p>
+<p><a id="pyransac3d.fit_results.CuboidResult.axes"></a></p>
+<h4 id="axes-ndarraynpfloat64-listfloat">axes: <code>NDArray[np.float64] | list[float]</code><a class="headerlink" href="#axes-ndarraynpfloat64-listfloat" title="Permanent link">&para;</a></h4>
+<p>Orthonormal axes of the cuboid, one per row, where the last one is the normal of the face with most inliers,
+<code>np.array (3, 3)</code>.</p>
+<p><a id="pyransac3d.fit_results.CuboidResult.inliers"></a></p>
+<h4 id="inliers-ndarraynpintp-listint_1">inliers: <code>NDArray[np.intp] | list[int]</code><a class="headerlink" href="#inliers-ndarraynpintp-listint_1" title="Permanent link">&para;</a></h4>
+<p>Index of the points of <code>pts</code> which fit the cuboid.</p>
+<p><a id="pyransac3d.fit_results.CylinderResult"></a></p>
+<h2 id="cylinderresult-objects">CylinderResult Objects<a class="headerlink" href="#cylinderresult-objects" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code><span class="k">class</span><span class="w"> </span><span class="nc">CylinderResult</span><span class="p">(</span><span class="n">NamedTuple</span><span class="p">)</span>
+</code></pre></div>
+<p>Result of <code>Cylinder.fit(.)</code>.</p>
+<hr />
+<p><a id="pyransac3d.fit_results.CylinderResult.center"></a></p>
+<h4 id="center-ndarraynpfloat64-listfloat_1">center: <code>NDArray[np.float64] | list[float]</code><a class="headerlink" href="#center-ndarraynpfloat64-listfloat_1" title="Permanent link">&para;</a></h4>
+<p>A point the axis of the cylinder passes through, <code>np.array (3,)</code>.</p>
+<p><a id="pyransac3d.fit_results.CylinderResult.axis"></a></p>
+<h4 id="axis-ndarraynpfloat64-listfloat">axis: <code>NDArray[np.float64] | list[float]</code><a class="headerlink" href="#axis-ndarraynpfloat64-listfloat" title="Permanent link">&para;</a></h4>
+<p>Unit vector describing the direction of the cylinder's axis, <code>np.array (3,)</code>.</p>
+<p><a id="pyransac3d.fit_results.CylinderResult.radius"></a></p>
+<h4 id="radius-float">radius: <code>float</code><a class="headerlink" href="#radius-float" title="Permanent link">&para;</a></h4>
+<p>Radius of the cylinder.</p>
+<p><a id="pyransac3d.fit_results.CylinderResult.inliers"></a></p>
+<h4 id="inliers-ndarraynpintp-listint_2">inliers: <code>NDArray[np.intp] | list[int]</code><a class="headerlink" href="#inliers-ndarraynpintp-listint_2" title="Permanent link">&para;</a></h4>
+<p>Index of the points of <code>pts</code> which fit the cylinder.</p>
+<p><a id="pyransac3d.fit_results.SphereResult"></a></p>
+<h2 id="sphereresult-objects">SphereResult Objects<a class="headerlink" href="#sphereresult-objects" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code><span class="k">class</span><span class="w"> </span><span class="nc">SphereResult</span><span class="p">(</span><span class="n">NamedTuple</span><span class="p">)</span>
+</code></pre></div>
+<p>Result of <code>Sphere.fit(.)</code>.</p>
+<hr />
+<p><a id="pyransac3d.fit_results.SphereResult.center"></a></p>
+<h4 id="center-listfloat">center: <code>list[float]</code><a class="headerlink" href="#center-listfloat" title="Permanent link">&para;</a></h4>
+<p>Center of the sphere, <code>np.array (3,)</code>.</p>
+<p><a id="pyransac3d.fit_results.SphereResult.radius"></a></p>
+<h4 id="radius-float_1">radius: <code>float</code><a class="headerlink" href="#radius-float_1" title="Permanent link">&para;</a></h4>
+<p>Radius of the sphere.</p>
+<p><a id="pyransac3d.fit_results.SphereResult.inliers"></a></p>
+<h4 id="inliers-ndarraynpintp-listint_3">inliers: <code>NDArray[np.intp] | list[int]</code><a class="headerlink" href="#inliers-ndarraynpintp-listint_3" title="Permanent link">&para;</a></h4>
+<p>Index of the points of <code>pts</code> which fit the sphere.</p>
+<p><a id="pyransac3d.fit_results.LineResult"></a></p>
+<h2 id="lineresult-objects">LineResult Objects<a class="headerlink" href="#lineresult-objects" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code><span class="k">class</span><span class="w"> </span><span class="nc">LineResult</span><span class="p">(</span><span class="n">NamedTuple</span><span class="p">)</span>
+</code></pre></div>
+<p>Result of <code>Line.fit(.)</code>.</p>
+<hr />
+<p><a id="pyransac3d.fit_results.LineResult.A"></a></p>
+<h4 id="a-ndarraynpfloat64-listfloat">A: <code>NDArray[np.float64] | list[float]</code><a class="headerlink" href="#a-ndarraynpfloat64-listfloat" title="Permanent link">&para;</a></h4>
+<p>3D slope of the line, which is a unit vector along its direction, <code>np.array (3,)</code>.</p>
+<p><a id="pyransac3d.fit_results.LineResult.B"></a></p>
+<h4 id="b-ndarraynpfloat64-listfloat">B: <code>NDArray[np.float64] | list[float]</code><a class="headerlink" href="#b-ndarraynpfloat64-listfloat" title="Permanent link">&para;</a></h4>
+<p>Axis interception, which is a point the line passes through, <code>np.array (3,)</code>.</p>
+<p><a id="pyransac3d.fit_results.LineResult.inliers"></a></p>
+<h4 id="inliers-ndarraynpintp-listint_4">inliers: <code>NDArray[np.intp] | list[int]</code><a class="headerlink" href="#inliers-ndarraynpintp-listint_4" title="Permanent link">&para;</a></h4>
+<p>Index of the points of <code>pts</code> which fit the line.</p>
+<p><a id="pyransac3d.fit_results.CircleResult"></a></p>
+<h2 id="circleresult-objects">CircleResult Objects<a class="headerlink" href="#circleresult-objects" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code><span class="k">class</span><span class="w"> </span><span class="nc">CircleResult</span><span class="p">(</span><span class="n">NamedTuple</span><span class="p">)</span>
+</code></pre></div>
+<p>Result of <code>Circle.fit(.)</code>.</p>
+<hr />
+<p><a id="pyransac3d.fit_results.CircleResult.center"></a></p>
+<h4 id="center-ndarraynpfloat64-listfloat_2">center: <code>NDArray[np.float64] | list[float]</code><a class="headerlink" href="#center-ndarraynpfloat64-listfloat_2" title="Permanent link">&para;</a></h4>
+<p>Center of the circle, <code>np.array (3,)</code>.</p>
+<p><a id="pyransac3d.fit_results.CircleResult.axis"></a></p>
+<h4 id="axis-ndarraynpfloat64-listfloat_1">axis: <code>NDArray[np.float64] | list[float]</code><a class="headerlink" href="#axis-ndarraynpfloat64-listfloat_1" title="Permanent link">&para;</a></h4>
+<p>Unit normal vector of the plane which contains the circle, <code>np.array (3,)</code>.</p>
+<p><a id="pyransac3d.fit_results.CircleResult.radius"></a></p>
+<h4 id="radius-float_2">radius: <code>float</code><a class="headerlink" href="#radius-float_2" title="Permanent link">&para;</a></h4>
+<p>Radius of the circle.</p>
+<p><a id="pyransac3d.fit_results.CircleResult.inliers"></a></p>
+<h4 id="inliers-ndarraynpintp-listint_5">inliers: <code>NDArray[np.intp] | list[int]</code><a class="headerlink" href="#inliers-ndarraynpintp-listint_5" title="Permanent link">&para;</a></h4>
+<p>Index of the points of <code>pts</code> which fit the circle.</p>
+<p><a id="pyransac3d.fit_results.PointResult"></a></p>
+<h2 id="pointresult-objects">PointResult Objects<a class="headerlink" href="#pointresult-objects" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code><span class="k">class</span><span class="w"> </span><span class="nc">PointResult</span><span class="p">(</span><span class="n">NamedTuple</span><span class="p">)</span>
+</code></pre></div>
+<p>Result of <code>Point.fit(.)</code>.</p>
+<hr />
+<p><a id="pyransac3d.fit_results.PointResult.center"></a></p>
+<h4 id="center-ndarraynpfloat64-listfloat_3">center: <code>NDArray[np.float64] | list[float]</code><a class="headerlink" href="#center-ndarraynpfloat64-listfloat_3" title="Permanent link">&para;</a></h4>
+<p>Point selected as best candidate, <code>np.array (3,)</code>.</p>
+<p><a id="pyransac3d.fit_results.PointResult.inliers"></a></p>
+<h4 id="inliers-ndarraynpintp-listint_6">inliers: <code>NDArray[np.intp] | list[int]</code><a class="headerlink" href="#inliers-ndarraynpintp-listint_6" title="Permanent link">&para;</a></h4>
+<p>Index of the points of <code>pts</code> which are neighbors of <code>center</code>.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": [], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.d7400e89.min.js"></script>
+      
+    
+  </body>
+</html>

@@ -16,7 +16,7 @@
         <link rel="prev" href="../circle/">
       
       
-        <link rel="next" href="../fit-state/">
+        <link rel="next" href="../fit-results/">
       
       
         
@@ -604,6 +604,34 @@
   
   
     <li class="md-nav__item">
+      <a href="../fit-results/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Fit Results
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../fit-state/" class="md-nav__link">
         
   
@@ -836,12 +864,11 @@ The point with more neighbors in a determined radius (<code>thresh</code>) will 
 <hr />
 <p><a id="pyransac3d.point.Point.fit"></a></p>
 <h4 id="fit">fit<a class="headerlink" href="#fit" title="Permanent link">&para;</a></h4>
-<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">fit</span><span class="p">(</span>
-    <span class="n">pts</span><span class="p">:</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">],</span>
-    <span class="n">thresh</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.2</span><span class="p">,</span>
-    <span class="n">maxIteration</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">10000</span><span class="p">,</span>
-    <span class="n">callback</span><span class="p">:</span> <span class="n">Callable</span><span class="p">[[</span><span class="n">FitState</span><span class="p">],</span> <span class="nb">bool</span> <span class="o">|</span> <span class="kc">None</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
-<span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">]</span> <span class="o">|</span> <span class="nb">list</span><span class="p">[</span><span class="nb">float</span><span class="p">],</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">intp</span><span class="p">]</span> <span class="o">|</span> <span class="nb">list</span><span class="p">[</span><span class="nb">int</span><span class="p">]]</span>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">fit</span><span class="p">(</span><span class="n">pts</span><span class="p">:</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">],</span>
+        <span class="n">thresh</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.2</span><span class="p">,</span>
+        <span class="n">maxIteration</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">10000</span><span class="p">,</span>
+        <span class="n">callback</span><span class="p">:</span> <span class="n">Callable</span><span class="p">[[</span><span class="n">FitState</span><span class="p">],</span> <span class="nb">bool</span> <span class="o">|</span> <span class="kc">None</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">PointResult</span>
 </code></pre></div>
 <p>Find the best point for the 3D Point representaiton. The Point in a 3d enviroment is defined as a X, Y Z coordinate with more neighbors around.</p>
 <p><strong>Arguments</strong>:</p>
@@ -853,11 +880,8 @@ The point with more neighbors in a determined radius (<code>thresh</code>) will 
 Return a truthy value from it to stop the fit early.</li>
 </ul>
 <p><strong>Returns</strong>:</p>
-<ul>
-<li><code>center</code>: Point selected as best candidate <code>np.array (3,)</code></li>
-<li><code>inliers</code>: Inlier's index from the original point cloud</li>
-</ul>
-<p>Everything else measured while fitting is kept on the object, described in the attributes
+<p><code>PointResult</code> with the <code>center</code> selected as best candidate and its <code>inliers</code>.
+Everything else measured while fitting is kept on the object, described in the attributes
 of this class.</p>
 <hr />
 

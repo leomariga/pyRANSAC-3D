@@ -33,12 +33,7 @@ def fit(
     thresh: float = 0.2,
     maxIteration: int = 10000,
     callback: Callable[[FitState], bool | None] | None = None
-) -> tuple[
-        NDArray[np.float64] | list[float],
-        NDArray[np.float64] | list[float],
-        float,
-        NDArray[np.intp] | list[int],
-]
+) -> CylinderResult
 ```
 
 Find the parameters (axis and radius) defining a cylinder.
@@ -52,10 +47,7 @@ Find the parameters (axis and radius) defining a cylinder.
 
 **Returns**:
 
-- `center`: Center of the cylinder `np.array (3,)`, which the cylinder axis is passing through
-- `axis`: Vector describing cylinder's axis `np.array (3,)`
-- `radius`: Radius of cylinder
-- `inliers`: Inlier's index from the original point cloud
+`CylinderResult` with the `center`, the `axis` and the `radius` of the cylinder, and its `inliers`.
 
 Everything else measured while fitting is kept on the object, described in the attributes of this class.
 

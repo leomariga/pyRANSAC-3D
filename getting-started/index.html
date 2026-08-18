@@ -361,6 +361,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#reading-the-result" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Reading the Result
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#fit-a-sphere" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -712,6 +723,34 @@
   
   
     <li class="md-nav__item">
+      <a href="../api-documentation/fit-results/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Fit Results
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../api-documentation/fit-state/" class="md-nav__link">
         
   
@@ -921,6 +960,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#reading-the-result" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Reading the Result
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#fit-a-sphere" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -1042,6 +1092,7 @@
 <li><a href="#install">Install</a></li>
 <li><a href="#choose-a-shape">Choose a Shape</a></li>
 <li><a href="#first-fit-plane">First Fit: Plane</a></li>
+<li><a href="#reading-the-result">Reading the Result</a></li>
 <li><a href="#fit-a-sphere">Fit a Sphere</a></li>
 <li><a href="#fit-a-cuboid">Fit a Cuboid</a></li>
 <li><a href="#callbacks">Callbacks</a></li>
@@ -1100,7 +1151,7 @@
 </tr>
 </tbody>
 </table>
-<p>The exact return values are documented in each API page, but every fitter returns the indexes of the inlier points. Those indexes are useful for extracting the part of your point cloud that matched the fitted shape.</p>
+<p>The exact return values of each fitter are documented in <a href="../api-documentation/fit-results/">Fit Results</a>, but every one of them returns the indexes of the inlier points. Those indexes are useful for extracting the part of your point cloud that matched the fitted shape.</p>
 <p>pyRANSAC-3D expects point clouds as NumPy-compatible arrays with shape <code>(N, 3)</code></p>
 <h2 id="first-fit-plane">First Fit: Plane<a class="headerlink" href="#first-fit-plane" title="Permanent link">&para;</a></h2>
 <p>Planes are a good first example because many point clouds contain floors, walls, tables, or other flat surfaces.</p>
@@ -1124,6 +1175,25 @@
 </code></pre></div>
 <p>The plane result is returned as <code>[A, B, C, D]</code> for:</p>
 <div class="highlight"><pre><span></span><code>Ax + By + Cz + D = 0
+</code></pre></div>
+<h2 id="reading-the-result">Reading the Result<a class="headerlink" href="#reading-the-result" title="Permanent link">&para;</a></h2>
+<p>Every <code>fit</code> returns a named tuple, one type per shape, so you can either unpack it as above or keep it and read each value by name. Reading by name is clearer for shapes with several parameters, where the order is easy to forget:</p>
+<div class="highlight"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">pyransac3d</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pyrsc</span>
+
+<span class="n">points</span> <span class="o">=</span> <span class="n">pyrsc</span><span class="o">.</span><span class="n">ShapeGenerator</span><span class="p">(</span><span class="n">seed</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">cylinder</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">radius</span><span class="o">=</span><span class="mf">2.0</span><span class="p">,</span> <span class="n">height</span><span class="o">=</span><span class="mf">6.0</span><span class="p">,</span> <span class="n">n_points</span><span class="o">=</span><span class="mi">800</span><span class="p">,</span> <span class="n">noise</span><span class="o">=</span><span class="mf">0.02</span><span class="p">)</span>
+
+<span class="n">result</span> <span class="o">=</span> <span class="n">pyrsc</span><span class="o">.</span><span class="n">Cylinder</span><span class="p">()</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">points</span><span class="p">,</span> <span class="n">thresh</span><span class="o">=</span><span class="mf">0.15</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Center: </span><span class="si">{</span><span class="n">result</span><span class="o">.</span><span class="n">center</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Axis: </span><span class="si">{</span><span class="n">result</span><span class="o">.</span><span class="n">axis</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Radius: </span><span class="si">{</span><span class="n">result</span><span class="o">.</span><span class="n">radius</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Inliers: </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">result</span><span class="o">.</span><span class="n">inliers</span><span class="p">)</span><span class="si">}</span><span class="s2"> of </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">points</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</code></pre></div>
+<p>The values a fit measures but does not return, such as the distance from every point to the fitted shape, are kept on the fitter object instead. They are listed in the attributes of each shape in the API pages:</p>
+<div class="highlight"><pre><span></span><code><span class="n">cylinder</span> <span class="o">=</span> <span class="n">pyrsc</span><span class="o">.</span><span class="n">Cylinder</span><span class="p">()</span>
+<span class="n">cylinder</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">points</span><span class="p">,</span> <span class="n">thresh</span><span class="o">=</span><span class="mf">0.15</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Distance of the first point to the cylinder hull: </span><span class="si">{</span><span class="n">cylinder</span><span class="o">.</span><span class="n">distances</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 </code></pre></div>
 <h2 id="fit-a-sphere">Fit a Sphere<a class="headerlink" href="#fit-a-sphere" title="Permanent link">&para;</a></h2>
 <p>Use a sphere when you expect points around a ball-like object.</p>

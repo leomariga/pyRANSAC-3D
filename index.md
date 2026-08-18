@@ -61,6 +61,8 @@ center: [0.010462385575072288, -0.2855090643954039, 0.02867848979091283]
 radius: 5.085218633039647
 ```
 
+Every `fit` returns a named tuple, so it can be unpacked as above or kept to read each value by name, like `result.center` and `result.radius`. Each one is documented in [Fit Results](https://leomariga.github.io/pyRANSAC-3D/api-documentation/fit-results/).
+
 ### More examples
 
 Runnable examples of every shape are in the [examples folder](https://github.com/leomariga/pyRANSAC-3D/tree/master/examples).

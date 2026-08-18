@@ -23,12 +23,11 @@ ______________________________________________________________________
 #### fit
 
 ```
-def fit(
-    pts: NDArray[np.float64],
-    thresh: float = 0.05,
-    maxIteration: int = 1000,
-    callback: Callable[[FitState], bool | None] | None = None
-) -> tuple[list[float], NDArray[np.intp] | list[int]]
+def fit(pts: NDArray[np.float64],
+        thresh: float = 0.05,
+        maxIteration: int = 1000,
+        callback: Callable[[FitState], bool | None] | None = None
+        ) -> PlaneResult
 ```
 
 Find the best equation for a plane.
@@ -42,9 +41,6 @@ Find the best equation for a plane.
 
 **Returns**:
 
-- `equation`: Parameters of the plane using Ax+By+Cz+D `np.array (4,)`
-- `inliers`: Points from the dataset considered inliers
-
-Everything else measured while fitting is kept on the object, described in the attributes of this class.
+`PlaneResult` with the `equation` of the plane and its `inliers`. Everything else measured while fitting is kept on the object, described in the attributes of this class.
 
 ______________________________________________________________________

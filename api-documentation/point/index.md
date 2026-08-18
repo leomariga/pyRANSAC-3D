@@ -21,12 +21,11 @@ ______________________________________________________________________
 #### fit
 
 ```
-def fit(
-    pts: NDArray[np.float64],
-    thresh: float = 0.2,
-    maxIteration: int = 10000,
-    callback: Callable[[FitState], bool | None] | None = None
-) -> tuple[NDArray[np.float64] | list[float], NDArray[np.intp] | list[int]]
+def fit(pts: NDArray[np.float64],
+        thresh: float = 0.2,
+        maxIteration: int = 10000,
+        callback: Callable[[FitState], bool | None] | None = None
+        ) -> PointResult
 ```
 
 Find the best point for the 3D Point representaiton. The Point in a 3d enviroment is defined as a X, Y Z coordinate with more neighbors around.
@@ -40,9 +39,6 @@ Find the best point for the 3D Point representaiton. The Point in a 3d enviromen
 
 **Returns**:
 
-- `center`: Point selected as best candidate `np.array (3,)`
-- `inliers`: Inlier's index from the original point cloud
-
-Everything else measured while fitting is kept on the object, described in the attributes of this class.
+`PointResult` with the `center` selected as best candidate and its `inliers`. Everything else measured while fitting is kept on the object, described in the attributes of this class.
 
 ______________________________________________________________________

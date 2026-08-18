@@ -14,34 +14,34 @@ Treat every array as read-only, because they are the same objects used by the fi
 
 ______________________________________________________________________
 
-#### iteration
+#### iteration: `int`
 
 Index of the current iteration, starting on 0.
 
-#### sample_indices
+#### sample_indices: `list[int]`
 
 Index, in `pts`, of the points sampled on this iteration.
 
-#### sample_points
+#### sample_points: `NDArray[np.float64]`
 
 The points sampled on this iteration, `np.array (S, 3)`, where `S` is how many points the shape needs.
 
-#### model
+#### model: `dict[str, Any]`
 
 Candidate shape of this iteration, keyed by the attributes of the shape being fitted, like `center` and `radius` for a `Sphere`.
 
-#### inliers
+#### inliers: `NDArray[np.intp]`
 
 Index of the points of `pts` which fit the candidate of this iteration.
 
-#### best_model
+#### best_model: `dict[str, Any]`
 
 Best candidate found so far, with the same keys of `model`.
 
-#### best_inliers
+#### best_inliers: `NDArray[np.intp] | list[int]`
 
 Index of the points of `pts` which fit `best_model`.
 
-#### is_best
+#### is_best: `bool`
 
 `True` when the candidate of this iteration became the new `best_model`.

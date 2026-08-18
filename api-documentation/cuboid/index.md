@@ -32,17 +32,11 @@ ______________________________________________________________________
 #### fit
 
 ```
-def fit(
-    pts: NDArray[np.float64],
-    thresh: float = 0.05,
-    maxIteration: int = 5000,
-    callback: Callable[[FitState], bool | None] | None = None
-) -> tuple[
-        NDArray[np.float64] | list[float],
-        NDArray[np.float64] | list[float],
-        NDArray[np.float64] | list[float],
-        NDArray[np.intp] | list[int],
-]
+def fit(pts: NDArray[np.float64],
+        thresh: float = 0.05,
+        maxIteration: int = 5000,
+        callback: Callable[[FitState], bool | None] | None = None
+        ) -> CuboidResult
 ```
 
 Find the cuboid which best fits the point cloud, from the 3 orthogonal planes of its faces.
@@ -56,10 +50,7 @@ Find the cuboid which best fits the point cloud, from the 3 orthogonal planes of
 
 **Returns**:
 
-- `center`: Center of the cuboid `np.array (3,)`
-- `extents`: Size of the cuboid along each one of its axes `np.array (3,)`
-- `axes`: Orthonormal axes of the cuboid, one per row, where the last one is the normal of the face with most inliers `np.array (3, 3)`
-- `inliers`: Inlier's index from the original point cloud
+`CuboidResult` with the `center`, the `extents` and the `axes` of the cuboid, and its `inliers`.
 
 Everything else measured while fitting is kept on the object, described in the attributes of this class. Call `get_corners(.)` to get the 8 vertices of the box and `get_transform(.)` to get its rotation and translation as a single matrix.
 

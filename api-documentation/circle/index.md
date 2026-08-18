@@ -26,17 +26,11 @@ ______________________________________________________________________
 #### fit
 
 ```
-def fit(
-    pts: NDArray[np.float64],
-    thresh: float = 0.2,
-    maxIteration: int = 1000,
-    callback: Callable[[FitState], bool | None] | None = None
-) -> tuple[
-        NDArray[np.float64] | list[float],
-        NDArray[np.float64] | list[float],
-        float,
-        NDArray[np.intp] | list[int],
-]
+def fit(pts: NDArray[np.float64],
+        thresh: float = 0.2,
+        maxIteration: int = 1000,
+        callback: Callable[[FitState], bool | None] | None = None
+        ) -> CircleResult
 ```
 
 Find the parameters (axis and radius and center) to define a circle.
@@ -50,10 +44,7 @@ Find the parameters (axis and radius and center) to define a circle.
 
 **Returns**:
 
-- `center`: Center of the circle `np.array (3,)`
-- `axis`: Vector describing circle's plane normal as `np.array (3,)`
-- `radius`: Radius of the circle
-- `inliers`: Inlier's index from the original point cloud
+`CircleResult` with the `center`, the `axis` and the `radius` of the circle, and its `inliers`.
 
 Everything else measured while fitting is kept on the object, described in the attributes of this class.
 

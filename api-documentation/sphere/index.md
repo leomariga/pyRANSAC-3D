@@ -23,12 +23,11 @@ ______________________________________________________________________
 #### fit
 
 ```
-def fit(
-    pts: NDArray[np.float64],
-    thresh: float = 0.2,
-    maxIteration: int = 1000,
-    callback: Callable[[FitState], bool | None] | None = None
-) -> tuple[list[float], float, NDArray[np.intp] | list[int]]
+def fit(pts: NDArray[np.float64],
+        thresh: float = 0.2,
+        maxIteration: int = 1000,
+        callback: Callable[[FitState], bool | None] | None = None
+        ) -> SphereResult
 ```
 
 Find the parameters (center and radius) to define a Sphere.
@@ -42,10 +41,6 @@ Find the parameters (center and radius) to define a Sphere.
 
 **Returns**:
 
-- `center`: Center of the sphere `np.array (3,)`
-- `radius`: Radius of the sphere
-- `inliers`: Inlier's index from the original point cloud
-
-Everything else measured while fitting is kept on the object, described in the attributes of this class.
+`SphereResult` with the `center` and the `radius` of the sphere, and its `inliers`. Everything else measured while fitting is kept on the object, described in the attributes of this class.
 
 ______________________________________________________________________
