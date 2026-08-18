@@ -712,6 +712,34 @@
   
   
     <li class="md-nav__item">
+      <a href="../api-documentation/fit-state/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Fit State
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../api-documentation/shape-generator/" class="md-nav__link">
         
   
@@ -1134,7 +1162,7 @@
 <h2 id="callbacks">Callbacks<a class="headerlink" href="#callbacks" title="Permanent link">&para;</a></h2>
 <p>Every fitter accepts an optional <code>callback</code>. The callback runs during RANSAC and receives a <code>state</code> dictionary for the current iteration, including values such as <code>iteration</code> and <code>best_inliers</code>.</p>
 <p>Use a callback when you want to react while fitting is still running: stop early with your own criteria, log intermediate values, inspect candidate parameters, or update a visualization.</p>
-<p>The full <code>state</code> dictionary is documented on each fitter: <a href="../api-documentation/plane/">Plane</a>, <a href="../api-documentation/sphere/">Sphere</a>, <a href="../api-documentation/cylinder/">Cylinder</a>, <a href="../api-documentation/cuboid/">Cuboid</a>, <a href="../api-documentation/line/">Line</a>, <a href="../api-documentation/circle/">Circle</a>, and <a href="../api-documentation/point/">Point</a>.</p>
+<p>Every key of the <code>state</code> dictionary is documented in <a href="../api-documentation/fit-state/">Fit State</a>.</p>
 <h3 id="early-stop-with-your-own-criteria">Early Stop With Your Own Criteria<a class="headerlink" href="#early-stop-with-your-own-criteria" title="Permanent link">&para;</a></h3>
 <p>If the callback returns <code>True</code>, the fit stops early and returns the best result found so far. This is useful when you already know what a good enough result looks like:</p>
 <div class="highlight"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">pyransac3d</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pyrsc</span>

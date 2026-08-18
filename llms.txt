@@ -11,6 +11,7 @@ pyRANSAC-3D is a Python library for fitting planes, lines, circles, spheres, cyl
 - [Circle](https://leomariga.github.io/pyRANSAC-3D/api-documentation/circle/index.md)
 - [Cuboid](https://leomariga.github.io/pyRANSAC-3D/api-documentation/cuboid/index.md)
 - [Cylinder](https://leomariga.github.io/pyRANSAC-3D/api-documentation/cylinder/index.md)
+- [Fit State](https://leomariga.github.io/pyRANSAC-3D/api-documentation/fit-state/index.md)
 - [Line](https://leomariga.github.io/pyRANSAC-3D/api-documentation/line/index.md)
 - [Plane](https://leomariga.github.io/pyRANSAC-3D/api-documentation/plane/index.md)
 - [Point](https://leomariga.github.io/pyRANSAC-3D/api-documentation/point/index.md)

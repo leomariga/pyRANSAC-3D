@@ -10,13 +10,13 @@
       
       
       
-        <link rel="canonical" href="https://leomariga.github.io/pyRANSAC-3D/api-documentation/point/">
+        <link rel="canonical" href="https://leomariga.github.io/pyRANSAC-3D/api-documentation/fit-state/">
       
       
-        <link rel="prev" href="../circle/">
+        <link rel="prev" href="../point/">
       
       
-        <link rel="next" href="../fit-state/">
+        <link rel="next" href="../shape-generator/">
       
       
         
@@ -27,7 +27,7 @@
     
     
       
-        <title>Point - pyRANSAC-3D</title>
+        <title>Fit State - pyRANSAC-3D</title>
       
     
     
@@ -76,7 +76,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#pyransac3dpoint" class="md-skip">
+        <a href="#pyransac3dfit_state" class="md-skip">
           Skip to content
         </a>
       
@@ -111,7 +111,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Point
+              Fit State
             
           </span>
         </div>
@@ -498,6 +498,34 @@
                 
   
   
+  
+  
+    <li class="md-nav__item">
+      <a href="../point/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Point
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
     
   
   
@@ -517,7 +545,7 @@
   <span class="md-ellipsis">
     
   
-    Point
+    Fit State
   
 
     
@@ -535,7 +563,7 @@
   <span class="md-ellipsis">
     
   
-    Point
+    Fit State
   
 
     
@@ -561,22 +589,99 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#point-objects" class="md-nav__link">
+  <a href="#fitstate-objects" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Point Objects
+        FitState Objects
       
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="Point Objects">
+    <nav class="md-nav" aria-label="FitState Objects">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#fit" class="md-nav__link">
+  <a href="#iteration" class="md-nav__link">
     <span class="md-ellipsis">
       
-        fit
+        iteration
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sample_indices" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        sample_indices
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sample_points" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        sample_points
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#model" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        model
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#inliers" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        inliers
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#best_model" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        best_model
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#best_inliers" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        best_inliers
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#is_best" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        is_best
       
     </span>
   </a>
@@ -592,34 +697,6 @@
   
 </nav>
       
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../fit-state/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Fit State
-  
-
-    
-  </span>
-  
-  
-
-      </a>
     </li>
   
 
@@ -769,22 +846,99 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#point-objects" class="md-nav__link">
+  <a href="#fitstate-objects" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Point Objects
+        FitState Objects
       
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="Point Objects">
+    <nav class="md-nav" aria-label="FitState Objects">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#fit" class="md-nav__link">
+  <a href="#iteration" class="md-nav__link">
     <span class="md-ellipsis">
       
-        fit
+        iteration
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sample_indices" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        sample_indices
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sample_points" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        sample_points
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#model" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        model
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#inliers" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        inliers
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#best_model" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        best_model
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#best_inliers" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        best_inliers
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#is_best" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        is_best
       
     </span>
   </a>
@@ -816,50 +970,44 @@
   
 
 
-<p><a id="pyransac3d.point"></a></p>
-<h1 id="pyransac3dpoint">pyransac3d.point<a class="headerlink" href="#pyransac3dpoint" title="Permanent link">&para;</a></h1>
-<p><a id="pyransac3d.point.Point"></a></p>
-<h2 id="point-objects">Point Objects<a class="headerlink" href="#point-objects" title="Permanent link">&para;</a></h2>
-<div class="highlight"><pre><span></span><code><span class="k">class</span><span class="w"> </span><span class="nc">Point</span><span class="p">()</span>
+<p><a id="pyransac3d.fit_state"></a></p>
+<h1 id="pyransac3dfit_state">pyransac3d.fit_state<a class="headerlink" href="#pyransac3dfit_state" title="Permanent link">&para;</a></h1>
+<p><a id="pyransac3d.fit_state.FitState"></a></p>
+<h2 id="fitstate-objects">FitState Objects<a class="headerlink" href="#fitstate-objects" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code><span class="k">class</span><span class="w"> </span><span class="nc">FitState</span><span class="p">(</span><span class="n">TypedDict</span><span class="p">)</span>
 </code></pre></div>
-<p>Implementation for Point RANSAC.</p>
-<p>This object finds the coordinate of a point in 3D space using RANSAC method.
-The point with more neighbors in a determined radius (<code>thresh</code>) will be selected as the best candidate.</p>
-<p><img alt="3D point" src="https://raw.githubusercontent.com/leomariga/pyRANSAC-3D/master/doc/point.gif" title="3D Point" /></p>
-<p><strong>Attributes</strong>:</p>
-<ul>
-<li><code>center</code> - Point selected as best candidate, <code>np.array (3,)</code>.</li>
-<li><code>inliers</code> - Index of the points of <code>pts</code> which are neighbors of <code>center</code>.</li>
-<li><code>distances</code> - Distance from each point of <code>pts</code> to <code>center</code>, <code>np.array (N,)</code>, in the same order
-  of <code>pts</code>.</li>
-</ul>
+<p>State of a single RANSAC iteration, which every <code>fit(.)</code> gives to its optional <code>callback</code>.</p>
+<p>A callback is useful to plot the fitting progress, inspect intermediate results or implement a
+custom early-stopping criterion. It is called after every iteration and, if it returns a truthy
+value, the fit stops early and returns the best result found so far. Iterations which sample
+degenerate points, like 3 collinear points for a plane, are skipped and never reach the callback.</p>
+<p>Treat every array as read-only, because they are the same objects used by the fit.</p>
 <hr />
-<p><a id="pyransac3d.point.Point.fit"></a></p>
-<h4 id="fit">fit<a class="headerlink" href="#fit" title="Permanent link">&para;</a></h4>
-<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">fit</span><span class="p">(</span>
-    <span class="n">pts</span><span class="p">:</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">],</span>
-    <span class="n">thresh</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.2</span><span class="p">,</span>
-    <span class="n">maxIteration</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">10000</span><span class="p">,</span>
-    <span class="n">callback</span><span class="p">:</span> <span class="n">Callable</span><span class="p">[[</span><span class="n">FitState</span><span class="p">],</span> <span class="nb">bool</span> <span class="o">|</span> <span class="kc">None</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
-<span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">]</span> <span class="o">|</span> <span class="nb">list</span><span class="p">[</span><span class="nb">float</span><span class="p">],</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">intp</span><span class="p">]</span> <span class="o">|</span> <span class="nb">list</span><span class="p">[</span><span class="nb">int</span><span class="p">]]</span>
-</code></pre></div>
-<p>Find the best point for the 3D Point representaiton. The Point in a 3d enviroment is defined as a X, Y Z coordinate with more neighbors around.</p>
-<p><strong>Arguments</strong>:</p>
-<ul>
-<li><code>pts</code>: 3D point cloud as a <code>np.array (N,3)</code>.</li>
-<li><code>thresh</code>: Threshold radius from the point which is considered inlier.</li>
-<li><code>maxIteration</code>: Number of maximum iteration which RANSAC will loop over.</li>
-<li><code>callback</code>: Optional callable which receives a <code>FitState</code> after every iteration.
-Return a truthy value from it to stop the fit early.</li>
-</ul>
-<p><strong>Returns</strong>:</p>
-<ul>
-<li><code>center</code>: Point selected as best candidate <code>np.array (3,)</code></li>
-<li><code>inliers</code>: Inlier's index from the original point cloud</li>
-</ul>
-<p>Everything else measured while fitting is kept on the object, described in the attributes
-of this class.</p>
-<hr />
+<p><a id="pyransac3d.fit_state.FitState.iteration"></a></p>
+<h4 id="iteration">iteration<a class="headerlink" href="#iteration" title="Permanent link">&para;</a></h4>
+<p>Index of the current iteration, starting on 0.</p>
+<p><a id="pyransac3d.fit_state.FitState.sample_indices"></a></p>
+<h4 id="sample_indices">sample_indices<a class="headerlink" href="#sample_indices" title="Permanent link">&para;</a></h4>
+<p>Index, in <code>pts</code>, of the points sampled on this iteration.</p>
+<p><a id="pyransac3d.fit_state.FitState.sample_points"></a></p>
+<h4 id="sample_points">sample_points<a class="headerlink" href="#sample_points" title="Permanent link">&para;</a></h4>
+<p>The points sampled on this iteration, <code>np.array (S, 3)</code>, where <code>S</code> is how many points the shape needs.</p>
+<p><a id="pyransac3d.fit_state.FitState.model"></a></p>
+<h4 id="model">model<a class="headerlink" href="#model" title="Permanent link">&para;</a></h4>
+<p>Candidate shape of this iteration, keyed by the attributes of the shape being fitted, like <code>center</code> and
+<code>radius</code> for a <code>Sphere</code>.</p>
+<p><a id="pyransac3d.fit_state.FitState.inliers"></a></p>
+<h4 id="inliers">inliers<a class="headerlink" href="#inliers" title="Permanent link">&para;</a></h4>
+<p>Index of the points of <code>pts</code> which fit the candidate of this iteration.</p>
+<p><a id="pyransac3d.fit_state.FitState.best_model"></a></p>
+<h4 id="best_model">best_model<a class="headerlink" href="#best_model" title="Permanent link">&para;</a></h4>
+<p>Best candidate found so far, with the same keys of <code>model</code>.</p>
+<p><a id="pyransac3d.fit_state.FitState.best_inliers"></a></p>
+<h4 id="best_inliers">best_inliers<a class="headerlink" href="#best_inliers" title="Permanent link">&para;</a></h4>
+<p>Index of the points of <code>pts</code> which fit <code>best_model</code>.</p>
+<p><a id="pyransac3d.fit_state.FitState.is_best"></a></p>
+<h4 id="is_best">is_best<a class="headerlink" href="#is_best" title="Permanent link">&para;</a></h4>
+<p><code>True</code> when the candidate of this iteration became the new <code>best_model</code>.</p>
 
 
 

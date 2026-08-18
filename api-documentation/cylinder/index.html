@@ -604,6 +604,34 @@
   
   
     <li class="md-nav__item">
+      <a href="../fit-state/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Fit State
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../shape-generator/" class="md-nav__link">
         
   
@@ -795,13 +823,23 @@
 <div class="highlight"><pre><span></span><code><span class="k">class</span><span class="w"> </span><span class="nc">Cylinder</span><span class="p">()</span>
 </code></pre></div>
 <div class="admonition warning">
-<p class="admonition-title">Warning</p>
-<p>The cylinder RANSAC does NOT present good results on real data on the current version.
-We are working to make a better algorithim using normals. If you want to contribute, please create a MR on github.
-Or give us ideas on <a href="https://github.com/leomariga/pyRANSAC-3D/issues/13">this issue</a></p>
+<p class="admonition-title">The cylinder RANSAC does NOT present good results on real data on the current version</p>
 </div>
+<p>We are working to make a better algorithim using normals. If you want to contribute, please create a MR on github.
+Or give us ideas on <a href="https://github.com/leomariga/pyRANSAC-3D/issues/13">this issue</a></p>
 <p>Implementation for cylinder RANSAC.</p>
 <p>This class finds a infinite height cilinder and returns the cylinder axis, center and radius.</p>
+<p><strong>Attributes</strong>:</p>
+<ul>
+<li><code>center</code> - A point the axis of the cylinder passes through, <code>np.array (3,)</code>.</li>
+<li><code>axis</code> - Unit vector describing the direction of the cylinder's axis, <code>np.array (3,)</code>.</li>
+<li><code>radius</code> - Radius of the cylinder.</li>
+<li><code>inliers</code> - Index of the points of <code>pts</code> which fit the cylinder.</li>
+<li><code>radial_distances</code> - Distance from each point of <code>pts</code> to the axis of the cylinder,
+  <code>np.array (N,)</code>, in the same order of <code>pts</code>.</li>
+<li><code>distances</code> - Distance from each point of <code>pts</code> to the hull of the cylinder, <code>np.array (N,)</code>,
+  in the same order of <code>pts</code>.</li>
+</ul>
 <hr />
 <p><a id="pyransac3d.cylinder.Cylinder.fit"></a></p>
 <h4 id="fit">fit<a class="headerlink" href="#fit" title="Permanent link">&para;</a></h4>
@@ -809,7 +847,7 @@ Or give us ideas on <a href="https://github.com/leomariga/pyRANSAC-3D/issues/13"
     <span class="n">pts</span><span class="p">:</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">],</span>
     <span class="n">thresh</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.2</span><span class="p">,</span>
     <span class="n">maxIteration</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">10000</span><span class="p">,</span>
-    <span class="n">callback</span><span class="p">:</span> <span class="n">Callable</span><span class="p">[[</span><span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]],</span> <span class="nb">bool</span> <span class="o">|</span> <span class="kc">None</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">callback</span><span class="p">:</span> <span class="n">Callable</span><span class="p">[[</span><span class="n">FitState</span><span class="p">],</span> <span class="nb">bool</span> <span class="o">|</span> <span class="kc">None</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span>
         <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">]</span> <span class="o">|</span> <span class="nb">list</span><span class="p">[</span><span class="nb">float</span><span class="p">],</span>
         <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">]</span> <span class="o">|</span> <span class="nb">list</span><span class="p">[</span><span class="nb">float</span><span class="p">],</span>
@@ -823,35 +861,18 @@ Or give us ideas on <a href="https://github.com/leomariga/pyRANSAC-3D/issues/13"
 <li><code>pts</code>: 3D point cloud as a numpy array (N,3).</li>
 <li><code>thresh</code>: Threshold distance from the cylinder hull which is considered inlier.</li>
 <li><code>maxIteration</code>: Number of maximum iteration which RANSAC will loop over.</li>
-<li><code>callback</code>: Optional callable invoked after every non-degenerate iteration
-with a state <code>dict</code>. If it returns a truthy value, fitting stops early.</li>
+<li><code>callback</code>: Optional callable which receives a <code>FitState</code> after every iteration.
+Return a truthy value from it to stop the fit early.</li>
 </ul>
 <p><strong>Returns</strong>:</p>
 <ul>
-<li><code>center</code>: Center of the cylinder np.array(1,3) which the cylinder axis is passing through.</li>
-<li><code>axis</code>: Vector describing cylinder's axis np.array(1,3).</li>
-<li><code>radius</code>: Radius of cylinder.</li>
-<li><code>inliers</code>: Inlier's index from the original point cloud.</li>
+<li><code>center</code>: Center of the cylinder <code>np.array (3,)</code>, which the cylinder axis is passing through</li>
+<li><code>axis</code>: Vector describing cylinder's axis <code>np.array (3,)</code></li>
+<li><code>radius</code>: Radius of cylinder</li>
+<li><code>inliers</code>: Inlier's index from the original point cloud</li>
 </ul>
-<p>The distances measured to select the inliers are not returned, but they are kept in the
-object, both as a <code>np.array (N,)</code> in the same order of <code>pts</code>:
-- <code>self.radial_distances</code>: distance from each point to the axis of the cylinder
-- <code>self.distances</code>: distance from each point to the hull of the cylinder</p>
-<p>The optional <code>callback</code> is invoked after every non-degenerate iteration with a
-state <code>dict</code>. Useful to plot the fitting progress, inspect intermediate results,
-or implement a custom early-stopping criterion. If it returns a truthy value,
-fitting stops early and the current best result is returned. Treat the arrays
-in the state <code>dict</code> as read-only. State keys:</p>
-<ul>
-<li><code>iteration</code>: current iteration index (0-based)</li>
-<li><code>sample_indices</code>: indices of the points sampled this iteration</li>
-<li><code>sample_points</code>: the sampled points, <code>np.array (3, 3)</code></li>
-<li><code>model</code>: <code>dict</code> with this iteration's candidate <code>center</code>, <code>axis</code>, <code>radius</code></li>
-<li><code>inliers</code>: inlier indices found for this iteration's candidate</li>
-<li><code>best_model</code>: <code>dict</code> with the best <code>center</code>, <code>axis</code>, <code>radius</code> found so far</li>
-<li><code>best_inliers</code>: best inlier indices found so far</li>
-<li><code>is_best</code>: <code>True</code> if this iteration became the new best candidate</li>
-</ul>
+<p>Everything else measured while fitting is kept on the object, described in the attributes
+of this class.</p>
 <hr />
 
 

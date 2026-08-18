@@ -527,6 +527,34 @@
   
   
     <li class="md-nav__item">
+      <a href="../api-documentation/fit-state/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Fit State
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../api-documentation/shape-generator/" class="md-nav__link">
         
   
@@ -772,6 +800,17 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#docstring-conventions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Docstring conventions
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#generating-and-publishing-docs" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -971,6 +1010,17 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#docstring-conventions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Docstring conventions
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#generating-and-publishing-docs" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -1119,6 +1169,18 @@ There is also <code>early_stop_callback.py</code>, which uses the same <code>cal
    <div class="highlight"><pre><span></span><code>uvx<span class="w"> </span>--from<span class="w"> </span><span class="nv">pyransac3d</span><span class="o">==</span>&lt;version&gt;<span class="w"> </span>python<span class="w"> </span>-c<span class="w"> </span><span class="s2">&quot;import pyransac3d as pyrsc; print(pyrsc.Plane)&quot;</span>
 </code></pre></div></li>
 </ol>
+<h3 id="docstring-conventions">Docstring conventions<a class="headerlink" href="#docstring-conventions" title="Permanent link">&para;</a></h3>
+<p>Each piece of information is documented in exactly one place, following the same convention as <a href="https://numpydoc.readthedocs.io/en/latest/format.html#documenting-classes">numpydoc</a>, the <a href="https://google.github.io/styleguide/pyguide.html#384-classes">Google style guide</a> and <a href="https://scikit-learn.org/stable/developers/develop.html#estimated-attributes">scikit-learn</a>:</p>
+<ul>
+<li>Everything a <code>fit(.)</code> stores on the object is documented in an <code>Attributes:</code> section of the <strong>class</strong> docstring, one line per attribute, and referred to by its plain name (<code>center</code>, not <code>self.center</code>).</li>
+<li>The <code>fit(.)</code> docstring only has its summary, <code>:param:</code> for every argument and <code>:returns:</code> for what it actually returns. It never repeats the attributes.</li>
+<li>The <code>state</code> dictionary given to a <code>callback</code> is documented once, in the <code>FitState</code> TypedDict of <code>pyransac3d/fit_state.py</code>, with a docstring under each key.</li>
+</ul>
+<p>Two caveats of the docs renderer are worth knowing when writing a docstring:</p>
+<ul>
+<li>A docstring which uses <code>Attributes:</code> (or any other Google section) has the indentation of every line stripped, so it cannot contain indented markdown like the body of an <code>!!! note</code> admonition. Use the <code>!!! note "The text goes in the title"</code> form instead.</li>
+<li>The <code>---</code> at the end of every docstring is the horizontal rule which separates the entries of a page, so keep it as the last line.</li>
+</ul>
 <h3 id="generating-and-publishing-docs">Generating and publishing docs<a class="headerlink" href="#generating-and-publishing-docs" title="Permanent link">&para;</a></h3>
 <p>Docs are generated from source docstrings via <code>pydoc-markdown</code> (config: <code>pydoc-markdown.yml</code>) using the <code>mkdocs</code> renderer, then deployed to the <code>gh-pages</code> branch (served by GitHub Pages).</p>
 <ol>

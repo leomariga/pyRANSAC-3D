@@ -115,7 +115,7 @@ Every fitter accepts an optional `callback`. The callback runs during RANSAC and
 
 Use a callback when you want to react while fitting is still running: stop early with your own criteria, log intermediate values, inspect candidate parameters, or update a visualization.
 
-The full `state` dictionary is documented on each fitter: [Plane](https://leomariga.github.io/pyRANSAC-3D/api-documentation/plane/index.md), [Sphere](https://leomariga.github.io/pyRANSAC-3D/api-documentation/sphere/index.md), [Cylinder](https://leomariga.github.io/pyRANSAC-3D/api-documentation/cylinder/index.md), [Cuboid](https://leomariga.github.io/pyRANSAC-3D/api-documentation/cuboid/index.md), [Line](https://leomariga.github.io/pyRANSAC-3D/api-documentation/line/index.md), [Circle](https://leomariga.github.io/pyRANSAC-3D/api-documentation/circle/index.md), and [Point](https://leomariga.github.io/pyRANSAC-3D/api-documentation/point/index.md).
+Every key of the `state` dictionary is documented in [Fit State](https://leomariga.github.io/pyRANSAC-3D/api-documentation/fit-state/index.md).
 
 ### Early Stop With Your Own Criteria
 
