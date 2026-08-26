@@ -276,6 +276,64 @@ class ShapeGenerator:
 
         return self._finish(pts, noise, n_outliers, outlier_bounds)
 
+    def cone(
+        self,
+        apex: ArrayLike,
+        axis: ArrayLike,
+        angle: float,
+        height: float = 10.0,
+        n_points: int = 500,
+        noise: float = 0.02,
+        n_outliers: int = 0,
+        outlier_bounds: ArrayLike | None = None,
+    ) -> NDArray[np.float64]:
+        """
+        Generate a cloud of points on the lateral surface of a cone.
+
+        The base is not sampled, because the fitter looks for a cone of infinite height and the
+        points on the base would be outliers.
+
+        :param apex: Point where the surface of the cone converges `np.array (3,)`.
+        :param axis: Axis of the cone `np.array (3,)`, pointing from the apex towards the
+            opening, which does not need to be unitary.
+        :param angle: Half-angle of the cone in radians, between its axis and its surface.
+        :param height: Height of the piece of cone where the points are sampled, measured from
+            the apex along the axis.
+        :param n_points: Number of points on the cone, without counting the outliers.
+        :param noise: Standard deviation of the gaussian noise added to every coordinate.
+        :param n_outliers: Number of points scattered around which do not belong to the shape.
+        :param outlier_bounds: Half size of the box where the outliers are scattered, as a scalar
+            or a `np.array (3,)`. When `None`, the box is the bounding box of the shape enlarged
+            by `OUTLIER_MARGIN`.
+
+        :returns: Point cloud as a `np.array (N, 3)`, where `N` is `n_points + n_outliers`
+
+        ---
+        """
+
+        apex = self._as_point(apex, "apex")
+        axis = self._as_direction(axis, "axis")
+        angle = self._as_sizes(angle, 1, "angle")[0]
+        height = self._as_sizes(height, 1, "height")[0]
+        n_points = self._as_count(n_points, "n_points", minimum=3)
+
+        if not 0 < angle < np.pi / 2:
+            raise ValueError("Angle must be between 0 and pi/2, exclusive!")
+
+        first_axis, second_axis = self._basis_from_axis(axis)
+        angles = self.rng.uniform(0, 2 * np.pi, n_points)
+
+        # The area of the cone grows with the square of the distance to the apex, so taking the
+        # square root of a uniform sample is what spreads the points evenly over the surface
+        # instead of crowding them around the apex
+        heights = height * np.sqrt(self.rng.uniform(0, 1, n_points))
+        radii = heights * np.tan(angle)
+
+        around_axis = np.cos(angles)[:, np.newaxis] * first_axis + np.sin(angles)[:, np.newaxis] * second_axis
+        pts = apex + radii[:, np.newaxis] * around_axis + heights[:, np.newaxis] * axis
+
+        return self._finish(pts, noise, n_outliers, outlier_bounds)
+
     def cuboid(
         self,
         center: ArrayLike,

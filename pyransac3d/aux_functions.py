@@ -176,3 +176,61 @@ def rodrigues_rot(P: ArrayLike, n0: ArrayLike, n1: ArrayLike) -> NDArray[np.floa
     else:
         P_rot = P
     return P_rot
+
+
+def estimate_normals(pts: ArrayLike, k: int = 16) -> NDArray[np.float64]:
+    """
+    Estimate the normal of the surface on every point of a cloud.
+
+    The normal of a point is taken from its `k` nearest neighbors: the direction in which they
+    spread the least is the one leaving the surface, which is the eigenvector of the smallest
+    eigenvalue of their covariance.
+
+    The normals are not oriented, which means a normal may point inwards while the next one
+    points outwards. That is enough for the fitters, which only use the direction of the normal,
+    but it is not enough to render them.
+
+    :param pts: 3D point cloud as a numpy array (N,3).
+    :param k: Number of neighbors used on each point. It is clamped to the size of the cloud.
+
+    :returns: Unit normal of the surface on each point `np.array (N, 3)`
+
+    ---
+    """
+
+    pts = np.asarray(pts, dtype=float)
+    if pts.ndim != 2 or pts.shape[1] != 3:
+        raise ValueError("Points must be a np.array (N,3)!")
+
+    n_points = pts.shape[0]
+    if n_points < 3:
+        raise ValueError("Estimating normals needs at least 3 points!")
+
+    # A point is its own nearest neighbor, so k+1 of them are taken and k are left after it
+    k = int(min(max(k, 2), n_points - 1))
+
+    normals = np.empty((n_points, 3))
+    squared = np.einsum("ij,ij->i", pts, pts)
+
+    # The distances are computed in blocks, so the matrix of every point against every other one
+    # is never held whole and the memory does not grow with the square of the cloud
+    block = max(1, int(4e6 // n_points))
+    for start in range(0, n_points, block):
+        stop = min(start + block, n_points)
+        chunk = pts[start:stop]
+
+        # |a-b|^2 = |a|^2 + |b|^2 - 2ab, which avoids building the (block, N, 3) differences
+        sq_dist = squared[np.newaxis, :] + squared[start:stop, np.newaxis] - 2.0 * (chunk @ pts.T)
+
+        neighbor_ids = np.argpartition(sq_dist, k, axis=1)[:, : k + 1]
+        neighbors = pts[neighbor_ids]
+
+        centered = neighbors - neighbors.mean(axis=1, keepdims=True)
+        covariances = np.einsum("bij,bik->bjk", centered, centered)
+
+        # eigh sorts the eigenvalues in ascending order, so the first eigenvector is the one of
+        # the smallest eigenvalue, which is the normal
+        _, eigenvectors = np.linalg.eigh(covariances)
+        normals[start:stop] = eigenvectors[:, :, 0]
+
+    return normals

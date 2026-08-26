@@ -79,6 +79,27 @@ class CylinderResult(NamedTuple):
     """Index of the points of `pts` which fit the cylinder."""
 
 
+class ConeResult(NamedTuple):
+    """
+    Result of `Cone.fit(.)`.
+
+    ---
+    """
+
+    apex: NDArray[np.float64] | list[float]
+    """Point where the surface of the cone converges, `np.array (3,)`."""
+
+    axis: NDArray[np.float64] | list[float]
+    """Unit vector describing the direction of the cone's axis, pointing from the apex towards the opening,
+    `np.array (3,)`."""
+
+    angle: float
+    """Half-angle of the cone in radians, between its axis and its surface."""
+
+    inliers: NDArray[np.intp] | list[int]
+    """Index of the points of `pts` which fit the cone."""
+
+
 class SphereResult(NamedTuple):
     """
     Result of `Sphere.fit(.)`.

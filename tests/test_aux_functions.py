@@ -193,3 +193,55 @@ def test_rodrigues_rot_does_nothing_when_both_normals_are_the_same() -> None:
     rotated = pyrsc.rodrigues_rot(points, [0.0, 0.0, 1.0], [0.0, 0.0, 1.0])
 
     np.testing.assert_array_equal(rotated, points)
+
+
+def test_estimate_normals_finds_the_normal_of_a_plane() -> None:
+    # A cloud this size is split in more than one block by the neighbor search, so the blocks
+    # have to agree with each other
+    rng = np.random.default_rng(0)
+    normal = np.asarray([1.0, 2.0, -1.0]) / np.linalg.norm([1.0, 2.0, -1.0])
+    first, second = pyrsc.ShapeGenerator._basis_from_axis(normal)
+    uv = rng.uniform(-5, 5, (2500, 2))
+    points = uv[:, 0:1] * first + uv[:, 1:2] * second
+
+    normals = pyrsc.estimate_normals(points, k=12)
+
+    assert normals.shape == points.shape
+    np.testing.assert_allclose(np.linalg.norm(normals, axis=1), 1.0)
+
+    # The normals are not oriented, so half of them may point to the other side of the plane
+    np.testing.assert_allclose(np.abs(normals.dot(normal)), 1.0, atol=1e-6)
+
+
+def test_estimate_normals_follows_the_surface_of_a_sphere() -> None:
+    generator = pyrsc.ShapeGenerator(seed=0)
+    center = np.asarray([1.0, -1.0, 2.0])
+    points = generator.sphere(center, 4.0, n_points=800, noise=0.0)
+
+    normals = pyrsc.estimate_normals(points, k=20)
+
+    # The normal of a sphere is radial, so it is aligned with the direction to its center
+    radial = points - center
+    radial = radial / np.linalg.norm(radial, axis=1)[:, np.newaxis]
+    alignment = np.abs(np.einsum("ij,ij->i", normals, radial))
+
+    assert np.median(alignment) > 0.99
+
+
+def test_estimate_normals_clamps_k_to_the_size_of_the_cloud() -> None:
+    points = np.asarray([[0.0, 0.0, 0.0], [1.0, 0.0, 0.0], [0.0, 1.0, 0.0], [1.0, 1.0, 0.0]])
+
+    normals = pyrsc.estimate_normals(points, k=50)
+
+    assert normals.shape == (4, 3)
+    np.testing.assert_allclose(np.abs(normals.dot([0.0, 0.0, 1.0])), 1.0, atol=1e-9)
+
+
+def test_estimate_normals_rejects_points_which_are_not_3d() -> None:
+    with pytest.raises(ValueError):
+        pyrsc.estimate_normals(np.zeros((10, 2)))
+
+
+def test_estimate_normals_rejects_a_cloud_without_enough_points() -> None:
+    with pytest.raises(ValueError):
+        pyrsc.estimate_normals(np.zeros((2, 3)))

@@ -26,6 +26,9 @@ renderer:
       - title: Cylinder
         contents:
         - pyransac3d.cylinder.*
+      - title: Cone
+        contents:
+        - pyransac3d.cone.*
       - title: Sphere
         contents:
         - pyransac3d.sphere.*
