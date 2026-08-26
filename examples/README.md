@@ -24,6 +24,7 @@ They build the point cloud with `pyransac3d.ShapeGenerator`, fit it and print th
 | [circle_simple.py](circle_simple.py) | The center, the axis and the radius of a circle |
 | [sphere_simple.py](sphere_simple.py) | The center and the radius of a sphere |
 | [cylinder_simple.py](cylinder_simple.py) | The center, the axis and the radius of a cylinder |
+| [cone_simple.py](cone_simple.py) | The apex, the axis and the half-angle of a cone |
 | [cuboid_simple.py](cuboid_simple.py) | The center, the extents and the axes of a cuboid |
 
 ## Visual
@@ -36,6 +37,7 @@ They build the point cloud with `pyransac3d.ShapeGenerator`, fit it and print th
 | [circle_visual.py](circle_visual.py) | The inliers of the circle and a torus on it |
 | [sphere_visual.py](sphere_visual.py) | The inliers of the sphere and its wireframe |
 | [cylinder_visual.py](cylinder_visual.py) | The inliers of the cylinder, its axes and a disk on it |
+| [cone_visual.py](cone_visual.py) | The inliers of the cone and its wireframe, fitted with the normals Open3D estimated |
 | [cuboid_visual.py](cuboid_visual.py) | The inliers of the box of `dataset/caixa.ply` and its 8 corners |
 
 ## Animation
@@ -50,6 +52,7 @@ The current inliers are red, the best inliers so far are green, the sampled poin
 | [circle_animation.py](circle_animation.py) | Generated circle, with the ring of the best candidate |
 | [sphere_animation.py](sphere_animation.py) | Generated sphere, with the wireframe of the best candidate |
 | [cylinder_animation.py](cylinder_animation.py) | Generated cylinder, with the wireframe of the best candidate |
+| [cone_animation.py](cone_animation.py) | Generated cone, with the wireframe of the best candidate |
 | [cuboid_animation.py](cuboid_animation.py) | Real cloud `dataset/caixa.ply`, with the box of the best candidate |
 
 ## Others
