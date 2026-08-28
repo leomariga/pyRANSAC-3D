@@ -68,8 +68,8 @@ renderer:
       - llmstxt:
           markdown_description: >
             pyRANSAC-3D is a Python library for fitting planes, lines, circles,
-            spheres, cylinders, cuboids, and point clusters to 3D point clouds
-            with RANSAC.
+            spheres, cylinders, cones, cuboids, and point clusters to 3D point
+            clouds with RANSAC.
           sections:
             Getting Started:
               - index.md: Project overview, installation, supported shapes, and quick examples.

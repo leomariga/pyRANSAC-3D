@@ -58,9 +58,8 @@ class Cone:
         :param maxIteration: Number of maximum iteration which RANSAC will loop over.
         :param normals: Optional unit normals of the surface at each point of `pts`, `np.array
             (N,3)`. When `None`, they are estimated from `pts` with `estimate_normals(.)`, which
-            costs a nearest neighbor search over the whole cloud. Passing the normals you already
-            have, such as the ones of an Open3D cloud, skips it. Their orientation does not
-            matter, only their direction.
+            is quadratic in the cloud size. Passing the normals you already have, such as the ones
+            of an Open3D cloud, skips it. Their orientation does not matter, only their direction.
         :param k_neighbors: Number of neighbors used to estimate the normals, ignored when
             `normals` is given.
         :param callback: Optional callable which receives a `FitState` after every iteration.

@@ -190,6 +190,10 @@ def estimate_normals(pts: ArrayLike, k: int = 16) -> NDArray[np.float64]:
     points outwards. That is enough for the fitters, which only use the direction of the normal,
     but it is not enough to render them.
 
+    !!! warning "Performance"
+        This is a brute-force nearest-neighbor search: runtime grows quadratically with the 
+        cloud size. Pass normals you already have on large scans instead of estimating them here.
+
     :param pts: 3D point cloud as a numpy array (N,3).
     :param k: Number of neighbors used on each point. It is clamped to the size of the cloud.
 
