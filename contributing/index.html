@@ -415,6 +415,34 @@
   
   
     <li class="md-nav__item">
+      <a href="../api-documentation/cone/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Cone
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../api-documentation/sphere/" class="md-nav__link">
         
   
@@ -817,6 +845,17 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
+  <a href="#release-checklist" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Release checklist
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#publishing-to-pypi" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -1027,6 +1066,17 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
+  <a href="#release-checklist" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Release checklist
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#publishing-to-pypi" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -1177,6 +1227,22 @@ There is also <code>early_stop_callback.py</code>, which uses the same <code>cal
 <p>By contributing, you agree that your contributions will be licensed under its Apache License 2.0.</p>
 <h2 id="maintainer-notes">Maintainer Notes<a class="headerlink" href="#maintainer-notes" title="Permanent link">&para;</a></h2>
 <p>These steps are infrequent, so they're documented here as a reminder.</p>
+<h3 id="release-checklist">Release checklist<a class="headerlink" href="#release-checklist" title="Permanent link">&para;</a></h3>
+<ol>
+<li>Pre-release: <code>uv run invoke test</code> and <code>uv run invoke lint</code>.</li>
+<li>Bump versions in <code>pyproject.toml</code>, <code>CITATION.cff</code>, and the README citation block, then <code>uv lock</code>.</li>
+<li>Commit and push to <code>master</code>.</li>
+<li>GitHub Release — tag <code>v&lt;version&gt;</code> (triggers the Zenodo archive).</li>
+<li>Build: <code>uv build</code>.</li>
+<li>Optional: publish to <a href="https://test.pypi.org">TestPyPI</a> with <code>uv publish --publish-url https://test.pypi.org/legacy/ --token &lt;test-token&gt;</code>.</li>
+<li>PyPI: <code>uv publish --token pypi-xxxx</code>.</li>
+<li>Verify the install from outside the repo:
+   <div class="highlight"><pre><span></span><code>uvx<span class="w"> </span>--from<span class="w"> </span><span class="nv">pyransac3d</span><span class="o">==</span>&lt;version&gt;<span class="w"> </span>python<span class="w"> </span>-c<span class="w"> </span><span class="s2">&quot;import pyransac3d as pyrsc; print(pyrsc.Plane)&quot;</span>
+</code></pre></div></li>
+<li>Docs: <code>uv run pydoc-markdown</code> then <code>uv run mkdocs gh-deploy --force -f build/docs/mkdocs.yml</code>.</li>
+<li>Verify <a href="https://pypi.org/project/pyransac3d/">PyPI</a>, <a href="https://zenodo.org/doi/10.5281/zenodo.7212567">Zenodo</a>, and <a href="https://leomariga.github.io/pyRANSAC-3D/">leomariga.github.io/pyRANSAC-3D</a>.</li>
+</ol>
+<p>Details for the PyPI and docs steps are below.</p>
 <h3 id="publishing-to-pypi">Publishing to PyPI<a class="headerlink" href="#publishing-to-pypi" title="Permanent link">&para;</a></h3>
 <ol>
 <li>Bump the version in <code>pyproject.toml</code> (<code>[project] version</code>) and <code>CITATION.cff</code> (<code>version</code>) — keep them in sync.</li>

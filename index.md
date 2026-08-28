@@ -8,6 +8,7 @@ ______________________________________________________________________
 
 - [Plane](https://leomariga.github.io/pyRANSAC-3D/api-documentation/plane/)
 - [Cylinder](https://leomariga.github.io/pyRANSAC-3D/api-documentation/cylinder/)
+- [Cone](https://leomariga.github.io/pyRANSAC-3D/api-documentation/cone/)
 - [Cuboid](https://leomariga.github.io/pyRANSAC-3D/api-documentation/cuboid/)
 - [Sphere](https://leomariga.github.io/pyRANSAC-3D/api-documentation/sphere/)
 - [Line](https://leomariga.github.io/pyRANSAC-3D/api-documentation/line/)

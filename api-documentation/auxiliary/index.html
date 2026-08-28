@@ -417,6 +417,34 @@
   
   
     <li class="md-nav__item">
+      <a href="../cone/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Cone
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../sphere/" class="md-nav__link">
         
   
@@ -742,6 +770,34 @@
     </span>
   </a>
   
+    <nav class="md-nav" aria-label="Set of points P, but rotated np.array (N, 3)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#estimate_normals" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        estimate_normals
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#unit-normal-of-the-surface-on-each-point-nparray-n-3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Unit normal of the surface on each point np.array (N, 3)
+      
+    </span>
+  </a>
+  
 </li>
       
     </ul>
@@ -910,6 +966,34 @@
     </span>
   </a>
   
+    <nav class="md-nav" aria-label="Set of points P, but rotated np.array (N, 3)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#estimate_normals" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        estimate_normals
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#unit-normal-of-the-surface-on-each-point-nparray-n-3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Unit normal of the surface on each point np.array (N, 3)
+      
+    </span>
+  </a>
+  
 </li>
       
     </ul>
@@ -999,6 +1083,29 @@ orientation of each edge and keep the one which gives the smallest area.</p>
 </ul>
 <p><strong>Returns</strong>:</p>
 <h2 id="set-of-points-p-but-rotated-nparray-n-3">Set of points P, but rotated <code>np.array (N, 3)</code><a class="headerlink" href="#set-of-points-p-but-rotated-nparray-n-3" title="Permanent link">&para;</a></h2>
+<p><a id="pyransac3d.aux_functions.estimate_normals"></a></p>
+<h4 id="estimate_normals">estimate_normals<a class="headerlink" href="#estimate_normals" title="Permanent link">&para;</a></h4>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">estimate_normals</span><span class="p">(</span><span class="n">pts</span><span class="p">:</span> <span class="n">ArrayLike</span><span class="p">,</span> <span class="n">k</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">16</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">]</span>
+</code></pre></div>
+<p>Estimate the normal of the surface on every point of a cloud.</p>
+<p>The normal of a point is taken from its <code>k</code> nearest neighbors: the direction in which they
+spread the least is the one leaving the surface, which is the eigenvector of the smallest
+eigenvalue of their covariance.</p>
+<p>The normals are not oriented, which means a normal may point inwards while the next one
+points outwards. That is enough for the fitters, which only use the direction of the normal,
+but it is not enough to render them.</p>
+<div class="admonition warning">
+<p class="admonition-title">Performance</p>
+<p>This is a brute-force nearest-neighbor search: runtime grows quadratically with the 
+cloud size. Pass normals you already have on large scans instead of estimating them here.</p>
+</div>
+<p><strong>Arguments</strong>:</p>
+<ul>
+<li><code>pts</code>: 3D point cloud as a numpy array (N,3).</li>
+<li><code>k</code>: Number of neighbors used on each point. It is clamped to the size of the cloud.</li>
+</ul>
+<p><strong>Returns</strong>:</p>
+<h2 id="unit-normal-of-the-surface-on-each-point-nparray-n-3">Unit normal of the surface on each point <code>np.array (N, 3)</code><a class="headerlink" href="#unit-normal-of-the-surface-on-each-point-nparray-n-3" title="Permanent link">&para;</a></h2>
 
 
 

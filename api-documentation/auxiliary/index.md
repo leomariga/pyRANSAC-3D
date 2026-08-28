@@ -82,3 +82,28 @@ Rotate a set of point between two normal vectors using Rodrigues' formula.
 **Returns**:
 
 ## Set of points P, but rotated `np.array (N, 3)`
+
+#### estimate_normals
+
+```
+def estimate_normals(pts: ArrayLike, k: int = 16) -> NDArray[np.float64]
+```
+
+Estimate the normal of the surface on every point of a cloud.
+
+The normal of a point is taken from its `k` nearest neighbors: the direction in which they spread the least is the one leaving the surface, which is the eigenvector of the smallest eigenvalue of their covariance.
+
+The normals are not oriented, which means a normal may point inwards while the next one points outwards. That is enough for the fitters, which only use the direction of the normal, but it is not enough to render them.
+
+Performance
+
+This is a brute-force nearest-neighbor search: runtime grows quadratically with the cloud size. Pass normals you already have on large scans instead of estimating them here.
+
+**Arguments**:
+
+- `pts`: 3D point cloud as a numpy array (N,3).
+- `k`: Number of neighbors used on each point. It is clamped to the size of the cloud.
+
+**Returns**:
+
+## Unit normal of the surface on each point `np.array (N, 3)`

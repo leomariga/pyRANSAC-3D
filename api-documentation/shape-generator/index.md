@@ -196,6 +196,38 @@ The caps are not sampled, because the fitter looks for a cylinder of infinite he
 
 ## Point cloud as a `np.array (N, 3)`, where `N` is `n_points + n_outliers`
 
+#### cone
+
+```
+def cone(apex: ArrayLike,
+         axis: ArrayLike,
+         angle: float,
+         height: float = 10.0,
+         n_points: int = 500,
+         noise: float = 0.02,
+         n_outliers: int = 0,
+         outlier_bounds: ArrayLike | None = None) -> NDArray[np.float64]
+```
+
+Generate a cloud of points on the lateral surface of a cone.
+
+The base is not sampled, because the fitter looks for a cone of infinite height and the points on the base would be outliers.
+
+**Arguments**:
+
+- `apex`: Point where the surface of the cone converges `np.array (3,)`.
+- `axis`: Axis of the cone `np.array (3,)`, pointing from the apex towards the opening, which does not need to be unitary.
+- `angle`: Half-angle of the cone in radians, between its axis and its surface.
+- `height`: Height of the piece of cone where the points are sampled, measured from the apex along the axis.
+- `n_points`: Number of points on the cone, without counting the outliers.
+- `noise`: Standard deviation of the gaussian noise added to every coordinate.
+- `n_outliers`: Number of points scattered around which do not belong to the shape.
+- `outlier_bounds`: Half size of the box where the outliers are scattered, as a scalar or a `np.array (3,)`. When `None`, the box is the bounding box of the shape enlarged by `OUTLIER_MARGIN`.
+
+**Returns**:
+
+## Point cloud as a `np.array (N, 3)`, where `N` is `n_points + n_outliers`
+
 #### cuboid
 
 ```

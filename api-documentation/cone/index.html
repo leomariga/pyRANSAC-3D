@@ -10,13 +10,13 @@
       
       
       
-        <link rel="canonical" href="https://leomariga.github.io/pyRANSAC-3D/api-documentation/circle/">
+        <link rel="canonical" href="https://leomariga.github.io/pyRANSAC-3D/api-documentation/cone/">
       
       
-        <link rel="prev" href="../line/">
+        <link rel="prev" href="../cylinder/">
       
       
-        <link rel="next" href="../point/">
+        <link rel="next" href="../sphere/">
       
       
         
@@ -27,7 +27,7 @@
     
     
       
-        <title>Circle - pyRANSAC-3D</title>
+        <title>Cone - pyRANSAC-3D</title>
       
     
     
@@ -76,7 +76,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#pyransac3dcircle" class="md-skip">
+        <a href="#pyransac3dcone" class="md-skip">
           Skip to content
         </a>
       
@@ -111,7 +111,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Circle
+              Cone
             
           </span>
         </div>
@@ -414,10 +414,37 @@
                 
   
   
+    
   
   
-    <li class="md-nav__item">
-      <a href="../cone/" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Cone
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
         
   
   
@@ -433,6 +460,54 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#cone-objects" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Cone Objects
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Cone Objects">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#fit" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        fit
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
     </li>
   
 
@@ -498,37 +573,10 @@
                 
   
   
-    
   
   
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
-      
-      
-        
-      
-      
-        <label class="md-nav__link md-nav__link--active" for="__toc">
-          
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Circle
-  
-
-    
-  </span>
-  
-  
-
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <a href="./" class="md-nav__link md-nav__link--active">
+    <li class="md-nav__item">
+      <a href="../circle/" class="md-nav__link">
         
   
   
@@ -544,54 +592,6 @@
   
 
       </a>
-      
-        
-
-<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
-  
-  
-  
-    
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#circle-objects" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Circle Objects
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Circle Objects">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#fit" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        fit
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-    </ul>
-  
-</nav>
-      
     </li>
   
 
@@ -825,15 +825,15 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#circle-objects" class="md-nav__link">
+  <a href="#cone-objects" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Circle Objects
+        Cone Objects
       
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="Circle Objects">
+    <nav class="md-nav" aria-label="Cone Objects">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
@@ -872,53 +872,59 @@
   
 
 
-<p><a id="pyransac3d.circle"></a></p>
-<h1 id="pyransac3dcircle">pyransac3d.circle<a class="headerlink" href="#pyransac3dcircle" title="Permanent link">&para;</a></h1>
-<p><a id="pyransac3d.circle.Circle"></a></p>
-<h2 id="circle-objects">Circle Objects<a class="headerlink" href="#circle-objects" title="Permanent link">&para;</a></h2>
-<div class="highlight"><pre><span></span><code><span class="k">class</span><span class="w"> </span><span class="nc">Circle</span><span class="p">()</span>
+<p><a id="pyransac3d.cone"></a></p>
+<h1 id="pyransac3dcone">pyransac3d.cone<a class="headerlink" href="#pyransac3dcone" title="Permanent link">&para;</a></h1>
+<p><a id="pyransac3d.cone.Cone"></a></p>
+<h2 id="cone-objects">Cone Objects<a class="headerlink" href="#cone-objects" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code><span class="k">class</span><span class="w"> </span><span class="nc">Cone</span><span class="p">()</span>
 </code></pre></div>
-<p>Implementation for Circle RANSAC.</p>
-<p>This class finds the circle's parameters based on 3 sampled points.
-This method uses 3 points to find the circle's plane, center and radius.</p>
-<p><img alt="Circle" src="https://raw.githubusercontent.com/leomariga/pyRANSAC-3D/master/doc/circle.gif" title="Circle" /></p>
+<p>Implementation for cone RANSAC.</p>
+<p>This class finds an infinite right circular cone, and returns its apex, the direction of its
+axis and its half-angle, which is the angle between the axis and the surface of the cone.</p>
+<p>A cone cannot be found from points alone: three points are not enough to define the six
+parameters of a cone, but three points <strong>and their normals</strong> are, because every plane tangent
+to a cone passes through its apex. So <code>fit(.)</code> works on the normals of the surface, which it
+takes from <code>normals</code> when they are given, and estimates from the cloud itself when they are
+not.</p>
 <p><strong>Attributes</strong>:</p>
 <ul>
-<li><code>center</code> - Center of the circle, <code>np.array (3,)</code>.</li>
-<li><code>axis</code> - Unit normal vector of the plane which contains the circle, <code>np.array (3,)</code>.</li>
-<li><code>radius</code> - Radius of the circle.</li>
-<li><code>inliers</code> - Index of the points of <code>pts</code> which fit the circle.</li>
-<li><code>plane_equation</code> - Equation of the plane which contains the circle, using Ax+By+Cz+D,
-  <code>np.array (4,)</code>, where A, B and C are the same as <code>axis</code>.</li>
-<li><code>plane_distances</code> - Signed distance from each point of <code>pts</code> to the plane of the circle,
-  <code>np.array (N,)</code>, in the same order of <code>pts</code>.</li>
-<li><code>radial_distances</code> - Distance from each point of <code>pts</code> to the hull of the circle if it was
-  extruded along its axis, <code>np.array (N,)</code>, in the same order of <code>pts</code>, which is negative
-  for points inside of it.</li>
-<li><code>distances</code> - Distance from each point of <code>pts</code> to the hull of the circle, <code>np.array (N,)</code>, in
-  the same order of <code>pts</code>.</li>
+<li><code>apex</code> - Point where the surface of the cone converges, <code>np.array (3,)</code>.</li>
+<li><code>axis</code> - Unit vector describing the direction of the cone's axis, pointing from the apex
+  towards the opening, <code>np.array (3,)</code>.</li>
+<li><code>angle</code> - Half-angle of the cone in radians, between its axis and its surface.</li>
+<li><code>inliers</code> - Index of the points of <code>pts</code> which fit the cone.</li>
+<li><code>distances</code> - Distance from each point of <code>pts</code> to the surface of the cone, <code>np.array (N,)</code>,
+  in the same order of <code>pts</code>.</li>
 </ul>
 <hr />
-<p><a id="pyransac3d.circle.Circle.fit"></a></p>
+<p><a id="pyransac3d.cone.Cone.fit"></a></p>
 <h4 id="fit">fit<a class="headerlink" href="#fit" title="Permanent link">&para;</a></h4>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">fit</span><span class="p">(</span><span class="n">pts</span><span class="p">:</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">],</span>
         <span class="n">thresh</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.2</span><span class="p">,</span>
         <span class="n">maxIteration</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">1000</span><span class="p">,</span>
+        <span class="n">normals</span><span class="p">:</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">k_neighbors</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">16</span><span class="p">,</span>
         <span class="n">callback</span><span class="p">:</span> <span class="n">Callable</span><span class="p">[[</span><span class="n">FitState</span><span class="p">],</span> <span class="nb">bool</span> <span class="o">|</span> <span class="kc">None</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
-        <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">CircleResult</span>
+        <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">ConeResult</span>
 </code></pre></div>
-<p>Find the parameters (axis and radius and center) to define a circle.</p>
+<p>Find the parameters (apex, axis and half-angle) defining a cone.</p>
 <p><strong>Arguments</strong>:</p>
 <ul>
 <li><code>pts</code>: 3D point cloud as a numpy array (N,3).</li>
-<li><code>thresh</code>: Threshold distance from the cylinder hull which is considered inlier.</li>
+<li><code>thresh</code>: Threshold distance from the cone surface which is considered inlier.</li>
 <li><code>maxIteration</code>: Number of maximum iteration which RANSAC will loop over.</li>
+<li><code>normals</code>: Optional unit normals of the surface at each point of <code>pts</code>, <code>np.array
+(N,3)</code>. When <code>None</code>, they are estimated from <code>pts</code> with <code>estimate_normals(.)</code>, which
+is quadratic in the cloud size. Passing the normals you already have, such as the ones
+of an Open3D cloud, skips it. Their orientation does not matter, only their direction.</li>
+<li><code>k_neighbors</code>: Number of neighbors used to estimate the normals, ignored when
+<code>normals</code> is given.</li>
 <li><code>callback</code>: Optional callable which receives a <code>FitState</code> after every iteration.
 Return a truthy value from it to stop the fit early.</li>
 </ul>
 <p><strong>Returns</strong>:</p>
-<p><code>CircleResult</code> with the <code>center</code>, the <code>axis</code> and the <code>radius</code> of the circle, and
-its <code>inliers</code>.</p>
+<p><code>ConeResult</code> with the <code>apex</code>, the <code>axis</code> and the <code>angle</code> of the cone, and its
+<code>inliers</code>.</p>
 <p>Everything else measured while fitting is kept on the object, described in the attributes
 of this class.</p>
 <hr />

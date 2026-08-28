@@ -417,6 +417,34 @@
   
   
     <li class="md-nav__item">
+      <a href="../cone/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Cone
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../sphere/" class="md-nav__link">
         
   
@@ -836,6 +864,34 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
+  <a href="#cone" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        cone
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#point-cloud-as-a-nparray-n-3-where-n-is-n_points-n_outliers_6" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Point cloud as a np.array (N, 3), where N is n_points + n_outliers
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Point cloud as a np.array (N, 3), where N is n_points + n_outliers">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
   <a href="#cuboid" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -852,7 +908,7 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#point-cloud-as-a-nparray-n-3-where-n-is-n_points-n_outliers_6" class="md-nav__link">
+  <a href="#point-cloud-as-a-nparray-n-3-where-n-is-n_points-n_outliers_7" class="md-nav__link">
     <span class="md-ellipsis">
       
         Point cloud as a np.array (N, 3), where N is n_points + n_outliers
@@ -1178,6 +1234,34 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
+  <a href="#cone" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        cone
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#point-cloud-as-a-nparray-n-3-where-n-is-n_points-n_outliers_6" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Point cloud as a np.array (N, 3), where N is n_points + n_outliers
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Point cloud as a np.array (N, 3), where N is n_points + n_outliers">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
   <a href="#cuboid" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -1194,7 +1278,7 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#point-cloud-as-a-nparray-n-3-where-n-is-n_points-n_outliers_6" class="md-nav__link">
+  <a href="#point-cloud-as-a-nparray-n-3-where-n-is-n_points-n_outliers_7" class="md-nav__link">
     <span class="md-ellipsis">
       
         Point cloud as a np.array (N, 3), where N is n_points + n_outliers
@@ -1401,6 +1485,37 @@ by <code>OUTLIER_MARGIN</code>.</li>
 </ul>
 <p><strong>Returns</strong>:</p>
 <h2 id="point-cloud-as-a-nparray-n-3-where-n-is-n_points-n_outliers_5">Point cloud as a <code>np.array (N, 3)</code>, where <code>N</code> is <code>n_points + n_outliers</code><a class="headerlink" href="#point-cloud-as-a-nparray-n-3-where-n-is-n_points-n_outliers_5" title="Permanent link">&para;</a></h2>
+<p><a id="pyransac3d.shape_generator.ShapeGenerator.cone"></a></p>
+<h4 id="cone">cone<a class="headerlink" href="#cone" title="Permanent link">&para;</a></h4>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">cone</span><span class="p">(</span><span class="n">apex</span><span class="p">:</span> <span class="n">ArrayLike</span><span class="p">,</span>
+         <span class="n">axis</span><span class="p">:</span> <span class="n">ArrayLike</span><span class="p">,</span>
+         <span class="n">angle</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+         <span class="n">height</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">10.0</span><span class="p">,</span>
+         <span class="n">n_points</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">500</span><span class="p">,</span>
+         <span class="n">noise</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.02</span><span class="p">,</span>
+         <span class="n">n_outliers</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span>
+         <span class="n">outlier_bounds</span><span class="p">:</span> <span class="n">ArrayLike</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">]</span>
+</code></pre></div>
+<p>Generate a cloud of points on the lateral surface of a cone.</p>
+<p>The base is not sampled, because the fitter looks for a cone of infinite height and the
+points on the base would be outliers.</p>
+<p><strong>Arguments</strong>:</p>
+<ul>
+<li><code>apex</code>: Point where the surface of the cone converges <code>np.array (3,)</code>.</li>
+<li><code>axis</code>: Axis of the cone <code>np.array (3,)</code>, pointing from the apex towards the
+opening, which does not need to be unitary.</li>
+<li><code>angle</code>: Half-angle of the cone in radians, between its axis and its surface.</li>
+<li><code>height</code>: Height of the piece of cone where the points are sampled, measured from
+the apex along the axis.</li>
+<li><code>n_points</code>: Number of points on the cone, without counting the outliers.</li>
+<li><code>noise</code>: Standard deviation of the gaussian noise added to every coordinate.</li>
+<li><code>n_outliers</code>: Number of points scattered around which do not belong to the shape.</li>
+<li><code>outlier_bounds</code>: Half size of the box where the outliers are scattered, as a scalar
+or a <code>np.array (3,)</code>. When <code>None</code>, the box is the bounding box of the shape enlarged
+by <code>OUTLIER_MARGIN</code>.</li>
+</ul>
+<p><strong>Returns</strong>:</p>
+<h2 id="point-cloud-as-a-nparray-n-3-where-n-is-n_points-n_outliers_6">Point cloud as a <code>np.array (N, 3)</code>, where <code>N</code> is <code>n_points + n_outliers</code><a class="headerlink" href="#point-cloud-as-a-nparray-n-3-where-n-is-n_points-n_outliers_6" title="Permanent link">&para;</a></h2>
 <p><a id="pyransac3d.shape_generator.ShapeGenerator.cuboid"></a></p>
 <h4 id="cuboid">cuboid<a class="headerlink" href="#cuboid" title="Permanent link">&para;</a></h4>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">cuboid</span><span class="p">(</span><span class="n">center</span><span class="p">:</span> <span class="n">ArrayLike</span><span class="p">,</span>
@@ -1428,7 +1543,7 @@ or a <code>np.array (3,)</code>. When <code>None</code>, the box is the bounding
 by <code>OUTLIER_MARGIN</code>.</li>
 </ul>
 <p><strong>Returns</strong>:</p>
-<h2 id="point-cloud-as-a-nparray-n-3-where-n-is-n_points-n_outliers_6">Point cloud as a <code>np.array (N, 3)</code>, where <code>N</code> is <code>n_points + n_outliers</code><a class="headerlink" href="#point-cloud-as-a-nparray-n-3-where-n-is-n_points-n_outliers_6" title="Permanent link">&para;</a></h2>
+<h2 id="point-cloud-as-a-nparray-n-3-where-n-is-n_points-n_outliers_7">Point cloud as a <code>np.array (N, 3)</code>, where <code>N</code> is <code>n_points + n_outliers</code><a class="headerlink" href="#point-cloud-as-a-nparray-n-3-where-n-is-n_points-n_outliers_7" title="Permanent link">&para;</a></h2>
 
 
 

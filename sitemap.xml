@@ -2,62 +2,66 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
     <url>
          <loc>https://leomariga.github.io/pyRANSAC-3D/</loc>
-         <lastmod>2026-08-18</lastmod>
+         <lastmod>2026-08-28</lastmod>
     </url>
     <url>
          <loc>https://leomariga.github.io/pyRANSAC-3D/contributing/</loc>
-         <lastmod>2026-08-18</lastmod>
+         <lastmod>2026-08-28</lastmod>
     </url>
     <url>
          <loc>https://leomariga.github.io/pyRANSAC-3D/getting-started/</loc>
-         <lastmod>2026-08-18</lastmod>
+         <lastmod>2026-08-28</lastmod>
     </url>
     <url>
          <loc>https://leomariga.github.io/pyRANSAC-3D/license/</loc>
-         <lastmod>2026-08-18</lastmod>
+         <lastmod>2026-08-28</lastmod>
     </url>
     <url>
          <loc>https://leomariga.github.io/pyRANSAC-3D/api-documentation/auxiliary/</loc>
-         <lastmod>2026-08-18</lastmod>
+         <lastmod>2026-08-28</lastmod>
     </url>
     <url>
          <loc>https://leomariga.github.io/pyRANSAC-3D/api-documentation/circle/</loc>
-         <lastmod>2026-08-18</lastmod>
+         <lastmod>2026-08-28</lastmod>
+    </url>
+    <url>
+         <loc>https://leomariga.github.io/pyRANSAC-3D/api-documentation/cone/</loc>
+         <lastmod>2026-08-28</lastmod>
     </url>
     <url>
          <loc>https://leomariga.github.io/pyRANSAC-3D/api-documentation/cuboid/</loc>
-         <lastmod>2026-08-18</lastmod>
+         <lastmod>2026-08-28</lastmod>
     </url>
     <url>
          <loc>https://leomariga.github.io/pyRANSAC-3D/api-documentation/cylinder/</loc>
-         <lastmod>2026-08-18</lastmod>
+         <lastmod>2026-08-28</lastmod>
     </url>
     <url>
          <loc>https://leomariga.github.io/pyRANSAC-3D/api-documentation/fit-results/</loc>
-         <lastmod>2026-08-18</lastmod>
+         <lastmod>2026-08-28</lastmod>
     </url>
     <url>
          <loc>https://leomariga.github.io/pyRANSAC-3D/api-documentation/fit-state/</loc>
-         <lastmod>2026-08-18</lastmod>
+         <lastmod>2026-08-28</lastmod>
     </url>
     <url>
          <loc>https://leomariga.github.io/pyRANSAC-3D/api-documentation/line/</loc>
-         <lastmod>2026-08-18</lastmod>
+         <lastmod>2026-08-28</lastmod>
     </url>
     <url>
          <loc>https://leomariga.github.io/pyRANSAC-3D/api-documentation/plane/</loc>
-         <lastmod>2026-08-18</lastmod>
+         <lastmod>2026-08-28</lastmod>
     </url>
     <url>
          <loc>https://leomariga.github.io/pyRANSAC-3D/api-documentation/point/</loc>
-         <lastmod>2026-08-18</lastmod>
+         <lastmod>2026-08-28</lastmod>
     </url>
     <url>
          <loc>https://leomariga.github.io/pyRANSAC-3D/api-documentation/shape-generator/</loc>
-         <lastmod>2026-08-18</lastmod>
+         <lastmod>2026-08-28</lastmod>
     </url>
     <url>
          <loc>https://leomariga.github.io/pyRANSAC-3D/api-documentation/sphere/</loc>
-         <lastmod>2026-08-18</lastmod>
+         <lastmod>2026-08-28</lastmod>
     </url>
 </urlset>
